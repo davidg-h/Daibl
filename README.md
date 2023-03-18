@@ -1,5 +1,4 @@
-# Daibl
-
+# Daibl (Discord AI Bot Learning)
 
 
 ## Getting started
