@@ -1,5 +1,11 @@
 # Daibl (Discord AI Bot Learning)
 
+## every dev install discord.py:
+```sh
+Shell:
+$ pip install -U discord.py
+$ pip install -U python-dotenv
+```
 
 ## Getting started
 
