@@ -22,7 +22,6 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 cd existing_repo
 git remote add origin https://git.informatik.fh-nuernberg.de/devpsoft_studios/daibl.git
 git branch -M main
-git push -uf origin main
 ```
 
 ## Integrate with your tools
