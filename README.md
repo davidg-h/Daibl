@@ -8,6 +8,12 @@ $ pip install -U python-dotenv
 
 ## Getting started
 
+Create a .env file in the discord_bot directory and set the environment variables:
+```dosini
+# .env example
+DISCORD_TOKEN=<your_token>
+DISCORD_GUILD=<guild-or-server_name>
+```
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
 Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
@@ -16,6 +22,12 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 - [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
 - [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+```
+mkdir daibl
+cd daibl
+git clone https://git.informatik.fh-nuernberg.de/devpsoft_studios/daibl.git
+```
+or
 
 ```
 cd existing_repo
@@ -93,6 +105,9 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+## Open Source implementations
+.....
 
 ## APIs
 .....
