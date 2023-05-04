@@ -5,7 +5,10 @@ import discord
 
 from dotenv import load_dotenv
 
-from GPT.ModelCommunicator import ModelCommunicator  
+from GPT.ModelCommunicator import ModelCommunicator 
+
+import gtts
+from playsound import playsound
 
 # credential stored in environment variables (should be locally on every machine) 
 load_dotenv()
@@ -44,13 +47,20 @@ async def on_message(message):
     if message.author == client.user:
         return
     print(message)
-    if message.content.startswith("#daiblBot"):
-        await message.channel.send(communicateWithModel(message.content.replace("#daiblBot", "")))
+    if message.content.startswith("#daibl"):
+        answer=communicateWithModel(message.content.replace("#daibl", ""))
         
+        await message.channel.send(answer)
+        tts = gtts.gTTS(answer)
+        tts.save("discord_bot\\TTS\\answer.mp3")
+        playsound("discord_bot\\TTS\\answer.mp3")
+
+
 
 def communicateWithModel(message):
     modelCommunicatior= ModelCommunicator()
     promptResult=modelCommunicatior.returnPromptText(MODEL,CHAT,message)
     return promptResult
+
 # starting the client (-> last line of file)
 client.run(TOKEN)
