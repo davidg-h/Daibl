@@ -5,10 +5,15 @@ import discord
 
 from dotenv import load_dotenv
 
+from GPT.ModelCommunicator import ModelCommunicator  
+
 # credential stored in environment variables (should be locally on every machine) 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+MODEL = os.getenv('MODEL_PATH')
+CHAT = os.getenv('CHAT_EXE')
+
 
 # Client setup
 ## Client is an object that represents a connection to Discord
@@ -34,6 +39,18 @@ async def on_ready():
 
     await channel.send("hi im daibl. At your service")
 
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    print(message)
+    if message.content.startswith("#daiblBot"):
+        await message.channel.send(communicateWithModel(message.content.replace("#daiblBot", "")))
+        
 
+def communicateWithModel(message):
+    modelCommunicatior= ModelCommunicator()
+    promptResult=modelCommunicatior.returnPromptText(MODEL,CHAT,message)
+    return promptResult
 # starting the client (-> last line of file)
 client.run(TOKEN)

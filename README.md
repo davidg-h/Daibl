@@ -13,6 +13,8 @@ Create a .env file in the discord_bot directory and set the environment variable
 # .env example
 DISCORD_TOKEN=<your_token>
 DISCORD_GUILD=<guild-or-server_name>
+MODEL_PATH=<path\to\model>
+CHAT_EXE=<path\to\main-or-chat.exe>
 ```
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
