@@ -6,3 +6,5 @@ gtts
 mutagen
 llm-rs
 youtube-dl
+langchain
+transformer
