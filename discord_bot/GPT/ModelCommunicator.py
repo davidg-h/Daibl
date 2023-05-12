@@ -1,8 +1,11 @@
-import subprocess
+from llm_rs import Llama
 
 class ModelCommunicator:
+    
+    def __init__(self, model_path):
+        #load the model 
+        self.model = Llama(model_path)
 
-    def returnPromptText(self,MODEL,CHAT, question):
-        result = subprocess.run([CHAT, '-m', MODEL, '-p', question], stdout=subprocess.PIPE, shell=True)
-        resultText=result.stdout.decode()
-        return resultText
+    def returnPromptText(self, question):
+        #generate response
+        return self.model.generate(question).text
