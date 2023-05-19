@@ -14,7 +14,6 @@ Create a .env file in the discord_bot directory and set the environment variable
 DISCORD_TOKEN=<your_token>
 DISCORD_GUILD=<guild-or-server_name>
 MODEL_PATH=<path\to\model>
-(CHAT_EXE=<path\to\main-or-chat.exe>) -> obsolete
 ```
 
 (Install ffmpeg https://ffmpeg.org/) -> look into TTS folder <br><br>
