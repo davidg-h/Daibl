@@ -16,7 +16,7 @@ DISCORD_GUILD=<guild-or-server_name>
 MODEL_PATH=<path\to\model>
 ```
 
-## For Pair-Programming of Devs
+## For Pair-Programming
 ### Change user.name and user.email to evenly split contributions
 ```sh
 git config user.name <UserName>
