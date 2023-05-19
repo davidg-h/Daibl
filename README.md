@@ -16,6 +16,12 @@ DISCORD_GUILD=<guild-or-server_name>
 MODEL_PATH=<path\to\model>
 ```
 
+## For Pair-Programming of Devs
+### Change user.name and user.email to evenly split contributions
+```sh
+git config user.name <UserName>
+git config user.email <Email-of-account>
+```
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
