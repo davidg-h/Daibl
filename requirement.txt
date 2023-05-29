@@ -2,9 +2,13 @@ discord
 discord.py
 discord.py[voice]
 python-dotenv
-gtts
-mutagen
-llm-rs
+TTS
 youtube-dl
 langchain
 transformer
+huggingface_hub
+
+
+mutagen
+(llm-rs)
+torch

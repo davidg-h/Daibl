@@ -4,30 +4,31 @@ import discord
 
 from dotenv import load_dotenv
 
-from GPT.ModelCommunicator import ModelCommunicator
-from TTS.DaiblVoice import Voice 
+from LLM.ModelCommunicator import ModelCommunicator
+from TTS_Bot.DaiblVoice import Voice
 from Bot.Daibl import Daibl
 
-# credential stored in environment variables (should be locally on every machine) 
+# credential stored in environment variables (should be locally on every machine)
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = int(os.getenv('DISCORD_GUILD'))
-MODEL = os.getenv('MODEL_PATH')
+TOKEN = os.getenv("DISCORD_TOKEN")
+GUILD = int(os.getenv("DISCORD_GUILD"))
+# MODEL = os.getenv("MODEL_PATH") obsolete for now
+HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 # Client setup
 ## Client is an object that represents a connection to Discord
 intents = discord.Intents.default()
 intents.message_content = True
 
-modelCommunicatior = ModelCommunicator(MODEL)
+modelCommunicatior = ModelCommunicator(HUGGINGFACEHUB_API_TOKEN)
 voice = Voice()
 bot = Daibl(
-    intents = intents, 
-    guild_id= GUILD, 
-    modelCommunicatior = modelCommunicatior, 
-    voice = voice ,
-    command_prefix="#daibl"
-    )
+    intents=intents,
+    guild_id=GUILD,
+    modelCommunicatior=modelCommunicatior,
+    voice=voice,
+    command_prefix="#daibl",
+)
 
 # starting the bot
 bot.run(TOKEN)

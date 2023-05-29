@@ -47,7 +47,10 @@ class Daibl(commands.Bot):
         await message.channel.send(answer)
         await self.voice.TTS(message.author.voice.channel , answer)
     
-    voice_client = None    
+    # should join the channel and stay as long as there is a user in it
+    # pass the Voice client (https://discordpy.readthedocs.io/en/stable/api.html#discord.VoiceChannel.connect)
+    # to voice so that it can play the .wav file
+    """ voice_client = None    
     async def on_voice_state_update(self, member, before, after):
         global voice_client
         if before.channel is None and after.channel is not None:
@@ -59,5 +62,5 @@ class Daibl(commands.Bot):
            if voice_client and voice_client.channel == before.channel and len(before.channel.members) == 1:
             # Der Bot ist der einzige übrig im Kanal, also trenne die Verbindung
             await voice_client.disconnect()
-            voice_client = None  # Setze die VoiceClient-Referenz zurück
+            voice_client = None  # Setze die VoiceClient-Referenz zurück """
         
