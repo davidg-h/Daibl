@@ -5,11 +5,11 @@
 
 1. Step: Create virtual environment from requirements.txt (vscode)
 
-![alternative text](discord_bot\docs\images\Screenshot-venv-from-requirements.png)
+![alternative text](\discord_bot\docs\images\Screenshot-venv-from-requirements.png)
 
 2. Step: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode) 
 
-![alternative text](discord_bot\docs\images\Screenshot-virtualenv.png)
+![alternative text](\discord_bot\docs\images\Screenshot-virtualenv.png)
 
 **If you get an error try this first**: (Error is related to the [ExecutionPolicy](https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows))
 
