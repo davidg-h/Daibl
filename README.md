@@ -11,6 +11,14 @@
 
 ![alternative text](\discord_bot\docs\images\Screenshot-virtualenv.png)
 
+3. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
+
+In the terminal:
+```dosini
+pip freeze > requirements.txt 
+# alternative: python -m pip freeze > requirements.txt
+```
+
 **If you get an error try this first**: (Error is related to the [ExecutionPolicy](https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows))
 
 Open Powershell.exe as Admin and enter:
