@@ -5,11 +5,11 @@
 
 1. Step: Create virtual environment from requirements.txt (vscode)
 
-![alternative text](\discord_bot\docs\images\Screenshot-venv-from-requirements.png)
+![alternative text](discord_bot/docs/images/Screenshot-venv-from-requirements.png)
 
 2. Step: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode) 
 
-![alternative text](\discord_bot\docs\images\Screenshot-virtualenv.png)
+![alternative text](discord_bot/docs/images/Screenshot-virtualenv.png)
 
 3. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
 
