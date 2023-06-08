@@ -1,9 +1,44 @@
 # Daibl (Discord AI Bot Learning)
 
-## every dev should install to work with the bot:
+## Virtual environment (python 3.8) in the folder 'discord_bot\python_virtualenv\daibl_python38'
+### Virtual environment activation (manually)
+
+1.Option: **Terminal** Activation
+```dosini
+# use this command in the terminal
+.\discord_bot\python_virtualenv\daibl_python38\Scripts\activate
+```
+
+2.Option: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode) 
+
+![alternative text](discord_bot\docs\images\Screenshot-virtualenv.png)
+
+**If you get an error try this first**: (Error is related to the [ExecutionPolicy](https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows))
+
+Open Powershell.exe as Admin and enter:
+```dosini
+Set-ExecutionPolicy Unrestricted -Force
+```
+This overwrites the processing of scripts
+
+### Deactivation and revert changes:
+```dosini
+# https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows
+# Before Reverting the ExecutionPolicy deactivate the virtual environment in the terminal
+deactivate # deactivates virtual environment
+Set-ExecutionPolicy Restricted -Force
+```
+
+To check if the virtual environment is active:
+```dosini
+python --version
+# out: Python 3.8.10
+```
+
+
+## To run the project without the virtual environment get these package dependencies:
 ```sh
-$ pip install -U discord.py
-$ pip install -U python-dotenv
+$ pip install -r requirement.txt
 ```
 
 ## Getting started
@@ -22,6 +57,8 @@ MODEL_PATH=<path\to\model>
 git config user.name <UserName>
 git config user.email <Email-of-account>
 ```
+
+----------------------------------------------------------------------------------------------------------------------------------------------
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 

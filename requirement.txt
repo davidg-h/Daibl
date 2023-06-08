@@ -5,7 +5,7 @@ python-dotenv
 TTS
 youtube-dl
 langchain
-transformer
+transformers
 huggingface_hub
 
 
