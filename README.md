@@ -3,13 +3,11 @@
 ## Virtual environment (python 3.8) in the folder 'discord_bot\python_virtualenv\daibl_python38'
 ### Virtual environment activation (manually)
 
-1.Option: **Terminal** Activation
-```dosini
-# use this command in the terminal
-.\discord_bot\python_virtualenv\daibl_python38\Scripts\activate
-```
+1. Step: Create virtual environment from requirements.txt (vscode)
 
-2.Option: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode) 
+![alternative text](discord_bot\docs\images\Screenshot-venv-from-requirements.png)
+
+2. Step: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode) 
 
 ![alternative text](discord_bot\docs\images\Screenshot-virtualenv.png)
 
