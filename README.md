@@ -17,6 +17,7 @@
 
 In the terminal:
 ```dosini
+pip list # lists all packages
 pip freeze > requirements.txt 
 # alternative: python -m pip freeze > requirements.txt
 ```
@@ -35,6 +36,7 @@ This overwrites the processing of scripts
 # Before Reverting the ExecutionPolicy deactivate the virtual environment in the terminal
 deactivate # deactivates virtual environment
 Set-ExecutionPolicy Restricted -Force
+Get-ExecutionPolicy # Check if Restricted is set back as default
 ```
 
 To check if the virtual environment is active:
