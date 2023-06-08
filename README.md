@@ -66,7 +66,7 @@ Create a .env file in the discord_bot directory and set the environment variable
 # .env example
 DISCORD_TOKEN=<your_token>
 DISCORD_GUILD=<guild-or-server_name>
-MODEL_PATH=<path\to\model>
+MODEL_PATH=<path/to/model>
 ```
 
 ## For Pair-Programming
