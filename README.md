@@ -52,10 +52,10 @@ python --version
 # out: Python 3.8.10
 ```
 
-## To run the project without the virtual environment get these package dependencies
+## To run the project without the virtual environment get these package/dependencies
 
 ```sh
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 ## Getting started
