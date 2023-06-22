@@ -5,7 +5,6 @@ import wave
 
 from TTS.api import TTS
 
-
 class Voice:
     def __init__(self):
         # List available 🐸TTS models and choose the first one
@@ -23,23 +22,25 @@ class Voice:
             text=text,
             speaker=self.tts.speakers[0],
             language=self.tts.languages[0],
-            file_path=cwd + "\\output.wav",
+            file_path=cwd + "/output.wav",
         )
+      
 
         # temporary implementation until bug is fixed
         vc = await voiceChannel.connect()
-        
+     
         vc.play(
             discord.FFmpegPCMAudio(
-                executable=cwd + "\\ffmpeg-6.0-full_build\\bin\\ffmpeg.exe",
-                source=cwd + "\\output.wav",
+                # executable=cwd + "/ffmpeg-6.0-full_build/bin/ffmpeg.exe", (.exe is Windows)
+                executable=cwd + "/ffmpeg", # Linux binary executeable for ffmpeg
+                source=cwd + "/output.wav",
             ),
             after=lambda e: print("done"),
         )
         
         # temporary implementation until bug is fixed
         counter = 0
-        with wave.open(cwd+ "\\output.wav") as mywav:
+        with wave.open(cwd+ "/output.wav") as mywav:
             duration_seconds = mywav.getnframes() / mywav.getframerate()
         
         while not counter >= duration_seconds:

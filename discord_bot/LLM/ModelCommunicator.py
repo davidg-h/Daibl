@@ -5,8 +5,8 @@ class ModelCommunicator:
     def __init__(self, hf_api_token):
         # load the model
         self.model = HuggingFaceHub(
-            repo_id="google/flan-t5-xxl",
-            model_kwargs={"temperature": 0.9 , "max_length":264},
+            repo_id="bigscience/bloom",
+            model_kwargs={"temperature":1e-10},
             huggingfacehub_api_token=hf_api_token
         )
         

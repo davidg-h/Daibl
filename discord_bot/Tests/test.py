@@ -8,8 +8,8 @@ hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 s = "Who is Usain Bolt?"
 
 llm = HuggingFaceHub(
-    repo_id="google/flan-t5-xxl",
-    model_kwargs={"temperature": 0.9 , "max_length":264},
+    repo_id="bigscience/bloom", 
+    #model_kwargs={"temperature":1e-10},
     huggingfacehub_api_token=hf_token
 )
 
