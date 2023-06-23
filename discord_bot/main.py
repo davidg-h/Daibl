@@ -15,19 +15,17 @@ GUILD = int(os.getenv("DISCORD_GUILD"))
 # MODEL = os.getenv("MODEL_PATH") obsolete for now
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
-# Client setup
-## Client is an object that represents a connection to Discord
-intents = discord.Intents.default()
-intents.message_content = True
+# Bot setup
+## Bot is an object that represents a connection to Discord
 
 modelCommunicatior = ModelCommunicator(HUGGINGFACEHUB_API_TOKEN)
 voice = Voice()
 bot = Daibl(
-    intents=intents,
+    command_prefix="$",
+    self_bot=False,
     guild_id=GUILD,
     modelCommunicatior=modelCommunicatior,
-    voice=voice,
-    command_prefix="#daibl",
+    voice=voice
 )
 
 # starting the bot
