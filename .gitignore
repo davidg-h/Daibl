@@ -1,3 +1,6 @@
+# VS Code genrated files
+.vs/
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
