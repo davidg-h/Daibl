@@ -2,22 +2,17 @@ from typing import Optional
 
 import discord
 from discord.ext import commands
+from discord.ext.audiorec import NativeVoiceClient
 
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
     
-    def __init__(
-        self,
-        *args,
-        guild_id: Optional[int] = None,
-        modelCommunicatior,
-        voice,
-        **kwargs,
-    ):
-        super().__init__(*args, **kwargs)
+    def __init__(self, command_prefix, self_bot, guild_id, modelCommunicatior, voice):
+        commands.Bot.__init__(self, command_prefix=command_prefix, intents=discord.Intents.default(), self_bot=self_bot)
         self.guild_id = guild_id
         self.modelCommunicatior = modelCommunicatior
         self.voice = voice
+        self.add_bot_commands()
     
     async def on_ready(self):
         # bot_test channel is referenced
@@ -27,6 +22,7 @@ class Daibl(commands.Bot):
         guild = self.get_guild(self.guild_id)
         # console output
         print(
+            f'\n[INFO]: Daibl now online:'
             f'\n{self.user} is connected to the following guild:\n'
             f'{guild.name} (id: {guild.id})\n'
             f'{self.user} will post messages to channel:{channel.name}\n'
@@ -41,26 +37,24 @@ class Daibl(commands.Bot):
         
         #all infos of message (channel, author, ...)
         print(message)
-        
-        answer = self.modelCommunicatior.returnPromptText(message.content.replace("#daibl ", ""))
-        
-        await message.channel.send(answer)
-        await self.voice.TTS(message.author.voice.channel , answer)
+            
+        await self.process_commands(message)
     
     # should join the channel and stay as long as there is a user in it
     # pass the Voice client (https://discordpy.readthedocs.io/en/stable/api.html#discord.VoiceChannel.connect)
     # to voice so that it can play the .wav file
-    """ voice_client = None    
-    async def on_voice_state_update(self, member, before, after):
-        global voice_client
-        if before.channel is None and after.channel is not None:
-            # Ein Mitglied hat einen Sprachkanal betreten
-            channel = after.channel
-            # Bot dem Sprachkanal beitreten lassen
-            await channel.connect()
-        if before.channel is not None and after.channel is None:
-           if voice_client and voice_client.channel == before.channel and len(before.channel.members) == 1:
-            # Der Bot ist der einzige übrig im Kanal, also trenne die Verbindung
-            await voice_client.disconnect()
-            voice_client = None  # Setze die VoiceClient-Referenz zurück """
+    def add_bot_commands(self):
+        
+        @self.command(name="status", pass_context=True)
+        async def status(ctx):
+            print(ctx)
+            await ctx.channel.send("Hello" + " " + ctx.author.name)
+            
+        @self.command(name="daibl", pass_context=True)
+        async def adress_bot(ctx):
+            answer = self.modelCommunicatior.returnPromptText(ctx.message.content.replace("$daibl ", ""))
+            
+            await ctx.channel.send(answer)
+            await self.voice.TTS(ctx.author.voice.channel , answer)
+            
         
