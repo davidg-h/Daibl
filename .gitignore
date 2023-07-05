@@ -1,5 +1,6 @@
 # VS Code genrated files
 .vs/
+.vscode
 .vscode/
 .vscode/*
 !.vscode/settings.json
