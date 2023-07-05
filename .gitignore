@@ -8,6 +8,9 @@
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
+# html files und wordlists
+discord_bot/scrap/data/*
+
 # Local History for Visual Studio Code
 .history/
 
