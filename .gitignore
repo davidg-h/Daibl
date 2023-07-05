@@ -10,6 +10,7 @@
 
 # html files und wordlists
 discord_bot/scrap/data/*
+discord_bot/scrap/data.zip
 
 # Local History for Visual Studio Code
 .history/
