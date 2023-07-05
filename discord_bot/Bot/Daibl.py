@@ -2,13 +2,12 @@ from typing import Optional
 
 import discord
 from discord.ext import commands
-from discord.ext.audiorec import NativeVoiceClient
 
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
     
     def __init__(self, command_prefix, self_bot, guild_id, modelCommunicatior, voice):
-        commands.Bot.__init__(self, command_prefix=command_prefix, intents=discord.Intents.default(), self_bot=self_bot)
+        commands.Bot.__init__(self, command_prefix=command_prefix, intents = discord.Intents.all(), self_bot=self_bot)
         self.guild_id = guild_id
         self.modelCommunicatior = modelCommunicatior
         self.voice = voice
@@ -36,7 +35,9 @@ class Daibl(commands.Bot):
             return
         
         #all infos of message (channel, author, ...)
+        print()
         print(message)
+        print()
             
         await self.process_commands(message)
     
