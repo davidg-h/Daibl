@@ -12,6 +12,10 @@
 discord_bot/scrap/data/*
 discord_bot/scrap/data.zip
 
+# venv
+bin/*
+pyvenv.cfg
+
 # Local History for Visual Studio Code
 .history/
 
