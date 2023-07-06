@@ -97,7 +97,6 @@ def create_content_json(path_html_files, outfile_name):
             with open(html_file, "r", encoding="utf-8") as file:
                 html_contents.append(get_content(file))
         except:
-
             html_contents.append("")
 
             
