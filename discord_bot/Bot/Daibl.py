@@ -3,6 +3,7 @@ from typing import Optional
 import discord
 from discord.ext import commands
 from discord.ext.audiorec import NativeVoiceClient
+from scrap.question_embedding import question_embeddings
 
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
@@ -39,6 +40,7 @@ class Daibl(commands.Bot):
         print(message)
             
         await self.process_commands(message)
+        await question_embeddings(message)
     
     # should join the channel and stay as long as there is a user in it
     # pass the Voice client (https://discordpy.readthedocs.io/en/stable/api.html#discord.VoiceChannel.connect)
