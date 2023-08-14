@@ -8,3 +8,5 @@ for windows there might be an issue with hosting it locally in a windows machine
 
 1. (Recommended) Download docker and run the recording tool in a docker container
 2. The issue involves audio files not being safed by default. It could be because of missing ffmpeg support. Download and set ffmpeg in PATH in the environment variables and try again.
+
+https://www.youtube.com/watch?v=bJjzSo_fOS8
