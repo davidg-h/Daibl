@@ -3,6 +3,9 @@ from transformers import BertModel, BertTokenizer
 import torch
 import sqlite3
 import pandas as pd
+from scipy.spatial.distance import cosine
+from db_init import initialize_database
+
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertModel.from_pretrained('bert-base-uncased',output_hidden_states = True)
@@ -20,32 +23,26 @@ def question_embeddings(message):
     
     token_vecs = hidden_states[-2][0]
     # Calculate the average of all 22 token vectors.
-    question_embedding = torch.mean(token_vecs, dim=0)
-    print ("Our final sentence embedding vector of shape:", question_embedding)
-
-    df = load_embeddings()
-    df["distance"] = [cos_distance(question_embedding, file_embedding) for file_embedding in df["word_embeddings"]]
-    
-    [print(text) for text in df.sort_values(by="distance")["text"].head(5)]
-
-def load_embeddings():
-    database = 'discord_bot/scrap/html.sqlite'
-    sql = """
-    SELECT filename, title, text
-    FROM html_attrs
-    """
-
-    con = sqlite3.connect(database)
-    df = pd.read_sql_query(sql, con)
-    con.close()
-    return df
-
-
-def cos_distance(vec1, vec2):
-    return torch.cosine_similarity(vec1, vec2)
+    sentence_embedding = torch.mean(token_vecs, dim=0)
+    print ("Our final sentence embedding vector of shape:", sentence_embedding)
+    return sentence_embedding
     
 
-question_embeddings("Wer ist Gallwitz?")
-#only 5 best documents 
+def calculate_document_question_distance(sentence_embedding,document_embedding):
+    
+    # Calculate the cosine similarity between question and document
+    diff_bank = 1 - cosine(sentence_embedding, document_embedding)
+
+    print('Vector similarity for *different* meanings:  %.2f' % diff_bank)
+
+def get_5_most_similar_documents(message):
+    database_path = "daibl-1\discord_bot\scrap\html.sqlite"
+    # Initialisiere den DataFrame mit der Funktion aus db_init.py
+    df = initialize_database(database_path)
+    question_embedding=question_embeddings(message)
+    df["distance"]=[calculate_document_question_distance(question_embedding,document_embedding)for document_embedding in df["embeddings"]]
+    most_similar_documents = df.nsmallest(5, "distance")
+
+    return most_similar_documents["text"]
 
 
