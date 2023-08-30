@@ -3,7 +3,7 @@ from typing import Optional
 import discord
 from discord.ext import commands
 from discord.ext.audiorec import NativeVoiceClient
-from scrap.question_embedding import question_embeddings
+from scrap.question_embedding import get_5_most_similar_documents(message)
 
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
@@ -40,7 +40,6 @@ class Daibl(commands.Bot):
         print(message)
             
         await self.process_commands(message)
-        await question_embeddings(message)
     
     # should join the channel and stay as long as there is a user in it
     # pass the Voice client (https://discordpy.readthedocs.io/en/stable/api.html#discord.VoiceChannel.connect)
@@ -54,8 +53,10 @@ class Daibl(commands.Bot):
             
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx):
-            answer = self.modelCommunicatior.returnPromptText(ctx.message.content.replace("$daibl ", ""))
-            
+            best_documents = await get_5_most_similar_documents(ctx.message.content) #annahme es ist array
+            query="/n".join(best_documents)+"/n"+"in regard of the documents above,anwser the following question: /n"+ctx.message.content.replace("$daibl ", "")
+            answer = self.modelCommunicatior.returnPromptText(query)
+
             await ctx.channel.send(answer)
             await self.voice.TTS(ctx.author.voice.channel , answer)
             
