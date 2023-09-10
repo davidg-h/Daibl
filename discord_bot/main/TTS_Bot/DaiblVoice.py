@@ -31,8 +31,8 @@ class Voice:
      
         vc.play(
             discord.FFmpegPCMAudio(
-                # executable=cwd + "/ffmpeg-6.0-full_build/bin/ffmpeg.exe", (.exe is Windows)
-                executable=cwd + "/ffmpeg", # Linux binary executeable for ffmpeg
+                executable="assets/ffmpeg-6.0-full_build/bin/ffmpeg.exe", # (.exe is Windows)
+                # executable= cwd + "/app/assets/ffmpeg", # Linux binary executeable for ffmpeg
                 source=cwd + "/output.wav",
             ),
             after=lambda e: print("done"),

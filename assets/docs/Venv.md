@@ -1,16 +1,18 @@
 # Steps to get a virtual environment running in VS Code with python
 
 ---
+-> | [Back](/README.md)
+-|-
 
 1. Step: [Install Python 3.8.10](https://www.python.org/downloads/release/python-3810/)
 
 2. Step: Create virtual environment from requirements.txt (vscode)
 
-    ![alternative text](images/Screenshot-venv-from-requirements.png)
+    ![alternative text](docs_images/Screenshot-venv-from-requirements.png)
 
 3. Step: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode)
 
-    ![alternative text](images/Screenshot-virtualenv.png)
+    ![alternative text](docs_images/Screenshot-virtualenv.png)
 
 4. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
 

@@ -6,11 +6,12 @@ from discord.ext import commands
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
     
-    def __init__(self, command_prefix, self_bot, guild_id, modelCommunicatior, voice):
+    def __init__(self, command_prefix, self_bot, guild_id, modelCommunicatior, voice, stt):
         commands.Bot.__init__(self, command_prefix=command_prefix, intents = discord.Intents.all(), self_bot=self_bot)
         self.guild_id = guild_id
         self.modelCommunicatior = modelCommunicatior
         self.voice = voice
+        self.stt = stt
         self.add_bot_commands()
     
     async def on_ready(self):
@@ -57,5 +58,9 @@ class Daibl(commands.Bot):
             
             await ctx.channel.send(answer)
             await self.voice.TTS(ctx.author.voice.channel , answer)
+            
+        @self.command(name="listen", pass_context=True)
+        async def listen(ctx):
+            await self.stt.start_transcription(self.get_channel(1086951624381059112))
             
         
