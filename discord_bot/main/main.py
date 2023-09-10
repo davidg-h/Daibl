@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
 from Bot.Daibl import Daibl
+from STT.LiveTranscripe import LiveTranscription
 
 # credential stored in environment variables (should be locally on every machine)
 load_dotenv()
@@ -20,12 +21,14 @@ HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 modelCommunicatior = ModelCommunicator(HUGGINGFACEHUB_API_TOKEN)
 voice = Voice()
+stt = LiveTranscription()
 bot = Daibl(
     command_prefix="$",
     self_bot=False,
     guild_id=GUILD,
     modelCommunicatior=modelCommunicatior,
-    voice=voice
+    voice=voice,
+    stt=stt
 )
 
 # starting the bot

@@ -109,7 +109,7 @@ def copy_dataset():
         shutil.rmtree(dst)
 
     shutil.copytree(
-        src="discord_bot\TTS_Bot\Train_Voice\Dataset_Generation\dataset",
+        src="discord_bot\main\TTS_Bot\Train_Voice\Dataset_Generation\dataset",
         dst=dst,
     )
     print("Dataset Copied Successfully")

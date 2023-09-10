@@ -4,11 +4,11 @@
 
 ## Docker environment
 
-We are developing the discord bot in a Docker environment (Linux system). As such file paths may be different when running on Windows. Devs should read through our [Docker documentation](discord_bot/docs/Docker.md) to work on the project.
+We are developing the discord bot in a Docker environment (Linux system). As such file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project.
 
 ## **Virtual environment activation**
 
-The virtual environment is used to make packaging easier and to only install the needed dependencies in the docker environment (remember: pip freeze). To setup the virtual environment look into the corresponding [virtual environment documentation](discord_bot/docs/Venv.md)
+The virtual environment is used to make packaging easier and to only install the needed dependencies in the docker environment (remember: pip freeze). To setup the virtual environment look into the corresponding [virtual environment documentation](assets/docs/Venv.md)
 
 ## Getting started
 
