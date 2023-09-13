@@ -3,16 +3,25 @@ from typing import Optional
 import discord
 from discord.ext import commands
 
+from LLM.ModelCommunicator import ModelCommunicator
+from TTS_Bot.DaiblVoice import Voice
+from STT.LiveTranscripe import LiveTranscription
+import STT.LiveTranscripe_Module as LTM
+
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
     
-    def __init__(self, command_prefix, self_bot, guild_id, modelCommunicatior, voice, stt):
+    def __init__(self, command_prefix, self_bot, guild_id, modelCommunicator:ModelCommunicator, voice:Voice):
+        
         commands.Bot.__init__(self, command_prefix=command_prefix, intents = discord.Intents.all(), self_bot=self_bot)
         self.guild_id = guild_id
-        self.modelCommunicatior = modelCommunicatior
+        self.modelCommunicator = modelCommunicator
         self.voice = voice
-        self.stt = stt
+        self.stt = LiveTranscription()
+        
+        self.vc = None
         self.add_bot_commands()
+        
     
     async def on_ready(self):
         # bot_test channel is referenced
@@ -48,19 +57,35 @@ class Daibl(commands.Bot):
     def add_bot_commands(self):
         
         @self.command(name="status", pass_context=True)
-        async def status(ctx):
+        async def status(ctx:commands.Context):
             print(ctx)
             await ctx.channel.send("Hello" + " " + ctx.author.name)
+        
+        @self.command(name="join", pass_context=True)
+        async def join(ctx:commands.Context):
+            try:
+                self.vc = await ctx.author.voice.channel.connect()
+            except Exception as e:
+                print(e)
+                self.vc.disconnect()
+                pass
+        
+        @self.command(name="dc", pass_context=True)
+        async def disconnect(ctx:commands.Context):
+            try:
+                await self.vc.disconnect()
+            except Exception as e:
+                print(e)
+                pass
             
         @self.command(name="daibl", pass_context=True)
-        async def adress_bot(ctx):
-            answer = self.modelCommunicatior.returnPromptText(ctx.message.content.replace("$daibl ", ""))
+        async def adress_bot(ctx:commands.Context):
+            answer = self.modelCommunicator.returnPromptText(ctx.message.content.replace("$daibl ", ""))
             
             await ctx.channel.send(answer)
             await self.voice.TTS(ctx.author.voice.channel , answer)
             
         @self.command(name="listen", pass_context=True)
-        async def listen(ctx):
-            await self.stt.start_transcription(self.get_channel(1086951624381059112))
-            
-        
+        async def listen(ctx:commands.Context):
+            await self.stt.transcripe(self.stt.audio_model, self.get_channel(1086951624381059112)) # can be later replaced with ctx (context) channel
+    

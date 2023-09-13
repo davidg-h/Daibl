@@ -2,6 +2,10 @@
 
 ---
 
+## Folder structure
+
+TODO: explain folder structure
+
 ## Docker environment
 
 We are developing the discord bot in a Docker environment (Linux system). As such file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project.
