@@ -1,0 +1,17 @@
+ > Training Environment:
+ | > Current device: 0
+ | > Num. of GPUs: 1
+ | > Num. of CPUs: 12
+ | > Num. of Torch Threads: 6
+ | > Torch seed: 54321
+ | > Torch CUDNN: True
+ | > Torch CUDNN deterministic: False
+ | > Torch CUDNN benchmark: False
+ > Start Tensorboard: tensorboard --logdir=c:\Users\David\Desktop\Repos\GitLab_Repos\it_project\daibl\discord_bot\main\TTS_Bot\Train_Voice\Training\david-tts\vits_david-tts-voice-September-14-2023_10+17AM-2ec89de
+
+ > Model has 83059180 parameters
+
+[4m[1m > EPOCH: 0/1000[0m
+ --> c:\Users\David\Desktop\Repos\GitLab_Repos\it_project\daibl\discord_bot\main\TTS_Bot\Train_Voice\Training\david-tts\vits_david-tts-voice-September-14-2023_10+17AM-2ec89de
+
+[1m > TRAINING (2023-09-14 10:17:45) [0m
