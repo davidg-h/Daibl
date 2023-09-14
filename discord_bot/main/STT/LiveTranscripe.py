@@ -19,7 +19,7 @@ from types import SimpleNamespace
 
 class LiveTranscription:
     """
-    Handles the live transcription of ASR
+    # Handles the live transcription of ASR
     
     ...
     
@@ -53,7 +53,7 @@ class LiveTranscription:
                 'default_microphone': ''
                 })
             
-            if not 'linux' in platform:
+            if 'linux' in platform:
                 self.args.default_microphone = default_microphone
             
             # The last time a recording was retreived from the queue.
@@ -67,9 +67,6 @@ class LiveTranscription:
             self.recorder.energy_threshold = self.args.energy_threshold
             # Definitely do this, dynamic energy compensation lowers the energy threshold dramtically to a point where the SpeechRecognizer never stops recording.
             self.recorder.dynamic_energy_threshold = False
-            
-            # Important for linux users. 
-            # Prevents permanent application hang and crash by using the wrong Microphone
 
             self.record_timeout = self.args.record_timeout
             self.phrase_timeout = self.args.phrase_timeout
@@ -79,6 +76,13 @@ class LiveTranscription:
             self.audio_model = self.load_model()
     
     def mic(self):
+        """
+        Returns the microphone for speech recognition
+        
+        \b
+        Important for linux users. 
+        Prevents permanent application hang and crash by using the wrong Microphone
+        """
         if 'linux' in platform:
             mic_name = self.args.default_microphone
             if not mic_name or mic_name == 'list':
@@ -90,15 +94,16 @@ class LiveTranscription:
                 for index, name in enumerate(sr.Microphone.list_microphone_names()):
                     if mic_name in name:
                         return sr.Microphone(sample_rate=16000, device_index=index)
-                        break
         else:
             return sr.Microphone(sample_rate=16000)
     
     def load_model(self):
-        # Load / Download model
+        """ Load whisper model """
         model = self.args.model
         if self.args.model != "large" and not self.args.non_english:
+            # load only english model 
             model = model + ".en"
+        # check for cuda (nvidia graphic card) availability
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
         audio_model = whisper.load_model(model).to(device)
         print("Model loaded.\n")
@@ -108,10 +113,12 @@ class LiveTranscription:
         return self.transcription
     
     def create_tmp_dir(self):
+        """ creates temp directory in current directory of file """
         if not os.path.exists(self.tmp_dir):
             os.makedirs(self.tmp_dir)
             
     def del_tmp_dir(self):
+        """ removes the temp directory """
         shutil.rmtree(self.tmp_dir)
         print("Deleting temporary directory -> Done")
         
@@ -125,6 +132,9 @@ class LiveTranscription:
                 self.data_queue.put(data)
                 
     def line_to_post(self):
+        """
+        concatinates all of the transcription in one line
+        """
         cached_transcription = ['']
         current_transcription = self.get_transcription()
         line_to_post = ""
@@ -138,20 +148,20 @@ class LiveTranscription:
         return line_to_post
                 
     async def transcripe(self, audio_model, channel):
-        
+        """ live transcription using speech recognition and whisper """
         self.create_tmp_dir()
         source = self.mic()
         
+        # reset transcription attributes to default before every transcript
+        self.data_queue = Queue()
         msg = None
+        self.transcription = ['']
         
         temp_file =  tempfile.NamedTemporaryFile(mode='w+b' , dir=self.tmp_dir, delete=False)
         temp_file.close()
         
-        self.transcription = ['']
-        
         with source:
             self.recorder.adjust_for_ambient_noise(source)
-       
 
         # Create a background thread that will pass us raw audio bytes.
         # We could do this manually but SpeechRecognizer provides a nice helper.
@@ -161,7 +171,8 @@ class LiveTranscription:
         print("Live-Transcription started. Please say something.\n")
         await channel.send("Live-Transcription started. Please say something.", delete_after=4)
         
-        t_end = time.time() + 10
+        # record only 15 sec of live audio for transcription
+        t_end = time.time() + 15
         while time.time() < t_end:
             try:
                 now = datetime.utcnow()
@@ -206,7 +217,7 @@ class LiveTranscription:
                     #os.system('cls' if os.name=='nt' else 'clear')
                     if msg != None:
                         await msg.delete()
-                    msg = await channel.send("Live-Transcription:  "+ self.line_to_post())
+                    msg = await channel.send("Live-Transcription:  " + self.line_to_post())
                     for line in self.transcription:
                         print(line)
                     # Flush stdout.
@@ -217,12 +228,12 @@ class LiveTranscription:
             except Exception:
                 break
         
-        stop_listening()
+        # stops background thread of audio recording
+        stop_listening(True)
         await channel.send("Live-Transcription ended", delete_after=4)
-        self.data_queue = Queue() #TODO find processes to close
-        self.del_tmp_dir()
         
         print("\n\nTranscription:")
         for line in self.transcription:
             print(line)
-            
+        
+        self.del_tmp_dir()

@@ -33,9 +33,9 @@ Every working update should be [uploaded/deployed in an image](https://www.youtu
 
 As running a docker container locally is pretty resource intense (especially on ram) you can define a .wslconfig file to [limit the VMs ressources](https://learn.microsoft.com/en-us/windows/wsl/wsl-config).
 
-#### <ins>Debug Docker Container</ins> TODO: Find better tutorial
+#### <ins>Debug Docker Container</ins>
 
-As a developer you need to debug code. For this reason debugging a docker container is necessary. Here is a [tutorial](https://www.youtube.com/watch?v=qCCj7qy72Bg ) on how to do it.
+As a developer you need to debug code. For this reason debugging a docker container is necessary. Here is a [tutorial](https://www.youtube.com/watch?v=qCCj7qy72Bg ) on how to do it inside a container.
 
 #### <ins>Usefull commands:</ins>
 
