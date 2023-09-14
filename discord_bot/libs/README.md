@@ -1,1 +1,0 @@
-# summary of libraries for the bot
