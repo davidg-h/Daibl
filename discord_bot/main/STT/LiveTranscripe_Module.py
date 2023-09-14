@@ -4,6 +4,9 @@ from multiprocessing.managers import BaseManager
 from time import sleep
 from STT.LiveTranscripe import LiveTranscription
 
+################################################################
+## experimental
+################################################################
 
 def work(stt:LiveTranscription, audio_model):
         stt.transcripe(audio_model)

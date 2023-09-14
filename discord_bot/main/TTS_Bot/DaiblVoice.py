@@ -6,6 +6,7 @@ import wave
 from TTS.api import TTS
 
 class Voice:
+    """ TTS module """
     def __init__(self):
         # List available 🐸TTS models and choose the first one
         self.model_name = TTS.list_models()[0]
@@ -26,7 +27,7 @@ class Voice:
         )
       
 
-        # temporary implementation until bug is fixed
+        # temporary implementation
         vc = await voiceChannel.connect()
      
         vc.play(
@@ -41,7 +42,7 @@ class Voice:
         # temporary implementation until bug is fixed
         counter = 0
         with wave.open(cwd+ "/output.wav") as mywav:
-            duration_seconds = mywav.getnframes() / mywav.getframerate()
+            duration_seconds = mywav.getnframes() / mywav.getframerate() # get the audio duration in seconds
         
         while not counter >= duration_seconds:
             await asyncio.sleep(1)

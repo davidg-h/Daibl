@@ -4,7 +4,21 @@
 
 ## Folder structure
 
-TODO: explain folder structure
+```sh
+📦assets # resources and assets for the project
+ ┣ 📂docs
+ ┗ 📂ffmpeg-6.0-full_build
+📦discord_bot
+ ┣ 📂main
+ ┃  ┣ 📂Bot     # Bot application
+ ┃  ┣ 📂LLM     # Communicating module with Large-Language-models
+ ┃  ┣ 📂STT     # Module for live transcription (ASR)
+ ┃  ┣ 📂TTS_Bot # Module for text-to-speech
+ ┃  ┣ 📂util    # Module for utilities
+ ┃  ┣ 📜main.py # main entry point
+ ┃  ┗ 📜.env    # token and keys
+ ┗ (📂test) # possible test folder
+ ```
 
 ## Docker environment
 

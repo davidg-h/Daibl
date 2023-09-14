@@ -2,6 +2,7 @@
 import os
 
 class add_path():
+    """ Utility class for adding temporary system path variables """
     def __init__(self, path):
         self.path = path
 
