@@ -104,5 +104,6 @@ target/
 
 # Miscellaneous
 **/*.md
-**/*Tests*
+**/*test*
 **/*ffmpeg-6.0-full_build*
+**/*docs*
