@@ -2,8 +2,9 @@
 from transformers import BertModel, BertTokenizer
 import torch
 from scipy.spatial.distance import cosine
-from db_init import initialize_database
-
+from scrap.db_init import initialize_database
+import json
+import pandas as pd
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 model = BertModel.from_pretrained('bert-base-uncased',output_hidden_states = True)
@@ -30,17 +31,19 @@ def calculate_document_question_distance(sentence_embedding,document_embedding):
     
     # Calculate the cosine similarity between question and document
     diff_bank = 1 - cosine(sentence_embedding, document_embedding)
-
     print('Vector similarity for *different* meanings:  %.2f' % diff_bank)
+    return diff_bank
 
 def get_5_most_similar_documents(message):
-    database_path = "daibl-1\discord_bot\scrap\html.sqlite"
+    database_path = "discord_bot\scrap\html.sqlite"
     # Initialisiere den DataFrame mit der Funktion aus db_init.py
     df = initialize_database(database_path)
     question_embedding=question_embeddings(message)
-    df["distance"]=[calculate_document_question_distance(question_embedding,document_embedding)for document_embedding in df["embeddings"]]
-    most_similar_documents = df.nsmallest(5, "distance")
-
+    df["distance"] = [calculate_document_question_distance(question_embedding, json.loads(document_embedding)) for document_embedding in df["word_embeddings"]]
+    sorted_df = df.sort_values(by="distance", ascending=True)
+    most_similar_documents = sorted_df.head(5)
     return most_similar_documents["text"]
+
+print(get_5_most_similar_documents("wer ist gallwitz"))
 
 
