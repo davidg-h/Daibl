@@ -3,7 +3,7 @@ from typing import Optional
 import discord
 from discord.ext import commands
 from discord.ext.audiorec import NativeVoiceClient
-from scrap.question_embedding import get_5_most_similar_documents(message)
+from scrap.query_crafter import get_query_all, get_query_best_5, get_query_extraction
 
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
@@ -53,11 +53,11 @@ class Daibl(commands.Bot):
             
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx):
-            best_documents = await get_5_most_similar_documents(ctx.message.content) #annahme es ist array
-            query="/n".join(best_documents)+"/n"+"in regard of the documents above,anwser the following question: /n"+ctx.message.content.replace("$daibl ", "")
+            query = get_query_best_5(ctx.message.content)
+
             answer = self.modelCommunicatior.returnPromptText(query)
 
             await ctx.channel.send(answer)
-            await self.voice.TTS(ctx.author.voice.channel , answer)
+            # await self.voice.TTS(ctx.author.voice.channel , answer)
             
         
