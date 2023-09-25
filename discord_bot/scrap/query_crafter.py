@@ -11,7 +11,7 @@ import json
 DATABASE_PATH = "discord_bot/scrap/html.sqlite"
 
 # best 5 documents as context
-def get_query_best_5(message):
+def get_query_embeddings(message):
     best_documents = get_5_most_similar_documents(message)
     query="\n----Dokument----\n".join(best_documents)+"\n"+"in regard of the documents above,anwser the following question: \n"+ message.replace("$daibl ", "")
     print(query)
@@ -23,7 +23,7 @@ def get_query_best_5(message):
 def get_query_extraction(message):
     dokuments = extraction(message)
     dokuments_text = "\n----Dokument----\n".join(dokuments)
-    query=dokuments_text[:1200] + "\n"+"in regard of the documents above,anwser the following question: \n"+ message.replace("$daibl ", "")
+    query=dokuments_text[:1200] + "\n"+"in regard of the documents above, anwser the following question: \n"+ message.replace("$daibl ", "")
     print(query)
     return query
 

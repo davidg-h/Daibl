@@ -3,7 +3,7 @@ from typing import Optional
 import discord
 from discord.ext import commands
 from discord.ext.audiorec import NativeVoiceClient
-from scrap.query_crafter import get_query_all, get_query_best_5, get_query_extraction
+from scrap.query_crafter import get_query_all, get_query_embeddings, get_query_extraction
 
 class Daibl(commands.Bot):
     '''Bot is only responsible for Discord events/commands'''
@@ -53,7 +53,8 @@ class Daibl(commands.Bot):
             
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx):
-            query = get_query_best_5(ctx.message.content)
+            
+            query = get_query_embeddings(ctx.message.content)
 
             answer = self.modelCommunicatior.returnPromptText(query)
 
