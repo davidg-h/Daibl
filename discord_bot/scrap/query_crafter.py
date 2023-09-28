@@ -4,7 +4,7 @@ import sqlite3
 import pandas as pd
 from scipy.spatial.distance import cosine
 from scrap.question_embedding import get_5_most_similar_documents
-from scrap.db_init import initialize_database
+from scrap.db_init import db_get_df
 from scrap.spacy_keywordextraction import extraction
 import json
 
@@ -30,7 +30,7 @@ def get_query_extraction(message):
 # all documents as context
 # throws error on api
 def get_query_all(message):
-    df = initialize_database(DATABASE_PATH)
+    df = db_get_df("word_embeddings", ["text"])
     documents = df["text"]
     query="\n----Dokument----\n".join(documents)+"\n"+"in regard of the documents above,anwser the following question: \n"+ message.replace("$daibl ", "")
     print(query)

@@ -2,7 +2,7 @@ import pandas as pd
 import sqlite3
 import spacy
 
-from scrap.db_init import initialize_database
+from scrap.db_init import db_get_df
 
 DATABASE_PATH = "discord_bot/scrap/html.sqlite"
 
@@ -14,7 +14,7 @@ def extraction(message):
     nouns = [token.text for token in doc if token.pos_ == 'NOUN']
     entities = [ent.text for ent in doc.ents]
 
-    df = initialize_database(DATABASE_PATH)
+    df = db_get_df("word_embeddings", ["text"])
 
     outputs = []
     if not entities:
