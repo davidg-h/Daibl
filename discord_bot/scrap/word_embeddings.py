@@ -1,60 +1,71 @@
+import sqlite3
+import pandas as pd
+import torch
+from transformers import BertModel, BertTokenizer
 import json
-from nltk.tokenize import sent_tokenize, word_tokenize
-import warnings
-import nltk
-nltk.download('punkt')
+from tqdm import tqdm
 
-warnings.filterwarnings(action = 'ignore')
-
-import gensim
-from gensim.models import Word2Vec
+DATABASE = 'daibl/discord_bot/scrap/html.sqlite'
 
 
-rawtext = ""
-with open('videoParametersRecipe.json') as json_file:
-        data = json.load(json_file)
-    
-        
-        for videodata in data:
-            
-            if videodata and videodata["recipeName"].strip() != videodata["recipeText"].strip() and len(videodata["recipeName"]) > 50:
-                rawtext += videodata["recipeText"] + " "
-
-# print(rawtext)
-
-
-
-# iterate through each sentence in the file
-for i in sent_tokenize(rawtext):
-	temp = []
+def get_df():
 	
-	# tokenize the sentence into words
-	for j in word_tokenize(i):
-		temp.append(j.lower())
+	sql = """
+	SELECT filename, title, text, tokens
+	FROM html_attrs
+	"""
 
-	data.append(temp)
+	con = sqlite3.connect(DATABASE)
+	df = pd.read_sql_query(sql, con)
+	con.close()
+	return df
 
-# Create CBOW model
-model1 = gensim.models.Word2Vec(data, min_count = 1,
-							vector_size = 100, window = 5)
+def get_model():
+	model = BertModel.from_pretrained('bert-base-uncased', output_hidden_states=True)
+	tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+	return (model, tokenizer)
 
-first =     "cinnamon"
-second =    "tasty"
+def proccessSentence(tokens):
+    if len(tokens) == 0:
+        # Handle the case when the token list is empty, for example, return a default embedding or raise an exception.
+        # For demonstration purposes, we'll return a zero tensor as the default embedding.
+        return torch.zeros(768)
 
-# Print results
-print(f"Cosine similarity between '{first}' " +
-			f"and '{second}' - CBOW : ",
-	model1.wv.similarity(first, second))
+    # Ensure the token sequence length is no longer than the maximum sequence length the model can handle (512)
+    if len(tokens) > 512:
+        tokens = tokens[:512]
 
-# Create Skip Gram model
-model2 = gensim.models.Word2Vec(data, min_count = 1, vector_size = 100,
-											window = 5, sg = 1)
+    # Padding the token sequence to the maximum sequence length if it's shorter
+    if len(tokens) < 512:
+        tokens += ['[PAD]'] * (512 - len(tokens))
+
+    segmentsDocument_ids = [1] * len(tokens)
+    tokenDocument_idss = tokenizer.convert_tokens_to_ids(tokens)
+    tokensDocument_tensor = torch.tensor([tokenDocument_idss], dtype=torch.int64)
+    segmentsDocument_tensors = torch.tensor([segmentsDocument_ids], dtype=torch.int64)
+
+    with torch.no_grad():
+        outputs = model(tokensDocument_tensor, segmentsDocument_tensors)
+        hiddenDocuments_states = outputs[2]
+
+    tokenDocuments_vecs = hiddenDocuments_states[-2][0]
+    sentenceDocument_embedding = torch.mean(tokenDocuments_vecs, dim=0)
+    
+    print( json.dumps(sentenceDocument_embedding.numpy().tolist()))
+
+    return sentenceDocument_embedding.numpy().tolist()
 
 
-# Print results
+model, tokenizer = get_model()
+
+df = get_df()
+print(df["tokens"][3])
+# df["tokens"] = [json.dumps(tokenizer.tokenize(text)) for text in df["text"]]
+word_embeddings = [proccessSentence(json.loads(tokens)) for tokens in tqdm(df["tokens"])]
+df["word_embeddings"] = [json.dumps(word_embedding) for word_embedding in word_embeddings]
+print("got tokens")
 
 
-print(f"Cosine similarity between '{first}' " +
-			f"and '{second}' - Skip Gram : ",
-	model2.wv.similarity(first, second))
 
+with sqlite3.connect(DATABASE) as con:
+    df.to_sql('html_attrs', con, index=False, if_exists='replace')
