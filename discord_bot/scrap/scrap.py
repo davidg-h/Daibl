@@ -108,7 +108,7 @@ def create_content_json(path_html_files, outfile_name):
 # urls= urls_to_array("discord_bot/scrap/allUrlsFiltered.txt")          
 # download_pages(urls=urls)
 
-create_content_json("discord_bot/scrap/htmlfiles", "discord_bot/scrap/html_contents.json")
+# create_content_json("discord_bot/scrap/htmlfiles", "discord_bot/scrap/html_contents.json")
 
 # with requests.Session() as session:
 #     response = session.get("https://www.th-nuernberg.de/")

@@ -4,8 +4,8 @@ import torch
 import sqlite3
 import pandas as pd
 from scipy.spatial.distance import cosine
-from scrap.db_init import initialize_database
-from scrap.spacy_keywordextraction import extraction
+from db_init import initialize_database
+from spacy_keywordextraction import extraction
 import json
 
 DATABASE_PATH = "discord_bot/scrap/html.sqlite"
