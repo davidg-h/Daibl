@@ -8,7 +8,7 @@ import numpy as np
 from collections import Counter
 from tqdm import tqdm  # Import tqdm for progress bar
 
-from db_init import initialize_database
+from scrap.db_init import db_get_df
 
 DATABASE_PATH = "discord_bot/scrap/html.sqlite"
 
@@ -82,16 +82,8 @@ def extraction(message):
     nouns = [token.text for token in doc if token.pos_ == 'NOUN']
     entities = [ent.text for ent in doc.ents]
 
-    df = initialize_database(DATABASE_PATH)
-    
-    # Tokenize the text and add a 'tokens' column to the DataFrame
-    df['tokens'] = df['text'].apply(tokenize_text)
+    df = db_get_df("word_embeddings", ["text"])
 
-    # Calculate and add the term frequency matrix column
-    add_term_frequency_column(df)
-    calculate_tfidf(df)
-
-    
     outputs = []
     if not entities:
         print("NO ENTITIES FOUND")
