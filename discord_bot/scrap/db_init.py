@@ -1,10 +1,14 @@
 import sqlite3
 import pandas as pd
+import os
+from dotenv import load_dotenv
 
-database_path = "discord_bot/scrap/html.sqlite"
+load_dotenv()
+database_path = os.getenv("DATABASE_PATH")
 
-
-def db_get_df(tablename, coloumns):
+def db_get_df(tablename="word_embeddings", coloumns=["*"]):
+    if type(coloumns) is not list:
+        raise Exception("needs a list as argument for coloumns parameter")
     con = sqlite3.connect(database_path)
     html_df = pd.read_sql_query(f"SELECT {', '.join(coloumns)} FROM {tablename}", con)
     con.close()
