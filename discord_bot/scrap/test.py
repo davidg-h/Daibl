@@ -3,7 +3,7 @@ import torch
 import sqlite3
 import pandas as pd
 from scipy.spatial.distance import cosine
-from db_init import initialize_database
+from db_init import db_get_df
 
 
 # Lade den BERT-Tokenizer und das Modell
@@ -14,7 +14,7 @@ model = BertModel.from_pretrained('bert-base-uncased')
 database_path = "daibl-1\discord_bot\scrap\html.sqlite"
 
 # Initialisiere den DataFrame mit der Funktion aus db_init.py
-html_df = initialize_database(database_path)
+html_df = db_get_df("word_embeddings", ["filename", "title", "text", "word_embeddings"])
 
 
 # Initialisiere eine leere Liste, um Embeddings für alle Dokumente zu speichern
