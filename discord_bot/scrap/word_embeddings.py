@@ -5,14 +5,14 @@ from transformers import BertModel, BertTokenizer
 import json
 from tqdm import tqdm
 
-DATABASE = 'daibl/discord_bot/scrap/html.sqlite'
+DATABASE = '/home/neumannvi84434/Daibl/daibl/discord_bot/scrap/html.sqlite'
 
 
 def get_df():
 	
 	sql = """
 	SELECT filename, title, text, tokens
-	FROM html_attrs
+	FROM word_embeddings
 	"""
 
 	con = sqlite3.connect(DATABASE)
@@ -39,13 +39,13 @@ def proccessSentence(tokens):
     if len(tokens) < 512:
         tokens += ['[PAD]'] * (512 - len(tokens))
 
-    segmentsDocument_ids = [1] * len(tokens)
-    tokenDocument_idss = tokenizer.convert_tokens_to_ids(tokens)
-    tokensDocument_tensor = torch.tensor([tokenDocument_idss], dtype=torch.int64)
-    segmentsDocument_tensors = torch.tensor([segmentsDocument_ids], dtype=torch.int64)
+    attention_mask = [1 if token != "[PAD]" else 0  for token in tokens]
+    token_ids = tokenizer.convert_tokens_to_ids(tokens)
+    token_ids_tensor = torch.tensor([token_ids], dtype=torch.int64)
+    attetion_mask_tensor = torch.tensor([attention_mask], dtype=torch.int64)
 
     with torch.no_grad():
-        outputs = model(tokensDocument_tensor, segmentsDocument_tensors)
+        outputs = model(token_ids_tensor, attetion_mask_tensor)
         hiddenDocuments_states = outputs[2]
 
     tokenDocuments_vecs = hiddenDocuments_states[-2][0]
@@ -60,12 +60,11 @@ model, tokenizer = get_model()
 
 df = get_df()
 print(df["tokens"][3])
-# df["tokens"] = [json.dumps(tokenizer.tokenize(text)) for text in df["text"]]
 word_embeddings = [proccessSentence(json.loads(tokens)) for tokens in tqdm(df["tokens"])]
 df["word_embeddings"] = [json.dumps(word_embedding) for word_embedding in word_embeddings]
-print("got tokens")
+print("got embeddings")
 
 
 
 with sqlite3.connect(DATABASE) as con:
-    df.to_sql('html_attrs', con, index=False, if_exists='replace')
+    df.to_sql('word_embeddings', con, index=False, if_exists='replace')
