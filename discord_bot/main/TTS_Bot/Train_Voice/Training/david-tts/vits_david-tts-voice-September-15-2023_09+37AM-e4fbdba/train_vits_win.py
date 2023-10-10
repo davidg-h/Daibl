@@ -34,22 +34,22 @@ def main(name):
     config = VitsConfig(
         audio=audio_config,
         run_name=f"vits_{name}-voice",
-        batch_size=32,
-        eval_batch_size=16,
+        batch_size=4,
+        eval_batch_size=4,
         batch_group_size=5,
-        num_loader_workers=0,
-        num_eval_loader_workers=4,
+        num_loader_workers=1,
+        num_eval_loader_workers=1,
         run_eval=True,
         test_delay_epochs=-1,
         epochs=1000,
         text_cleaner="phoneme_cleaners",
         use_phonemes=True,
-        phoneme_language="de-de",
+        phoneme_language="de",
         phoneme_cache_path=os.path.join(output_path, "phoneme_cache"),
         compute_input_seq_cache=True,
         print_step=25,
         print_eval=True,
-        mixed_precision=True,
+        mixed_precision=False,
         output_path=output_path,
         datasets=[dataset_config],
         cudnn_benchmark=False,
@@ -109,12 +109,15 @@ def copy_dataset():
         shutil.rmtree(dst)
 
     shutil.copytree(
-        #src="discord_bot\main\TTS_Bot\Train_Voice\Dataset_Generation\dataset",
-        src="daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset", # th-server
+        src="discord_bot\main\TTS_Bot\Train_Voice\Dataset_Generation\dataset",
         dst=dst,
     )
     print("Dataset Copied Successfully")
 
 
-_ = copy_dataset() if input("Copy dataset from the 'Dataset_Generation' folder? (y/n):   ") == 'y' else print("")
-main(input("Enter name for voice model (Ex:David-Model):"))
+from multiprocessing import Process, freeze_support
+
+if __name__ == "__main__":
+    freeze_support()  # needed for Windows
+    copy_dataset()
+    main(input("Enter name for voice model (Ex:David-Model):"))
