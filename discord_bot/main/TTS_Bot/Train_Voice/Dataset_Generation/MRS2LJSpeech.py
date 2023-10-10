@@ -177,8 +177,8 @@ def cleanup():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mrs_dir", required=True)
-    parser.add_argument("--ffmpeg", required=False, default=False)
+    parser.add_argument("--mrs_dir", required=False, default='/mimic-recording-studio-0.1.1')
+    parser.add_argument("--ffmpeg", required=False, default=True)
     parser.add_argument(
         "--name", required=False, default=input("Enter name for dataset:")
     )
