@@ -59,3 +59,5 @@ python --version
 ```sh
 pip install -r requirements.txt
 ```
+
+https://janakiev.com/blog/jupyter-virtual-envs/

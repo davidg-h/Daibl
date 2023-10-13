@@ -60,7 +60,7 @@ def main(name):
             "Dieser Kuchen ist großartig. Er ist so lecker und feucht.",
             "Vor dem 22. November 1963.",
         ],
-        eval_split_size=0.14285714285714285, # assert error 'eval_split_size' parameter to a minimum of 0.14285714285714285
+        #eval_split_size=0.14285714285714285, # assert error 'eval_split_size' parameter to a minimum of 0.14285714285714285
     )
 
     # INITIALIZE THE AUDIO PROCESSOR

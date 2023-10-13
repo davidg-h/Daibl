@@ -20,3 +20,9 @@ You have two options:
 
 1. (Recommended) Download docker and run the recording tool in a docker container. Go to the directory with the tool in it and start docker
 2. The issue involves audio files not being safed by default. It could be because of missing ffmpeg support. Download and set ffmpeg in PATH in the environment variables and try again.
+
+Folder Structure for Training: (.wav files must be in mono, 22kHz frequency [22050 Hz], 16 bit)
+dataset
+-----wavs
+----------audio.wav
+-----metadata.cvs
