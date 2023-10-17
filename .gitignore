@@ -12,6 +12,9 @@
 discord_bot/scrap/data/*
 discord_bot/scrap/data.zip
 
+# database - it will take up to much space to track it in source control
+discord_bot/scrap/html.sqlite
+
 # venv
 bin/*
 pyvenv.cfg
