@@ -21,11 +21,11 @@ def main(name:str):
     ----------
     name (str): Name of your model
     '''
-    output_path = os.path.join("/home/nguyenda81452/itp/daibl/assets/models/tts-models", name) # folder where model is saved, change accordingly
+    output_path = os.path.join("/nfs/scratch/students/nguyenda81452/itp/daibl/assets/models/tts-models", name) # folder where model is saved, change accordingly
     dataset_config = BaseDatasetConfig(
             formatter="thorsten",
             meta_file_train="metadata.csv",
-            path="/home/nguyenda81452/itp/daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_David_dataset" # Change to your dataset
+            path="/nfs/scratch/students/nguyenda81452/itp/daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_David_dataset" # Change to your dataset
         )
 
     audio_config = VitsAudioConfig(
