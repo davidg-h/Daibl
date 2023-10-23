@@ -5,7 +5,7 @@ import wave
 
 from TTS.api import TTS
 
-class Voice:
+class Voice: # https://tts.readthedocs.io/en/dev/inference.html for own model
     """ TTS module """
     def __init__(self):
         # List available 🐸TTS models and choose the first one
