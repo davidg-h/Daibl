@@ -8,7 +8,6 @@ from scrap.db_init import db_get_df
 # from scrap.spacy_keywordextraction import extraction
 import json
 
-DATABASE_PATH = "discord_bot/scrap/html.sqlite"
 
 # best 5 documents as context
 def get_query_embeddings(message):
