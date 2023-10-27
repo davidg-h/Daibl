@@ -14,16 +14,15 @@ def get_model():
     return model, tokenizer
 
 
-def proccessSentence(tokens, model, tokenizer):
-    if len(tokens) == 0:
+def proccessSentence(token_ids, model, tokenizer):
+    if len(token_ids) == 0:
         # Handle the case when the token list is empty, for example, return a default embedding or raise an exception.
         # For demonstration purposes, we'll return a zero tensor as the default embedding.
         return torch.zeros(768)
 
-    tokens = ["CLS"] + tokens + ["SEP"]
+    token_ids = [101] + token_ids + [102]
 
-    attention_mask = [1 if token != "[PAD]" else 0  for token in tokens]
-    token_ids = tokenizer.convert_tokens_to_ids(tokens)
+    attention_mask = [1 if token_id != 0 else 0  for token_id in token_ids]
     token_ids_tensor = torch.tensor([token_ids], dtype=torch.int64)
     attetion_mask_tensor = torch.tensor([attention_mask], dtype=torch.int64)
 
@@ -56,13 +55,13 @@ def proccessSentence(tokens, model, tokenizer):
     #concat last four layers
     embed_5 = torch.cat([layer_vecs[i] for i in [-1,-2,-3,-4]], dim=0)
     
-
+    print(embed_1[3], token_ids[3])
     return embed_1, embed_2, embed_3, embed_4, embed_5
 
 
 def create_and_save_embeddings(chunk_count, chunk_id):
     model, tokenizer = get_model()
-    df = db_get_df("chunk_word_embeddings", ["filename", "chunk_text", "chunk_id", "chunk_tokens_json"])
+    df = db_get_df("chunk_embeddings", ["filename", "chunk_text", "chunk_id", "chunk_tokens_json"])
 
     workers = chunk_count
     chunk_size = len(df) // workers
@@ -77,7 +76,7 @@ def create_and_save_embeddings(chunk_count, chunk_id):
 
         print(f"got {col_name}")
 
-    db_save_df(my_chunk, f'chunk_word_embeddings_{chunk_id}')
+    # db_save_df(my_chunk, f'chunk_word_embeddings_{chunk_id}')
 
 
 def main():
