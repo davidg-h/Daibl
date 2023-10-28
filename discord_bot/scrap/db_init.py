@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 database_path = os.getenv("DATABASE_PATH")
 
-def db_get_df(tablename="word_embeddings", coloumns=["*"]):
+def db_get_df(tablename="chunk_embeddings", coloumns=["*"]):
     if type(coloumns) is not list:
         raise Exception("needs a list as argument for coloumns parameter")
     con = sqlite3.connect(database_path)

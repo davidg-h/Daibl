@@ -5,10 +5,9 @@ import pandas as pd
 from scipy.spatial.distance import cosine
 from scrap.question_embedding import get_5_most_similar_documents
 from scrap.db_init import db_get_df
-from scrap.spacy_keywordextraction import extraction
+# from scrap.spacy_keywordextraction import extraction
 import json
 
-DATABASE_PATH = "discord_bot/scrap/html.sqlite"
 
 # best 5 documents as context
 def get_query_embeddings(message):

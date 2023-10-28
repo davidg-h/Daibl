@@ -5,11 +5,8 @@ from transformers import BertModel, BertTokenizer
 import json
 from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor
-from scrap.db_init import db_get_df
+from scrap.db_init import db_get_df, db_save_df
 import argparse
-
-DATABASE = '/home/neumannvi84434/Daibl/daibl/discord_bot/scrap/html.sqlite'
-
 
 def get_model():
     model = BertModel.from_pretrained('bert-base-uncased', output_hidden_states=True)
@@ -17,66 +14,70 @@ def get_model():
     return model, tokenizer
 
 
-def proccessSentence(tokens, model, tokenizer):
-    if len(tokens) == 0:
+def proccessSentence(token_ids, model, tokenizer):
+    if len(token_ids) == 0:
         # Handle the case when the token list is empty, for example, return a default embedding or raise an exception.
         # For demonstration purposes, we'll return a zero tensor as the default embedding.
         return torch.zeros(768)
 
-    tokens = ["CLS"] + tokens + ["SEP"]
+    token_ids = [101] + token_ids + [102]
 
-    attention_mask = [1 if token != "[PAD]" else 0  for token in tokens]
-    token_ids = tokenizer.convert_tokens_to_ids(tokens)
+    attention_mask = [1 if token_id != 0 else 0  for token_id in token_ids]
     token_ids_tensor = torch.tensor([token_ids], dtype=torch.int64)
     attetion_mask_tensor = torch.tensor([attention_mask], dtype=torch.int64)
 
     with torch.no_grad():
         outputs = model(token_ids_tensor, attetion_mask_tensor)
-        hiddenDocuments_states = outputs[2]
+        hidden_states = outputs[2]
 
-    tokenDocuments_vecs = hiddenDocuments_states[-2][0]
-    sentenceDocument_embedding = torch.mean(tokenDocuments_vecs, dim=0)
+    # stack the layer list 
+    token_embeddings = torch.stack(hidden_states, dim=0)
+    # remove the batches dim
+    token_embeddings = torch.squeeze(token_embeddings, dim=1)
+    # Swap dimensions 0 and 1.
+    token_embeddings = token_embeddings.permute(1,0,2)
+    # average all token embeds
+    layer_vecs = torch.mean(token_embeddings, dim=0)
 
-    # # initial embeddings can be taken from 0th layer of hidden states
-    # word_embed_2 = hidden_states[0]
 
-    # # sum of all hidden states
-    # word_embed_3 = torch.stack(hidden_states).sum(0)
+    # last layer
+    embed_1 = layer_vecs[12]
 
-    # # sum of second to last layer
-    # word_embed_4 = torch.stack(hidden_states[2:]).sum(0) 
+    # Calculate the average of layer 3 to 13
+    embed_2 = torch.mean(layer_vecs[2:], dim=0)
 
-    # # sum of last four layer
-    # word_embed_5 = torch.stack(hidden_states[-4:]).sum(0) 
+    # sum of layer 3 to 13
+    embed_3 = layer_vecs[2:].sum(0)
 
-    # #concat last four layers
-    # word_embed_6 = torch.cat([hidden_states[i] for i in [-1,-2,-3,-4]], dim=-1)
+    # sum of last four layer
+    embed_4 = layer_vecs[-4:].sum(0) 
+
+    #concat last four layers
+    embed_5 = torch.cat([layer_vecs[i] for i in [-1,-2,-3,-4]], dim=0)
     
-
-    return sentenceDocument_embedding
-
-
-def create_and_save_embeddings_chunk(chunk_df, model, tokenizer):
-    word_embeddings = [proccessSentence(json.loads(tokens), model, tokenizer) for tokens in tqdm(chunk_df["chunk_tokens_json"])]
-    chunk_df["chunk_word_embeddings"] = [json.dumps(word_embedding.tolist()) for word_embedding in word_embeddings]
-    return chunk_df
+    print(embed_1[3], token_ids[3])
+    return embed_1, embed_2, embed_3, embed_4, embed_5
 
 
 def create_and_save_embeddings(chunk_count, chunk_id):
     model, tokenizer = get_model()
-    df = db_get_df("chunk_word_embeddings", ["filename", "chunk_text", "chunk_id", "chunk_tokens_json"])
+    df = db_get_df("chunk_embeddings", ["filename", "chunk_text", "chunk_id", "chunk_tokens_json"])
 
     workers = chunk_count
     chunk_size = len(df) // workers
     offset = chunk_count * chunk_id
-    my_chunk = df[offset:offset+chunk_size] 
+    my_chunk = df.iloc[offset:offset+chunk_size].copy()  # Create a copy to avoid SettingWithCopyWarning
 
-    word_embeddings = [proccessSentence(json.loads(tokens), model, tokenizer) for tokens in tqdm(my_chunk["chunk_tokens_json"])]
-    my_chunk["chunk_word_embeddings"] = [json.dumps(word_embedding.tolist()) for word_embedding in word_embeddings]
-    print("got embeddings")
+    embed_matrix = [proccessSentence(json.loads(tokens), model, tokenizer) for tokens in tqdm(my_chunk["chunk_tokens_json"])]
 
-    with sqlite3.connect(DATABASE) as con:
-        df.to_sql(f'chunk_word_embeddings_{chunk_id}', con, index=False, if_exists='replace')
+    for i in range(5):
+        col_name = f"chunk_word_embeddings_{i+1}"
+        my_chunk[col_name] = [json.dumps(word_embedding[i].tolist()) for word_embedding in embed_matrix]
+
+        print(f"got {col_name}")
+
+    # db_save_df(my_chunk, f'chunk_word_embeddings_{chunk_id}')
+
 
 def main():
     
@@ -86,7 +87,6 @@ def main():
 
     args = parser.parse_args()
 
-    
     create_and_save_embeddings(args.chunk_count, args.chunk_id)
 
 
