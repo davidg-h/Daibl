@@ -72,4 +72,4 @@ git branch -M main
 
 ## License
 
-For open source projects, say how it is licensed.
+Click [this](/LICENSE) to read the license.
