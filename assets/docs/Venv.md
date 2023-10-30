@@ -4,7 +4,7 @@
 -> | [Back](/README.md)
 -|-
 
-1. Step: [Install Python 3.8.10](https://www.python.org/downloads/release/python-3810/)
+1. Step: [Install min. Python 3.8.10](https://www.python.org/downloads/release/python-3810/)
 
 2. Step: Create virtual environment from requirements.txt (vscode)
 
@@ -54,8 +54,22 @@ python --version
 # out: Python 3.8.10
 ```
 
-### To run the project without the virtual environment get these package/dependencies
+### Install get package/dependencies in virtuel env
 
 ```sh
 pip install -r requirements.txt
 ```
+
+## CLI-way
+
+Install a python version like in step 1. Pick one of the options below to create your virtual env
+```sh
+python -m venv my-venv # Creates virtual env with the name my-venv. Version of venv will depend on system python version
+
+python3.9 -m venv my-venv # Creates venv with python version 3.9 named my-venv
+
+source my-venv/bin/activate # activates the venv
+deactivate # to deactivate venv
+```
+
+Readings: [Virtual env in jupyter](https://janakiev.com/blog/jupyter-virtual-envs/), [Create venv with different versions](https://stackoverflow.com/questions/70422866/how-to-create-a-venv-with-a-different-python-version)
