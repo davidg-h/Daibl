@@ -31,3 +31,6 @@ tmp/
 logs
 __pycache__
 build/
+
+# exclude
+!*package*.json
