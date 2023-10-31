@@ -24,7 +24,7 @@ def main(name:str):
     dataset_config = BaseDatasetConfig(
             formatter="ljspeech",
             meta_file_train="metadata.csv",
-            path="/nfs/scratch/students/nguyenda81452/itp/daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_David_dataset" # Change to your dataset
+            path="/nfs/scratch/students/nguyenda81452/itp/daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_david-v2_dataset" # Change to your dataset
         )
 
     audio_config = VitsAudioConfig(
@@ -107,4 +107,4 @@ def main(name:str):
     trainer.fit()
     print("Fertig!")
 
-main("david-tts-v2") # Change the name of your model
+main("david-tts-v3") # Change the name of your model
