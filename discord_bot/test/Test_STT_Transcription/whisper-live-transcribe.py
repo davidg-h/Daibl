@@ -13,37 +13,62 @@ from tempfile import NamedTemporaryFile
 from time import sleep
 from sys import platform
 
-class add_path():
+
+class add_path:
     def __init__(self, path):
         self.path = path
 
     def __enter__(self):
-        self.old_path = os.environ['PATH']
-        os.environ['PATH'] = self.path + os.pathsep + self.old_path
+        self.old_path = os.environ["PATH"]
+        os.environ["PATH"] = self.path + os.pathsep + self.old_path
 
     def __exit__(self, exc_type, exc_value, traceback):
-        os.environ['PATH'] = self.old_path
+        os.environ["PATH"] = self.old_path
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", default="medium", help="Model to use",
-                        choices=["tiny", "base", "small", "medium", "large"])
-    parser.add_argument("--non_english", action='store_true', default=True,
-                        help="Don't use the english model.")
-    parser.add_argument("--energy_threshold", default=1000,
-                        help="Energy level for mic to detect.", type=int)
-    parser.add_argument("--record_timeout", default=2,
-                        help="How real time the recording is in seconds.", type=float)
-    parser.add_argument("--phrase_timeout", default=3,
-                        help="How much empty space between recordings before we "
-                             "consider it a new line in the transcription.", type=float)  
-    if 'linux' in platform:
-        parser.add_argument("--default_microphone", default='pulse',
-                            help="Default microphone name for SpeechRecognition. "
-                                 "Run this with 'list' to view available Microphones.", type=str)
+    parser.add_argument(
+        "--model",
+        default="small",
+        help="Model to use",
+        choices=["tiny", "base", "small", "medium", "large"],
+    )
+    parser.add_argument(
+        "--non_english",
+        action="store_true",
+        default=True,
+        help="Don't use the english model.",
+    )
+    parser.add_argument(
+        "--energy_threshold",
+        default=1000,
+        help="Energy level for mic to detect.",
+        type=int,
+    )
+    parser.add_argument(
+        "--record_timeout",
+        default=2,
+        help="How real time the recording is in seconds.",
+        type=float,
+    )
+    parser.add_argument(
+        "--phrase_timeout",
+        default=3,
+        help="How much empty space between recordings before we "
+        "consider it a new line in the transcription.",
+        type=float,
+    )
+    if "linux" in platform:
+        parser.add_argument(
+            "--default_microphone",
+            default="pulse",
+            help="Default microphone name for SpeechRecognition. "
+            "Run this with 'list' to view available Microphones.",
+            type=str,
+        )
     args = parser.parse_args()
-    
+
     # The last time a recording was retreived from the queue.
     phrase_time = None
     # Current raw audio bytes.
@@ -55,15 +80,15 @@ def main():
     recorder.energy_threshold = args.energy_threshold
     # Definitely do this, dynamic energy compensation lowers the energy threshold dramtically to a point where the SpeechRecognizer never stops recording.
     recorder.dynamic_energy_threshold = False
-    
-    # Important for linux users. 
+
+    # Important for linux users.
     # Prevents permanent application hang and crash by using the wrong Microphone
-    if 'linux' in platform:
+    if "linux" in platform:
         mic_name = args.default_microphone
-        if not mic_name or mic_name == 'list':
+        if not mic_name or mic_name == "list":
             print("Available microphone devices are: ")
             for index, name in enumerate(sr.Microphone.list_microphone_names()):
-                print(f"Microphone with name \"{name}\" found")   
+                print(f'Microphone with name "{name}" found')
             return
         else:
             for index, name in enumerate(sr.Microphone.list_microphone_names()):
@@ -72,7 +97,7 @@ def main():
                     break
     else:
         source = sr.Microphone(sample_rate=16000)
-        
+
     # Load / Download model
     model = args.model
     if args.model != "large" and not args.non_english:
@@ -83,12 +108,12 @@ def main():
     phrase_timeout = args.phrase_timeout
 
     temp_file = NamedTemporaryFile().name
-    transcription = ['']
-    
+    transcription = [""]
+
     with source:
         recorder.adjust_for_ambient_noise(source)
 
-    def record_callback(_, audio:sr.AudioData) -> None:
+    def record_callback(_, audio: sr.AudioData) -> None:
         """
         Threaded callback function to recieve audio data when recordings finish.
         audio: An AudioData containing the recorded bytes.
@@ -99,7 +124,9 @@ def main():
 
     # Create a background thread that will pass us raw audio bytes.
     # We could do this manually but SpeechRecognizer provides a nice helper.
-    recorder.listen_in_background(source, record_callback, phrase_time_limit=record_timeout)
+    recorder.listen_in_background(
+        source, record_callback, phrase_time_limit=record_timeout
+    )
 
     # Cue the user that we're ready to go.
     print("Model loaded.\nLive-Transcription started. Please say something.\n")
@@ -112,7 +139,9 @@ def main():
                 phrase_complete = False
                 # If enough time has passed between recordings, consider the phrase complete.
                 # Clear the current working audio buffer to start over with the new data.
-                if phrase_time and now - phrase_time > timedelta(seconds=phrase_timeout):
+                if phrase_time and now - phrase_time > timedelta(
+                    seconds=phrase_timeout
+                ):
                     last_sample = bytes()
                     phrase_complete = True
                 # This is the last time we received new audio data from the queue.
@@ -124,16 +153,21 @@ def main():
                     last_sample += data
 
                 # Use AudioData to convert the raw data to wav data.
-                audio_data = sr.AudioData(last_sample, source.SAMPLE_RATE, source.SAMPLE_WIDTH)
+                audio_data = sr.AudioData(
+                    last_sample, source.SAMPLE_RATE, source.SAMPLE_WIDTH
+                )
                 wav_data = io.BytesIO(audio_data.get_wav_data())
 
                 # Write wav data to the temporary file as bytes.
-                with open(temp_file, 'w+b') as f:
+                with open(temp_file, "w+b") as f:
                     f.write(wav_data.read())
 
                 # Read the transcription.
-                result = audio_model.transcribe(temp_file, fp16=torch.cuda.is_available())
-                text = result['text'].strip()
+                with add_path(r"assets\\ffmpeg-6.0-full_build\\bin"):
+                    result = audio_model.transcribe(
+                        temp_file, fp16=torch.cuda.is_available()
+                    )
+                text = result["text"].strip()
 
                 # If we detected a pause between recordings, add a new item to our transcripion.
                 # Otherwise edit the existing one.
@@ -143,21 +177,21 @@ def main():
                     transcription[-1] = text
 
                 # Clear the console to reprint the updated transcription.
-                os.system('cls' if os.name=='nt' else 'clear')
+                os.system("cls" if os.name == "nt" else "clear")
                 for line in transcription:
                     print(line)
                 # Flush stdout.
-                print('', end='', flush=True)
+                print("", end="", flush=True)
 
                 # Infinite loops are bad for processors, must sleep.
                 sleep(0.25)
-        except KeyboardInterrupt: # ctrl-c
+        except KeyboardInterrupt:  # ctrl-c
             break
-        
+
     print("\n\nTranscription:")
     for line in transcription:
         print(line)
 
-with add_path(r'discord_bot\\TTS_Bot\\ffmpeg-6.0-full_build\\bin'):
-    if __name__ == "__main__":
-        main()
+
+if __name__ == "__main__":
+    main()

@@ -4,7 +4,7 @@
 -> | [Back](/README.md)
 -|-
 
-1. Step: [Install min. Python 3.8.10](https://www.python.org/downloads/release/python-3810/)
+1. Step: [Install min. Python 3.9](https://www.python.org/downloads/release/python-3913/)
 
 2. Step: Create virtual environment from requirements.txt (vscode)
 
@@ -14,7 +14,15 @@
 
     ![alternative text](docs_images/Screenshot-virtualenv.png)
 
-4. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
+4. Step: Activate the virtual environment and update pip:
+
+    In the terminal:
+
+        ```sh
+        pip install pip setuptools wheel --upgrade
+        ```
+
+5. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
 
     In the terminal:
 

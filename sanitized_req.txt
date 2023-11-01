@@ -1,0 +1,13 @@
+pip
+setuptools
+wheel
+python-dotenv
+discord.py[voice]
+ffmpeg-python
+langchain
+pyaudio
+SpeechRecognition
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch
+git+https://github.com/openai/whisper.git
+-e assets/TTS-dev/
