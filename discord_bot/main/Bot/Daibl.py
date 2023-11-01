@@ -5,6 +5,7 @@ from discord.ext import commands
 
 from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
+from STT.Hotword import detection
 from STT.LiveTranscripe import LiveTranscription
 import STT.LiveTranscripe_Module as LTM
 
@@ -75,6 +76,13 @@ class Daibl(commands.Bot):
             """ greeting author """
             print(ctx)
             await ctx.channel.send("Hello" + " " + ctx.author.name)
+        
+        @self.command(name="hotword", pass_context=True)
+        async def hotword(ctx:commands.Context):
+            """ hotword detection """
+            if detection.hw_detection():  
+                 await ctx.channel.send("Hotword accepted")
+        
         
         @self.command(name="join", pass_context=True)
         async def join(ctx:commands.Context):
