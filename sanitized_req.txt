@@ -6,6 +6,7 @@ discord.py[voice]
 ffmpeg-python
 langchain
 pyaudio
+onnxruntime
 SpeechRecognition
 --extra-index-url https://download.pytorch.org/whl/cu116
 torch
