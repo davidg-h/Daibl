@@ -18,8 +18,8 @@ class Voice:
 
         # Init TTS
         self.tts = TTS(
-            model_path="assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/best_model_557276.pth",
-            config_path="assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/config.json",
+            model_path="daibl/assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/best_model_557276.pth",
+            config_path="daibl/assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/config.json",
         ).to(device)
 
     # Run TTS
@@ -36,7 +36,7 @@ class Voice:
 
         vc.play(
             discord.FFmpegPCMAudio(
-                executable="assets/ffmpeg-6.0-full_build/bin/ffmpeg.exe",  # (.exe is Windows)
+                executable="daibl/assets/ffmpeg-6.0-full_build/bin/ffmpeg.exe",  # (.exe is Windows)
                 # executable= cwd + "/app/assets/ffmpeg", # Linux binary executeable for ffmpeg
                 source=cwd + "/output.wav",
             ),

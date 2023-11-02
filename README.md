@@ -37,7 +37,7 @@ Create a .env file in the **discord_bot\main** directory and set the environment
 # .env example
 DISCORD_TOKEN=<your_token>
 DISCORD_GUILD=<guild-or-server_name>
-MODEL_PATH=<path/to/model>
+PROJECT_PATH=<path/to/project> # Full path to project to simplify imports (if you want to read further into this google Python Path)
 ```
 
 ## For Pair-Programming

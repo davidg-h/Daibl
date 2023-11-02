@@ -30,10 +30,6 @@ output_dir_audio = ""
 output_dir_audio_temp = ""
 output_dir_speech = ""
 
-# The line `sys.path.insert(0, "discord_bot/main")` is adding the directory "discord_bot/main" to the
-# beginning of the Python module search path. This allows the script to import modules from that directory.
-# Used only when you run the script directly and not from main.py
-sys.path.insert(0, "discord_bot/main")
 
 # Create folders needed for ljspeech
 def create_folders(name):
@@ -181,7 +177,11 @@ def cleanup():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mrs_dir", required=False, default='assets/rec-tool/mimic-recording-studio-0.1.1')
+    parser.add_argument(
+        "--mrs_dir",
+        required=False,
+        default="assets/rec-tool/mimic-recording-studio-0.1.1",
+    )
     parser.add_argument("--ffmpeg", required=False, default=True)
     parser.add_argument(
         "--name", required=False, default=input("Enter name for dataset:")
@@ -206,7 +206,14 @@ def main():
 
     print("\n\033[38;5;86;1m✔\033[0m COMPLETE【ツ】\n")
 
-from util.Environment import add_path
+
+# Begin of script execution
+from dotenv import load_dotenv
+
+load_dotenv()
+PROJECT_PATH = os.getenv("PROJECT_PATH")
+sys.path.append(PROJECT_PATH)
+from discord_bot.main.util.Environment import add_path
 
 if __name__ == "__main__":
     with add_path("assets/ffmpeg-6.0-full_build/bin"):

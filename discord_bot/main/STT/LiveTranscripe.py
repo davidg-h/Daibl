@@ -220,8 +220,14 @@ class LiveTranscription:
                         f.write(wav_data.read())
 
                     # Read the transcription.
-                    with add_path("assets/ffmpeg-6.0-full_build/bin"):
-                        with torch.cuda.device("cuda:0"):
+                    with add_path("daibl/assets/ffmpeg-6.0-full_build/bin"):
+                        if torch.cuda.is_available():
+                            with torch.cuda.device("cuda:0"):
+                                result = audio_model.transcribe(
+                                    temp_file.name, fp16=torch.cuda.is_available()
+                                )
+                        else:
+                            print("no cuda device available")
                             result = audio_model.transcribe(
                                 temp_file.name, fp16=torch.cuda.is_available()
                             )
@@ -253,7 +259,7 @@ class LiveTranscription:
                 break
 
         # stops background thread of audio recording
-        stop_listening(True)
+        # stop_listening(True)
         await channel.send("Live-Transcription ended", delete_after=4)
 
         print("\n\nTranscription:")

@@ -1,14 +1,18 @@
 pip
 setuptools
 wheel
+
 python-dotenv
+-e assets/TTS-dev/
 discord.py[voice]
 ffmpeg-python
 langchain
 pyaudio
 onnxruntime
 SpeechRecognition
---extra-index-url https://download.pytorch.org/whl/cu116
-torch
 git+https://github.com/openai/whisper.git
--e assets/TTS-dev/
+
+--extra-index-url https://download.pytorch.org/whl/cu121 # if necessary change to the cuda version needed
+torch
+torchaudio
+torchvision 
