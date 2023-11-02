@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 from trainer import Trainer, TrainerArgs
 
@@ -9,23 +10,31 @@ from TTS.tts.models.vits import Vits, VitsAudioConfig
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 
+load_dotenv()
 
-def main(name:str):
-    '''
+
+def main(name: str):
+    """
     Setup and start training/fine-tuning of Model. Look up the docs to restart training at a checkpoint.
-    
+
     ...
-    
+
     Parameters
     ----------
     name (str): Name of your model
-    '''
-    output_path = os.path.join("/nfs/scratch/students/nguyenda81452/itp/daibl/assets/models/tts-models", name) # folder where model is saved, change accordingly
+    """
+    PROJECT_PATH = os.getenv("PROJECT_PATH")
+    output_path = os.path.join(
+        PROJECT_PATH, "assets/models/tts-models", name
+    )  # folder where model is saved, change accordingly
     dataset_config = BaseDatasetConfig(
-            formatter="ljspeech",
-            meta_file_train="metadata.csv",
-            path="/nfs/scratch/students/nguyenda81452/itp/daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_david-v2_dataset" # Change to your dataset
-        )
+        formatter="ljspeech",
+        meta_file_train="metadata.csv",
+        path=os.path.join(
+            PROJECT_PATH,
+            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_david-v2_dataset",  # Change to your dataset
+        ),
+    )
 
     audio_config = VitsAudioConfig(
         sample_rate=22050,
@@ -67,7 +76,7 @@ def main(name:str):
         lr=0.00001,
         lr_gen=0.00001,
         lr_disc=0.00001
-        #eval_split_size=0.14285714285714285, # assert error 'eval_split_size' parameter to a minimum of 0.14285714285714285
+        # eval_split_size=0.14285714285714285, # assert error 'eval_split_size' parameter to a minimum of 0.14285714285714285
     )
 
     # INITIALIZE THE AUDIO PROCESSOR
@@ -107,4 +116,5 @@ def main(name:str):
     trainer.fit()
     print("Fertig!")
 
-main("david-tts-v3") # Change the name of your model
+
+main("david-tts-v3")  # Change the name of your model

@@ -30,6 +30,7 @@ class Daibl(commands.Bot):
         guild_id: int,
         modelCommunicator: ModelCommunicator,
         voice: Voice,
+        PROJECT_PATH: str,
     ):
         commands.Bot.__init__(
             self,
@@ -40,7 +41,7 @@ class Daibl(commands.Bot):
         self.guild_id = guild_id
         self.modelCommunicator = modelCommunicator
         self.voice = voice
-        self.stt = LiveTranscription()
+        self.stt = LiveTranscription(PROJECT_PATH=PROJECT_PATH)
 
         self.vc = None
         self.add_bot_commands()
@@ -88,12 +89,11 @@ class Daibl(commands.Bot):
             await ctx.channel.send("Hello" + " " + ctx.author.name)
 
         @self.command(name="hotword", pass_context=True)
-        async def hotword(ctx:commands.Context):
-            """ hotword detection """
-            if detection.hw_detection():  
-                 await ctx.channel.send("Hotword accepted")
-        
-        
+        async def hotword(ctx: commands.Context):
+            """hotword detection"""
+            if detection.hw_detection():
+                await ctx.channel.send("Hotword accepted")
+
         @self.command(name="join", pass_context=True)
         async def join(ctx: commands.Context):
             """join voice channel"""

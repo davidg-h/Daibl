@@ -41,6 +41,7 @@ class LiveTranscription:
 
     def __init__(
         self,
+        PROJECT_PATH: str,
         model="medium",
         non_english=True,
         energy_threshold: int = 1000,
@@ -48,6 +49,7 @@ class LiveTranscription:
         phrase_timeout: float = 3,
         default_microphone="pulse",
     ):
+        self.PROJECT_PATH = PROJECT_PATH
         self.cwd = os.path.dirname(__file__)
         self.tmp_dir = os.path.join(self.cwd, "tmp")
 
@@ -220,7 +222,11 @@ class LiveTranscription:
                         f.write(wav_data.read())
 
                     # Read the transcription.
-                    with add_path("daibl/assets/ffmpeg-6.0-full_build/bin"):
+                    with add_path(
+                        os.path.join(
+                            self.PROJECT_PATH, "assets/ffmpeg-6.0-full_build/bin"
+                        )
+                    ):
                         if torch.cuda.is_available():
                             with torch.cuda.device("cuda:0"):
                                 result = audio_model.transcribe(

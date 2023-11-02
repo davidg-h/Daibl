@@ -10,7 +10,8 @@ from TTS.api import TTS
 class Voice:
     """TTS module"""
 
-    def __init__(self):
+    def __init__(self, PROJECT_PATH: str):
+        self.PROJECT_PATH = PROJECT_PATH
         # Get device
         device = "cuda" if torch.cuda.is_available() else "cpu"
         # List available 🐸TTS models
@@ -18,8 +19,14 @@ class Voice:
 
         # Init TTS
         self.tts = TTS(
-            model_path="daibl/assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/best_model_557276.pth",
-            config_path="daibl/assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/config.json",
+            model_path=os.path.join(
+                self.PROJECT_PATH,
+                "assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/best_model_557276.pth",
+            ),
+            config_path=os.path.join(
+                self.PROJECT_PATH,
+                "assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/config.json",
+            ),
         ).to(device)
 
     # Run TTS
@@ -36,8 +43,11 @@ class Voice:
 
         vc.play(
             discord.FFmpegPCMAudio(
-                executable="daibl/assets/ffmpeg-6.0-full_build/bin/ffmpeg.exe",  # (.exe is Windows)
-                # executable= cwd + "/app/assets/ffmpeg", # Linux binary executeable for ffmpeg
+                executable=os.path.join(
+                    self.PROJECT_PATH,
+                    "assets/ffmpeg-6.0-full_build/bin/ffmpeg.exe",  # (.exe is Windows)
+                ),
+                # executable= os.path.join(self.PROJECT_PATH, "assets/ffmpeg"), # Linux binary executeable for ffmpeg
                 source=cwd + "/output.wav",
             ),
             after=lambda e: print("done"),
