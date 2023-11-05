@@ -75,6 +75,8 @@ Install a python version like in step 1. Pick one of the options below to create
 python -m venv my-venv # Creates virtual env with the name my-venv. Version of venv will depend on system python version
 
 python3.9 -m venv my-venv # Creates venv with python version 3.9 named my-venv
+# alternative
+py -3.9 -m venv c:\path\to\wherever\you\want\it # example: py -3.9 -m venv my-venv
 
 source my-venv/bin/activate # activates the venv
 deactivate # to deactivate venv
