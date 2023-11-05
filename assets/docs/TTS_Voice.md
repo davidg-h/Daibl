@@ -41,7 +41,7 @@ The explanation of the ljspeech structure and how to generate it from the data r
 ***$`\textcolor{red}{\text{At your own risk:}}`$**<br>
 You can also record the audio data on your own (without the tool mimic-recording-studio) if you follow the format and folder structure above.<br> 
 It is recommended to install the free software audacity from <https://www.audacityteam.org> <br> 
-**$`\textcolor{red}{\text{Caution: Dont´t download the software from audacity.de - the software could be compromised with malware}}`$ ***
+**$`\textcolor{red}{\text{Caution: Dont´t download the software from audacity.de - the software could be compromised with malware}}`$***
 
 ## Train/Finetune model
 
