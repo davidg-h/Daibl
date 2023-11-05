@@ -8,9 +8,9 @@
 
 You will need following requirements to make training/finetuning possible and easier:
 
-- [mimic-recording-studio](https://github.com/MycroftAI/mimic-recording-studio): recording tool specialised for tts data generation (a version is already in daibl/assests/rec-tool/). Read the [remarks](#mimic-recording-studio-remarks) first before using it.
+- [mimic-recording-studio](https://github.com/MycroftAI/mimic-recording-studio): recording tool specialised for tts data generation (a version is already in $`\textcolor{blue}{\text{daibl/assests/rec-tool/}}`$). Read the [remarks](#mimic-recording-studio-remarks) first before using it.
   - [setup of mimic-recording-studio](https://www.youtube.com/watch?v=tAuPAPdahvA&list=PL19C7uchWZeo-j9mUmYeVfgzbP3vHSHU-&index=2)
-- [coqui-ai TTS](https://github.com/coqui-ai/TTS): repo to set up TTS and train/finetune own models (a version is already in daibl/assests/TTS-dev/)
+- [coqui-ai TTS](https://github.com/coqui-ai/TTS): repo to set up TTS and train/finetune own models (a version is already in $`\textcolor{blue}{\text{daibl/assests/TTS-dev/}}`$)
   - [setup of coqui-ai TTS: Follow the Installation chapter](https://tts.readthedocs.io/en/dev/tutorial_for_nervous_beginners.html)
   - [alternative tutorial](https://www.youtube.com/watch?v=fXwVn02OesA&list=PL19C7uchWZeo-j9mUmYeVfgzbP3vHSHU-&index=5)
 
@@ -28,20 +28,20 @@ The dataset follows the ljspeech folder structure:
 ```
 
 The explanation of the ljspeech structure and how to generate it from the data recorded with mimic-recording-studio can be found [here](https://www.youtube.com/watch?v=Vxq8FAoNzqY&list=PL19C7uchWZeo-j9mUmYeVfgzbP3vHSHU-&index=4) <br>
-&rarr; the script is already there: daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/MRS2LJSpeech.py
+&rarr; the script is already there: $`\textcolor{blue}{\text{daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/MRS2LJSpeech.py}}`$
 
-***MRS2LJSpeech.py ffmpeg flag is defaulted to True to convert any audio to the required format - In general pay attention that you start anything that needs ffmpeg with daibl/assets/ffmpeg-6.0-full_build/bin/ (look at how the util/Environment.py works)***
+***MRS2LJSpeech.py ffmpeg flag is defaulted to True to convert any audio to the required format - $`\textcolor{red}{\text{In general pay attention that you start anything that needs ffmpeg with daibl/assets/ffmpeg-6.0-full_build/bin/}}`$ (look at how the util/Environment.py works)***
 
-**Attention**: your data (.wav files) should have following format:
+**$`\textcolor{red}{\text{Attention}}`$**: your data (.wav files) should have following format:
 
 - mono
 - 22kHz frequency [22050 Hz]
 - 16 bit
 
-***At your own risk:**<br>
+***$`\textcolor{red}{\text{At your own risk:}}`$**<br>
 You can also record the audio data on your own (without the tool mimic-recording-studio) if you follow the format and folder structure above.<br> 
 It is recommended to install the free software audacity from <https://www.audacityteam.org> <br> 
-**Caution: Dont´t download the software from audacity.de - the software could be compromised with malware***
+**$`\textcolor{red}{\text{Caution: Dont´t download the software from audacity.de - the software could be compromised with malware}}`$***
 
 ## Train/Finetune model
 
@@ -61,7 +61,7 @@ Source: [coqui-ai TTS: Tutorial For Nervous Beginners](https://tts.readthedocs.i
 
 ### Finetune model
 
-For the german language we use a base model from [Thorsten-Voice](https://github.com/thorstenMueller/Thorsten-Voice/tree/master) which is located in: daibl/assets/models/tts-models/tts_models--de--thorsten--vits/ $`\textcolor{red}{\text{your text}}`$
+For the german language we use a base model from [Thorsten-Voice](https://github.com/thorstenMueller/Thorsten-Voice/tree/master) which is located in: $`\textcolor{blue}{\text{daibl/assets/models/tts-models/tts_models--de--thorsten--vits/}}`$
 
 Start finetuning on the base model:
 
