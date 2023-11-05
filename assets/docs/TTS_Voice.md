@@ -8,7 +8,7 @@
 
 You will need following requirements to make training/finetuning possible and easier:
 
-- [mimic-recording-studio](https://github.com/MycroftAI/mimic-recording-studio): recording tool specialised for tts data generation (a version is already in [daibl/assests/rec-tool/](/assets/rec-tool/mimic-recording-studio-0.1.1)). Read the [remarks](#mimic-recording-studio-remarks) first before using it.
+- [mimic-recording-studio](https://github.com/MycroftAI/mimic-recording-studio): recording tool specialised for tts data generation (a version is already in [daibl/assests/rec-tool/mimic-recording-studio-0.1.1](/assets/rec-tool/mimic-recording-studio-0.1.1)). Read the [remarks](#mimic-recording-studio-remarks) first before using it.
   - [setup of mimic-recording-studio](https://www.youtube.com/watch?v=tAuPAPdahvA&list=PL19C7uchWZeo-j9mUmYeVfgzbP3vHSHU-&index=2)
 - [coqui-ai TTS](https://github.com/coqui-ai/TTS): repo to set up TTS and train/finetune own models (a version is already in [daibl/assests/TTS-dev/](/assets/TTS-dev))
   - [setup of coqui-ai TTS: Follow the Installation chapter](https://tts.readthedocs.io/en/dev/tutorial_for_nervous_beginners.html)
