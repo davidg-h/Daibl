@@ -31,7 +31,7 @@ The virtual environment is used to make packaging easier and to only install the
 
 ## Getting started
 
-Create a <span style="color:red">.env file</span> in the **discord_bot\main** directory and set the environment variables:
+Create a $`\textcolor{red}{\text{.env file}}`$ in the **[discord_bot\main](discord_bot/main/example.env)** directory and set the environment variables:
 
 ```sh
 # .env example
