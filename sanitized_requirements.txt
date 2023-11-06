@@ -1,17 +1,29 @@
+# general
 pip
 setuptools
 wheel
 
+# project related
+tensorflow[and-cuda]
 python-dotenv
--e assets/TTS-dev/
 discord.py[voice]
 ffmpeg-python
-langchain
 pyaudio
 onnxruntime
 SpeechRecognition
+-e assets/TTS-dev/
 git+https://github.com/openai/whisper.git
 
+# hugging face
+huggingface_hub
+transformers
+datasets
+datasets[audio]
+datasets[vision]
+diffusers[torch]
+accelerate
+
+# pytorch with cuda
 --extra-index-url https://download.pytorch.org/whl/cu121 # if necessary change to the cuda version needed
 torch
 torchaudio

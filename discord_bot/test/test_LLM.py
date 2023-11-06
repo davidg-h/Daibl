@@ -1,22 +1,26 @@
 import os
 from dotenv import load_dotenv
-from langchain import HuggingFaceHub, PromptTemplate, LLMChain
+import torch
+from huggingface_hub import login, logout
 
 load_dotenv()
 hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
-s = "Who is Usain Bolt?"
+login(token=hf_token)
+# logout()
 
-llm = HuggingFaceHub(
-    repo_id="bigscience/bloom", 
-    #model_kwargs={"temperature":1e-10},
-    huggingfacehub_api_token=hf_token
+# Use a pipeline as a high-level helper
+from transformers import pipeline, TextGenerationPipeline
+
+generator: TextGenerationPipeline = pipeline(
+    "text-generation", model="meta-llama/Llama-2-7b-chat-hf"
 )
+print()
+print(generator)
 
-template = """Question: {question}
+answer = generator("Wer ist der schnellste Man der Welt?", return_text=True)
 
-Answer: """
-prompt = PromptTemplate(template=template, input_variables=["question"])
-llm_chain = LLMChain(prompt=prompt, llm=llm)
+print(answer)
+print(answer["generated_text"])
 
-print(llm_chain.run(s))
+logout()

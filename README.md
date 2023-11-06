@@ -31,7 +31,7 @@ The virtual environment is used to make packaging easier and to only install the
 
 ## Getting started
 
-Create a $`\textcolor{red}{\text{.env file}}`$ in the **[discord_bot\main](discord_bot/main/example.env)** directory and set the environment variables:
+Create a $`\textcolor{red}{\text{.env file}}`$ in the **[daibl/discord_bot/main](discord_bot/main/example.env)** directory and set the environment variables:
 
 ```sh
 # .env example
