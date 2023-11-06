@@ -1,12 +1,10 @@
-import sqlite3
-import pandas as pd
+import argparse
+import json
+from scrap.db_init import db_get_df, db_save_df
+from tqdm import tqdm
 import torch
 from transformers import BertModel, BertTokenizer
-import json
-from tqdm import tqdm
-from concurrent.futures import ThreadPoolExecutor
-from scrap.db_init import db_get_df, db_save_df
-import argparse
+
 
 def get_model():
     model = BertModel.from_pretrained('bert-base-uncased', output_hidden_states=True)
@@ -16,8 +14,6 @@ def get_model():
 
 def proccessSentence(token_ids, model, tokenizer):
     if len(token_ids) == 0:
-        # Handle the case when the token list is empty, for example, return a default embedding or raise an exception.
-        # For demonstration purposes, we'll return a zero tensor as the default embedding.
         return torch.zeros(768)
 
     token_ids = [101] + token_ids + [102]
