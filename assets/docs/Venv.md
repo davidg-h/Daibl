@@ -6,23 +6,29 @@
 
 1. Step: [Install min. Python 3.9](https://www.python.org/downloads/release/python-3913/)
 
-2. Step: Create virtual environment from requirements.txt (vscode)
+2. Step: [Create virtual environment with or without requirements.txt (vscode)](https://code.visualstudio.com/docs/python/environments)
 
-    ![alternative text](docs_images/Screenshot-venv-from-requirements.png)
+    From requirements.txt:
+    ![With requirements:](docs_images/Screenshot-venv-from-requirements.png)
 
-3. Step: [Select the virtual environment python.exe as the **python interpreter**](https://code.visualstudio.com/docs/python/environments) (vscode)
+    Without requirements.txt: (Keyboard-Shortcut: Control+Shift+P)
+    ![Without requirements:](docs_images/Screenshot-venv-witout-req.png)
+
+3. Step: Select a python version or enter a path to a python version for the virtual environment: **python interpreter** (vscode)
 
     ![alternative text](docs_images/Screenshot-virtualenv.png)
 
-4. Step: Activate the virtual environment and update pip:
+4. Step: Update pip (optional: if you have problems with the packages create an empty .venv and run this command before [installing the requirements](#install-get-packagedependencies-in-virtuel-env))
 
     In the terminal:
 
-        ```sh
-        pip install pip setuptools wheel --upgrade
-        ```
+    ```sh
+    pip install pip setuptools wheel --upgrade
+    ```
 
 5. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
+
+    Remember pip freeze writes all packages installed in .venv to the requirements.txt . If you want to keep the requirements.txt more compact/sanitized list only the necessary packages. Dependencies will normally be resolved by pip (another reason to keep pip updated).
 
     In the terminal:
 

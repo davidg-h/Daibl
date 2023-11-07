@@ -159,7 +159,7 @@ class LiveTranscription:
         return line_to_post
 
     async def transcripe(self, audio_model, channel):
-        """live transcription using speech recognition and whisper"""
+        """live transcription using speech recognition and whisper --> return transcription"""
         self.create_tmp_dir()
         source = self.mic()
 
@@ -273,3 +273,4 @@ class LiveTranscription:
             print(line)
 
         self.del_tmp_dir()
+        return self.get_transcription()

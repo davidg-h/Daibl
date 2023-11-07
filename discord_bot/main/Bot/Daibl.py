@@ -126,6 +126,8 @@ class Daibl(commands.Bot):
         @self.command(name="listen", pass_context=True)
         async def listen(ctx: commands.Context):
             """starting live transcription (ASR)"""
-            await self.stt.transcripe(
+            transcription: list[str] = await self.stt.transcripe(
                 self.stt.audio_model, self.get_channel(1086951624381059112)
             )  # can be later replaced with ctx (context) channel
+            for line in transcription:
+                await self.get_channel(1086951624381059112).send("$daibl " + line)
