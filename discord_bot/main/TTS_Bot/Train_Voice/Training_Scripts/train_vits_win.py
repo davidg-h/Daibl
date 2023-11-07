@@ -117,4 +117,4 @@ def main(name: str):
     print("Fertig!")
 
 
-main("david-tts-v3")  # Change the name of your model
+main("patrick-tts-v3")  # Change the name of your model
