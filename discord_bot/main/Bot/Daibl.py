@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Union
 
 import discord
 from discord.ext import commands
@@ -67,11 +67,7 @@ class Daibl(commands.Bot):
         """processing of channel messages"""
         # checks message in every channel
         if message.author == self.user:
-            if "$daibl" in message.content:
-                command = self.get_command('daibl')
-                await command(message)
-            else:
-                return
+            return
 
         # all infos of message (channel, author, ...)
         print()
@@ -133,5 +129,8 @@ class Daibl(commands.Bot):
             transcription: list[str] = await self.stt.transcripe(
                 self.stt.audio_model, self.get_channel(1086951624381059112)
             )  # can be later replaced with ctx (context) channel
-            for line in transcription:
-                await self.get_channel(1086951624381059112).send("$daibl " + line)
+            # get the transcription and give it to the LLM
+            for i in range(len(transcription)):
+                full_line = "$daibl " + transcription[i]
+            ctx.message.content = full_line
+            await adress_bot(ctx)

@@ -251,7 +251,8 @@ class LiveTranscription:
                     if msg != None:
                         await msg.delete()
                     msg = await channel.send(
-                        "Live-Transcription:  " + self.line_to_post()
+                        "Frage an Daibl (Live-Transcription):  " +
+                        self.line_to_post()
                     )
                     for line in self.transcription:
                         print(line)
