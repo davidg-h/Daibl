@@ -67,7 +67,11 @@ class Daibl(commands.Bot):
         """processing of channel messages"""
         # checks message in every channel
         if message.author == self.user:
-            return
+            if "$daibl" in message.content:
+                command = self.get_command('daibl')
+                await command(message)
+            else:
+                return
 
         # all infos of message (channel, author, ...)
         print()
