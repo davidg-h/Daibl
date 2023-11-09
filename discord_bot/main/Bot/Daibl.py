@@ -116,7 +116,7 @@ class Daibl(commands.Bot):
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx: commands.Context):
             """communicate with LLM module"""
-            answer = self.modelCommunicator.returnPromptText(
+            answer = self.modelCommunicator.returnPromptText(  # TODO give feedback that the question is processing for example play elevator music
                 ctx.message.content.replace("$daibl ", "")
             )
 

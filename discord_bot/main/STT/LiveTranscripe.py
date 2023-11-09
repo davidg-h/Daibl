@@ -117,7 +117,7 @@ class LiveTranscription:
         # check for cuda (nvidia graphic card) availability
         device = "cuda" if torch.cuda.is_available() else "cpu"
         audio_model = whisper.load_model(model).to(device)
-        print("Model loaded.\n")
+        print(f"\n{model} Whisper-Model loaded.\n")
         return audio_model
 
     def get_transcription(self):
