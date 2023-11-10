@@ -13,7 +13,7 @@ def hw_detection():
     daibl_hw = HotwordDetector(
         hotword="daibl",
         model = base_model,
-        reference_file=os.path.join(samples_loc, r"C:\Users\Patri\Desktop\Daibl\daibl\daibl\discord_bot\main\STT\Hotword\wakewords\daibl\daibl_ref.json"),
+        reference_file=os.path.join(samples_loc, r"C:\Users\Patri\Desktop\Daibl\daibl\discord_bot\main\STT\Hotword\wakewords\daibl\daibl_ref.json"),
         threshold=0.7,
         relaxation_time=2
     )

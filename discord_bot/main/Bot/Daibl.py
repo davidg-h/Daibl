@@ -90,8 +90,7 @@ class Daibl(commands.Bot):
 
         @self.command(name="hotword", pass_context=True)
         async def hotword(ctx: commands.Context):
-            """hotword detection"""
-            if detection.hw_detection():
+            
                 await ctx.channel.send("Hotword accepted")
 
         @self.command(name="join", pass_context=True)
@@ -126,8 +125,9 @@ class Daibl(commands.Bot):
         @self.command(name="listen", pass_context=True)
         async def listen(ctx: commands.Context):
             """starting live transcription (ASR)"""
-            transcription: list[str] = await self.stt.transcripe(
-                self.stt.audio_model, self.get_channel(1086951624381059112)
-            )  # can be later replaced with ctx (context) channel
-            for line in transcription:
-                await self.get_channel(1086951624381059112).send("$daibl " + line)
+            if detection.hw_detection():
+                transcription: list[str] = await self.stt.transcripe(
+                    self.stt.audio_model, self.get_channel(1086951624381059112)
+                )  # can be later replaced with ctx (context) channel
+                for line in transcription:
+                    await self.get_channel(1086951624381059112).send("$daibl " + line)

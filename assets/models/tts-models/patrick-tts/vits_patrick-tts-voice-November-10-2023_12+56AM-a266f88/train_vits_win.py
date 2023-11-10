@@ -12,6 +12,7 @@ from TTS.utils.audio import AudioProcessor
 
 load_dotenv()
 
+# Changes user has to do himself are marked with !!CHANGE!! 
 
 def main(name: str):
     """
@@ -32,7 +33,7 @@ def main(name: str):
         meta_file_train="metadata.csv",
         path=os.path.join(
             PROJECT_PATH,
-            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_Patrick-TTS_dataset",  # Change to your dataset
+            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_Patrick-TTS_dataset",  # !!CHANGE!! Change to your dataset
         ),
     )
 
@@ -76,7 +77,6 @@ def main(name: str):
         lr=0.00001,
         lr_gen=0.00001,
         lr_disc=0.00001
-        # eval_split_size=0.14285714285714285, # assert error 'eval_split_size' parameter to a minimum of 0.14285714285714285
     )
 
     # INITIALIZE THE AUDIO PROCESSOR
@@ -117,4 +117,4 @@ def main(name: str):
     print("Fertig!")
 
 
-main("patrick-tts")  # Change the name of your model
+main("patrick-tts")  # !!CHANGE!! Change the name of your model
