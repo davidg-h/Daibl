@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Union
 
 import discord
 from discord.ext import commands
@@ -115,7 +115,7 @@ class Daibl(commands.Bot):
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx: commands.Context):
             """communicate with LLM module"""
-            answer = self.modelCommunicator.returnPromptText(
+            answer = self.modelCommunicator.returnPromptText(  # TODO give feedback that the question is processing for example play elevator music
                 ctx.message.content.replace("$daibl ", "")
             )
 
@@ -125,9 +125,11 @@ class Daibl(commands.Bot):
         @self.command(name="listen", pass_context=True)
         async def listen(ctx: commands.Context):
             """starting live transcription (ASR)"""
-            if detection.hw_detection():
-                transcription: list[str] = await self.stt.transcripe(
-                    self.stt.audio_model, self.get_channel(1086951624381059112)
-                )  # can be later replaced with ctx (context) channel
-                for line in transcription:
-                    await self.get_channel(1086951624381059112).send("$daibl " + line)
+            transcription: list[str] = await self.stt.transcripe(
+                self.stt.audio_model, self.get_channel(1086951624381059112)
+            )  # can be later replaced with ctx (context) channel
+            # get the transcription and give it to the LLM
+            for i in range(len(transcription)):
+                full_line = "$daibl " + transcription[i]
+            ctx.message.content = full_line
+            await adress_bot(ctx)

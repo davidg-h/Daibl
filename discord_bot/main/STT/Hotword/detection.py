@@ -12,8 +12,9 @@ base_model = Resnet50_Arc_loss()
 def hw_detection():
     daibl_hw = HotwordDetector(
         hotword="daibl",
-        model = base_model,
-        reference_file=os.path.join(samples_loc, r"C:\Users\Patri\Desktop\Daibl\daibl\discord_bot\main\STT\Hotword\wakewords\daibl\daibl_ref.json"),
+        model=base_model,
+        reference_file=os.path.join(  # TODO passe den Pfad noch so an dass die PROJECT_PATH in .env verwendet wird
+            samples_loc, r"C:\Users\david\Desktop\Repos\itp\daibl\discord_bot\main\STT\Hotword\wakewords\daibl\daibl_ref.json"),
         threshold=0.7,
         relaxation_time=2
     )
@@ -26,11 +27,11 @@ def hw_detection():
     mic_stream.start_stream()
 
     print("Say daibl ")
-    while True :
+    while True:
         frame = mic_stream.getFrame()
         result = daibl_hw.scoreFrame(frame)
-        if result==None :
-            #no voice activity
+        if result == None:
+            # no voice activity
             continue
-        if(result["match"]):
+        if (result["match"]):
             return True
