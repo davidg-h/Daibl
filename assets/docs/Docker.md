@@ -4,6 +4,12 @@
 -> | [Back](/README.md)
 -|-
 
+**Table of Contents:**
+
+- [Install Docker Environment](#install-docker-environment)
+  - [Install WSL](#install-wsl-windows-subsystem-for-linux)
+- [Deploying and pushing an image](#deploying-and-pushing-an-image)
+
 ## Install [Docker Environment](https://www.docker.com/)
 
 This makes it possible to monitor your images and containers.

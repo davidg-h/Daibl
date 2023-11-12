@@ -11,7 +11,7 @@ ffmpeg-python
 pyaudio
 onnxruntime
 SpeechRecognition
--e assets/TTS-dev/
+-e ./assets/TTS-dev/
 git+https://github.com/openai/whisper.git
 
 # hugging face

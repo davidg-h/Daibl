@@ -2,6 +2,16 @@
 
 ---
 
+**Table of Contents:**
+
+- [Folder structure](#folder-structure)
+- [Docker environment](#docker-environment)
+- [Virtual environment activation](#virtual-environment-activation)
+- [Getting started](#getting-started)
+- [For Pair-Programming](#for-pair-programming)
+- [Add your files](#add-your-files)
+- [License](#license)
+
 ## Folder structure
 
 ```sh
