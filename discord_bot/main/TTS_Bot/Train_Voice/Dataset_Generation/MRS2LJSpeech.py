@@ -175,12 +175,12 @@ def cleanup():
     rmtree(output_dir_audio_temp)
 
 
-def main():
+def main(PROJECT_PATH):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--mrs_dir",
         required=False,
-        default="assets/rec-tool/mimic-recording-studio-0.1.1",
+        default=os.path.join(PROJECT_PATH, "assets/rec-tool/mimic-recording-studio-0.1.1"),
     )
     parser.add_argument("--ffmpeg", required=False, default=True)
     parser.add_argument(
@@ -217,4 +217,4 @@ from discord_bot.main.util.Environment import add_path
 
 if __name__ == "__main__":
     with add_path(os.path.join(PROJECT_PATH, "assets/ffmpeg-6.0-full_build/bin")):
-        main()
+        main(PROJECT_PATH)

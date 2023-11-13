@@ -26,13 +26,13 @@ def main(name: str):
     PROJECT_PATH = os.getenv("PROJECT_PATH")
     output_path = os.path.join(
         PROJECT_PATH, "assets/models/tts-models", name
-    )  # folder where model is saved, change accordingly
+    )  # folder where model is saved
     dataset_config = BaseDatasetConfig(
         formatter="ljspeech",
         meta_file_train="metadata.csv",
         path=os.path.join(
             PROJECT_PATH,
-            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_david-v2_dataset",  # Change to your dataset
+            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_david-v2_dataset",  # !!Change!! to your dataset
         ),
     )
 
@@ -117,4 +117,4 @@ def main(name: str):
     print("Fertig!")
 
 
-main("patrick-tts-v3")  # Change the name of your model
+main("patrick-tts-v3")  # !!Change!! the name of your model
