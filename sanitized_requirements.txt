@@ -8,7 +8,8 @@ tensorflow[and-cuda]
 python-dotenv
 discord.py[voice]
 ffmpeg-python
-pyaudio
+pyaudio; sys_platform!='linux'
+python3-pyaudio; sys_platform=='linux'
 onnxruntime
 SpeechRecognition
 -e ./assets/TTS-dev/
