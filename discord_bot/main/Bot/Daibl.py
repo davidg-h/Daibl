@@ -126,11 +126,13 @@ class Daibl(commands.Bot):
         @self.command(name="listen", pass_context=True)
         async def listen(ctx: commands.Context):
             """starting live transcription (ASR)"""
-            transcription: list[str] = await self.stt.transcripe(
-                self.stt.audio_model, self.get_channel(1086951624381059112)
-            )  # can be later replaced with ctx (context) channel
-            # get the transcription and give it to the LLM
-            for i in range(len(transcription)):
-                full_line = "$daibl " + transcription[i]
-            ctx.message.content = full_line
-            await adress_bot(ctx)
+            
+            if detection.hw_detection():
+                transcription: list[str] = await self.stt.transcripe(
+                    self.stt.audio_model, self.get_channel(1086951624381059112)
+                )  # can be later replaced with ctx (context) channel
+                # get the transcription and give it to the LLM
+                for i in range(len(transcription)):
+                    full_line = "$daibl " + transcription[i]
+                ctx.message.content = full_line
+                await adress_bot(ctx)
