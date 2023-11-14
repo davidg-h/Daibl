@@ -8,8 +8,7 @@ tensorflow[and-cuda]
 python-dotenv
 discord.py[voice]
 ffmpeg-python
-pyaudio; sys_platform!='linux'
-python3-pyaudio; sys_platform=='linux'
+pyaudio; sys_platform == 'win32' # PyAudio (for microphone users) PyAudio is required if and only if you want to use microphone input (Microphone). For instalation on macOS GNU/Linux follow https://pypi.org/project/PyAudio/
 onnxruntime
 SpeechRecognition
 -e ./assets/TTS-dev/
