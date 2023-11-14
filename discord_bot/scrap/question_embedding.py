@@ -13,8 +13,6 @@ model = BertModel.from_pretrained('bert-base-uncased',output_hidden_states = Tru
 def question_embeddings(message):
 
     if len(message) == 0:
-        # Handle the case when the token list is empty, for example, return a default embedding or raise an exception.
-        # For demonstration purposes, we'll return a zero tensor as the default embedding.
         return torch.zeros(768)
     
     message = "[CLS]" + message + "[SEP]"
@@ -32,7 +30,6 @@ def question_embeddings(message):
 
     # stack the layer list 
     token_embeddings = torch.stack(hidden_states, dim=0)
-    # remove the batches dim
     token_embeddings = torch.squeeze(token_embeddings, dim=1)
     # Swap dimensions 0 and 1.
     token_embeddings = token_embeddings.permute(1,0,2)
