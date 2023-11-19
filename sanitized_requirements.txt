@@ -26,7 +26,8 @@ accelerate
 ctransformers[cuda] # loading quantiziced models
 
 # pytorch with cuda
---extra-index-url https://download.pytorch.org/whl/cu121 # if necessary change to the cuda version needed
-torch
-torchaudio
-torchvision 
+# if necessary change to the cuda version needed. https://pytorch.org/get-started/previous-versions/
+--extra-index-url https://download.pytorch.org/whl/cu113  
+torch==1.12.1+cu113
+torchvision==0.13.1+cu113
+torchaudio==0.12.1
