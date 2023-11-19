@@ -1,1 +1,0 @@
-# hier kommt die main.py rein bzw die einstiegstelle unseres bots (diese datei wird später gelöscht)

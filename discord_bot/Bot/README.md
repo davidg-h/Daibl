@@ -1,1 +1,0 @@
-# hier sind alle dateien für den discord bot -> methoden, functionen, klassen die der discord bot braucht damit er was macht
