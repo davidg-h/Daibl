@@ -14,15 +14,15 @@ login(token=hf_token)
 
 prompt = "Wer war Napoleon?"
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
-model_id = r"C:\Users\David\Desktop\llama_model\itp\llama2-7b-chat-hf"
+model_id = "TheBloke/Llama-2-7B-GGML"
 
-tokenizer = AutoTokenizer.from_pretrained(model_id)
+#tokenizer = AutoTokenizer.from_pretrained(model_id)
 #model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16, device_map="auto")
 
 generator = pipeline(
     task="text-generation", 
     model=model_id, 
-    tokenizer=tokenizer, 
+    #tokenizer=tokenizer, 
     torch_dtype=torch.float16, 
     device_map="auto",
     temperature=0.1,
@@ -30,9 +30,10 @@ generator = pipeline(
     top_k=10,
     repetition_penalty=1.1,
     num_return_sequences=1,
-    eos_token_id=tokenizer.eos_token_id,
-    #max_new_tokens=50,
-    max_length=100)
+    #eos_token_id=tokenizer.eos_token_id,
+    max_new_tokens=50,
+    #max_length=100
+    )
 print(generator(prompt)[0]['generated_text'])
 
 
