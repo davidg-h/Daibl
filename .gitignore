@@ -10,12 +10,12 @@
 !.vscode/*.code-snippets
 
 # html files und wordlists
-discord_bot/scrap/data/*
-discord_bot/scrap/data.zip
+discord_bot/main/scrap/data/*
+discord_bot/main/scrap/data.zip
 
 # database - it will take up to much space to track it in source control
-discord_bot/scrap/html.sqlite
-discord_bot/scrap/html-test.sqlite
+discord_bot/main/scrap/html.sqlite
+discord_bot/main/scrap/html-test.sqlite
 backup/*
 
 # venv
