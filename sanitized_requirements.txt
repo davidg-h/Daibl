@@ -16,12 +16,14 @@ git+https://github.com/openai/whisper.git
 
 # hugging face
 huggingface_hub
-transformers
+transformers[torch]
 datasets
 datasets[audio]
 datasets[vision]
 diffusers[torch]
 accelerate
+#test
+ctransformers[cuda] # loading quantiziced models
 
 # pytorch with cuda
 --extra-index-url https://download.pytorch.org/whl/cu121 # if necessary change to the cuda version needed
