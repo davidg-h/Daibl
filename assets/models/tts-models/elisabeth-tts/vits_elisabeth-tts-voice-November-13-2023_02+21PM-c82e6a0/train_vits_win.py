@@ -32,7 +32,7 @@ def main(name: str):
         meta_file_train="metadata.csv",
         path=os.path.join(
             PROJECT_PATH,
-            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_Patrick-TTS_dataset",  # Change to your dataset
+            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_Elisabeth-TTS_dataset_dataset",  # Change to your dataset
         ),
     )
 
@@ -117,4 +117,4 @@ def main(name: str):
     print("Fertig!")
 
 
-main("patrick-tts")  # Change the name of your model
+main("elisabeth-tts")  # Change the name of your model

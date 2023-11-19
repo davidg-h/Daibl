@@ -91,8 +91,7 @@ class Daibl(commands.Bot):
 
         @self.command(name="hotword", pass_context=True)
         async def hotword(ctx: commands.Context):
-            """hotword detection"""
-            if detection.hw_detection():
+            
                 await ctx.channel.send("Hotword accepted")
 
         @self.command(name="join", pass_context=True)
