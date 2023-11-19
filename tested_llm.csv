@@ -1,0 +1,7 @@
+# looking for real time capable model
+meta-llama/Llama-2-7b-chat-hf, standard loading takes to much memory and text generation performance is slow
+jphme/Llama-2-13b-chat-german, average in generating text/output when max_new_tokn is not high
+
+
+
+# Quantizized models
