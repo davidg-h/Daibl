@@ -1,7 +1,11 @@
-from langchain.llms import HuggingFaceHub
+import os
+os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/itp/CACHE_DIR/huggingface/hub'
+os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/itp/CACHE_DIR/huggingface'
 
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+import torch
+from huggingface_hub import login
+from ctransformers import AutoModelForCausalLM, AutoTokenizer # loading of Quantized LLM
+from transformers import pipeline
 
 
 class ModelCommunicator:
@@ -17,21 +21,50 @@ class ModelCommunicator:
     """
 
     def __init__(self, hf_api_token):
+        
+        #setup
+        login(token=hf_api_token)
+        device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        model_id = "meta-llama/Llama-2-13b-chat-hf"
+        quantized_file = "" # only set if loading quantized model (model.gguf)
+        self.model = None
+        
         # load the model
-        self.model = HuggingFaceHub(
-            repo_id="bigscience/mt0-base",
-            model_kwargs={"temperature": 1e-10},
-            huggingfacehub_api_token=hf_api_token
-        )
+        if quantized_file != "":
+            llm = AutoModelForCausalLM.from_pretrained(model_id, model_file=quantized_file, model_type="llama", gpu_layers=50, hf=True).to(device)
+            tokenizer = AutoTokenizer.from_pretrained(llm)
+            self.model = pipeline(
+                task="text-generation", 
+                model=model_id,
+                tokenizer=tokenizer, 
+                torch_dtype='auto', #torch.bfloat16, 
+                device_map='auto',
+                temperature=0.7,
+                top_p=0.15,
+                top_k=15,
+                repetition_penalty=1.1,
+                num_return_sequences=1,
+                eos_token_id=tokenizer.eos_token_id,
+                max_new_tokens=65,
+                #max_length=256,
+            )
+        else:
+            self.model = pipeline(
+                task="text-generation", 
+                model=model_id,
+                torch_dtype='auto', #torch.bfloat16, 
+                device_map='auto',
+                temperature=0.7,
+                top_p=0.15,
+                top_k=15,
+                repetition_penalty=1.1,
+                num_return_sequences=1,
+                max_new_tokens=65,
+                #max_length=256,
+            )
 
     def returnPromptText(self, question):
         """ process and return answer of LLM """
-
-        self.template = """Question: {question}
-
-        Answer: """
-        self.prompt = PromptTemplate(
-            template=self.template, input_variables=["question"])
-
-        llm_chain = LLMChain(prompt=self.prompt, llm=self.model)
-        return llm_chain.run(question)
+        
+        answer = self.model(question, do_sample=True)
+        return answer[0]['generated_text']
