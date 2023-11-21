@@ -22,12 +22,17 @@ datasets[audio]
 datasets[vision]
 diffusers[torch]
 accelerate
-#test
 ctransformers[cuda] # loading quantiziced models
 
-# pytorch with cuda
+# Pytorch with cuda
 # if necessary change to the cuda version needed. https://pytorch.org/get-started/previous-versions/
---extra-index-url https://download.pytorch.org/whl/cu113  
-torch==1.12.1+cu113
-torchvision==0.13.1+cu113
-torchaudio==0.12.1
+# uncomment the needed version for the platform
+
+# university servers
+#-r pytorch_linux-requirements.txt
+
+# windows devices
+-r pytorch_win-requirements.txt
+
+# Pytorch on Mac (there is no CUDA support on mac)
+#-r pytorch_mac-requirements.txt

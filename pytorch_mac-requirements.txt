@@ -1,0 +1,5 @@
+# Pytorch on Mac (there is no CUDA support on mac)
+--pre --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+torch
+torchvision
+torchaudio
