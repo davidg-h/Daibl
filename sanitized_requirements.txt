@@ -8,7 +8,7 @@ tensorflow[and-cuda]
 python-dotenv
 discord.py[voice]
 ffmpeg-python
-pyaudio; sys_platform == 'win32' # PyAudio (for microphone users) PyAudio is required if and only if you want to use microphone input (Microphone). For instalation on macOS GNU/Linux follow https://pypi.org/project/PyAudio/
+pyaudio # PyAudio (for microphone users) PyAudio is required if and only if you want to use microphone input (Microphone). For instalation on macOS GNU/Linux follow https://pypi.org/project/PyAudio/
 onnxruntime
 SpeechRecognition
 -e ./assets/TTS-dev/
@@ -29,10 +29,10 @@ ctransformers[cuda] # loading quantiziced models
 # uncomment the needed version for the platform
 
 # university servers
-#-r pytorch_linux-requirements.txt
+-r ./pytorch-requirements/pytorch_linux-requirements.txt
 
 # windows devices
--r pytorch_win-requirements.txt
+#-r ./pytorch-requirements/pytorch_win-requirements.txt
 
 # Pytorch on Mac (there is no CUDA support on mac)
-#-r pytorch_mac-requirements.txt
+#-r ./pytorch-requirements/pytorch_mac-requirements.txt
