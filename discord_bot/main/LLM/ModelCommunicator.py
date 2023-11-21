@@ -1,11 +1,11 @@
 import os
-os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/itp/CACHE_DIR/huggingface/hub'
-os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/itp/CACHE_DIR/huggingface'
+os.environ['TRANSFORMERS_CACHE'] = 'D:\.cache\huggingface\hub'
+os.environ['HF_HOME'] = 'D:\.cache\huggingface'
 
 import torch
 from huggingface_hub import login
 from ctransformers import AutoModelForCausalLM, AutoTokenizer # loading of Quantized LLM
-from transformers import pipeline
+from transformers import pipeline # loading of hf LLMs
 
 
 class ModelCommunicator:
@@ -25,7 +25,7 @@ class ModelCommunicator:
         #setup
         login(token=hf_api_token)
         device = "cuda:0" if torch.cuda.is_available() else "cpu"
-        model_id = "meta-llama/Llama-2-13b-chat-hf"
+        model_id = "jphme/em_german_7b_v01"
         quantized_file = "" # only set if loading quantized model (model.gguf)
         self.model = None
         
@@ -35,9 +35,9 @@ class ModelCommunicator:
             tokenizer = AutoTokenizer.from_pretrained(llm)
             self.model = pipeline(
                 task="text-generation", 
-                model=model_id,
+                model=llm,
                 tokenizer=tokenizer, 
-                torch_dtype='auto', #torch.bfloat16, 
+                torch_dtype=torch.bfloat16, 
                 device_map='auto',
                 temperature=0.7,
                 top_p=0.15,
@@ -52,7 +52,7 @@ class ModelCommunicator:
             self.model = pipeline(
                 task="text-generation", 
                 model=model_id,
-                torch_dtype='auto', #torch.bfloat16, 
+                torch_dtype=torch.bfloat16, 
                 device_map='auto',
                 temperature=0.7,
                 top_p=0.15,

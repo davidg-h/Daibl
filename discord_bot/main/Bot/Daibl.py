@@ -4,8 +4,8 @@ from discord.ext import commands
 from util.Antiblocking import run_blocking
 from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
-#from STT.Hotword import detection
-#from STT.LiveTranscripe import LiveTranscription
+from STT.Hotword import detection
+from STT.LiveTranscripe import LiveTranscription
 
 
 class Daibl(commands.Bot):
@@ -40,7 +40,7 @@ class Daibl(commands.Bot):
         self.guild_id = guild_id
         self.modelCommunicator = modelCommunicator
         self.voice = voice
-        #self.stt = LiveTranscription(PROJECT_PATH=PROJECT_PATH)
+        self.stt = LiveTranscription(PROJECT_PATH=PROJECT_PATH)
 
         self.vc = None
         self.add_bot_commands()
@@ -87,11 +87,11 @@ class Daibl(commands.Bot):
             print(ctx)
             await ctx.channel.send("Hello" + " " + ctx.author.name)
 
-        # @self.command(name="hotword", pass_context=True)
-        # async def hotword(ctx: commands.Context):
-        #     """hotword detection"""
-        #     if detection.hw_detection():
-        #         await ctx.channel.send("Hotword accepted")
+        @self.command(name="hotword", pass_context=True)
+        async def hotword(ctx: commands.Context):
+            """hotword detection"""
+            if detection.hw_detection():
+                await ctx.channel.send("Hotword accepted")
 
         @self.command(name="join", pass_context=True)
         async def join(ctx: commands.Context):
@@ -119,17 +119,17 @@ class Daibl(commands.Bot):
             # TODO give feedback that the question is processing for example play elevator music
 
             await ctx.channel.send(answer)
-            await run_blocking(self.voice.TTS, self, ctx.author.voice.channel, answer)
+            await self.voice.TTS(ctx.author.voice.channel, answer)
 
-        # @self.command(name="listen", pass_context=True)
-        # async def listen(ctx: commands.Context):
-        #     """starting live transcription (ASR)"""
+        @self.command(name="listen", pass_context=True)
+        async def listen(ctx: commands.Context):
+            """starting live transcription (ASR)"""
             
-        #     #if detection.hw_detection():
-        #     transcription: list[str] = await run_blocking(self.stt.transcripe, self, self.stt.audio_model, self.get_channel(1086951624381059112))
-        #     # can be later replaced with ctx (context) channel
-        #     # get the transcription and give it to the LLM
-        #     for i in range(len(transcription)):
-        #         full_line = "$daibl " + transcription[i]
-        #     ctx.message.content = full_line
-        #     await adress_bot(ctx)
+            #if detection.hw_detection():
+            transcription: list[str] = await run_blocking(self.stt.transcripe, self, self.stt.audio_model, self.get_channel(1086951624381059112))
+            # can be later replaced with ctx (context) channel
+            # get the transcription and give it to the LLM
+            for i in range(len(transcription)):
+                full_line = "$daibl " + transcription[i]
+            ctx.message.content = full_line
+            await adress_bot(ctx)

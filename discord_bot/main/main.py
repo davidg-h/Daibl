@@ -1,7 +1,7 @@
 # daibl_bot.py
 import os
-os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/itp/CACHE_DIR/huggingface/hub'
-os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/itp/CACHE_DIR/huggingface'
+os.environ['TRANSFORMERS_CACHE'] = 'D:\.cache\huggingface\hub'
+os.environ['HF_HOME'] = 'D:\.cache\huggingface'
 
 from dotenv import load_dotenv
 from huggingface_hub import logout
