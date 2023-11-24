@@ -6,6 +6,7 @@ from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
 from STT.Hotword import detection
 from STT.LiveTranscripe import LiveTranscription
+from scrap.query_crafter import  get_query_embeddings_MiniLM
 
 
 class Daibl(commands.Bot):
@@ -115,8 +116,9 @@ class Daibl(commands.Bot):
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx: commands.Context):
             """communicate with LLM module"""
-            answer = await run_blocking(self.modelCommunicator.returnPromptText, self, ctx.message.content.replace("$daibl ", ""))
-            # TODO give feedback that the question is processing for example play elevator music
+            query = get_query_embeddings_MiniLM(ctx.message.content.replace("$daibl ", ""))
+
+            answer = await run_blocking(self.modelCommunicator.returnPromptText, self, query)
 
             await ctx.channel.send(answer)
             await self.voice.TTS(ctx.author.voice.channel, answer)
