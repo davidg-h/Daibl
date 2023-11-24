@@ -27,27 +27,8 @@ print(f"\nLLM-Model: {model_id}")
 
 model = None
 quantized_file = "" # only set if loading quantized model (model.gguf)
-#llm = AutoModelForCausalLM.from_pretrained(model_id, model_file="llama-2-13b-german-assistant-v2.Q4_K_M.gguf", model_type="llama", gpu_layers=50, hf=True).to(device)
-#print(llm(prompt))
-#tokenizer = AutoTokenizer.from_pretrained(llm)
 
-# print(f"\n{datetime.now()}  Loading model weights")
-# generator = pipeline(
-#     task="text-generation", 
-#     model=model_id,
-#     #tokenizer=tokenizer, 
-#     torch_dtype='auto', #torch.bfloat16, 
-#     device_map="auto",
-#     temperature=0.7,
-#     top_p=0.15,
-#     top_k=15,
-#     repetition_penalty=1.1,
-#     num_return_sequences=1,
-#     #eos_token_id=tokenizer.eos_token_id,
-#     max_new_tokens=65,
-#     #max_length=256,
-#     )
-
+print(f"\n{datetime.now()}  Loading model weights")
 # load the model
 if quantized_file != "":
     llm = AutoModelForCausalLM.from_pretrained(model_id, model_file=quantized_file, model_type="llama", gpu_layers=50, hf=True).to(device)
