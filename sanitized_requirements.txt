@@ -1,0 +1,50 @@
+# general
+pip
+setuptools
+wheel
+
+# project related
+python-dotenv
+discord.py[voice]
+ffmpeg-python
+pyaudio # PyAudio (for microphone users) PyAudio is required if and only if you want to use microphone input (Microphone). For instalation on macOS GNU/Linux follow https://pypi.org/project/PyAudio/
+onnxruntime
+SpeechRecognition
+tensorflow[and-cuda] # maybe have to install seperate over pip again: https://www.tensorflow.org/install/pip
+-e ./assets/TTS-dev/
+git+https://github.com/openai/whisper.git
+
+# hugging face
+huggingface_hub
+sentencepiece # needed for older models as sentencepiece was removed as a required dependency from transformers
+datasets
+accelerate
+transformers[torch]
+datasets[audio]
+datasets[vision]
+diffusers[torch]
+ctransformers[cuda] # loading quantiziced models
+
+# Pytorch with cuda
+# if necessary change to the cuda version needed. https://pytorch.org/get-started/previous-versions/
+# uncomment the needed version for the platform
+
+# linux
+# CUDA 11.7 for university servers
+--extra-index-url https://download.pytorch.org/whl/cu117
+torch==1.13.1+cu117 
+torchvision==0.14.1+cu117 
+torchaudio==0.13.1 
+
+# windows
+# CUDA 12.1 for windows devices
+# --extra-index-url https://download.pytorch.org/whl/cu121
+# torch
+# torchvision
+# torchaudio
+
+# Pytorch on Mac (there is no CUDA support on mac)
+# --pre --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+# torch
+# torchvision
+# torchaudio
