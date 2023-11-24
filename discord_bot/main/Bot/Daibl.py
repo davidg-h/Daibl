@@ -1,8 +1,7 @@
-from typing import Union
-
 import discord
 from discord.ext import commands
 
+from util.Antiblocking import run_blocking
 from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
 from STT.Hotword import detection
@@ -116,10 +115,9 @@ class Daibl(commands.Bot):
         @self.command(name="daibl", pass_context=True)
         async def adress_bot(ctx: commands.Context):
             """communicate with LLM module"""
-
-            print("test2222")
             query = get_query_embeddings_MiniLM(ctx.message.content.replace("$daibl ", ""))
-            answer = self.modelCommunicator.returnPromptText( query) # TODO give feedback that the question is processing for example play elevator music
+
+            answer = await run_blocking(self.modelCommunicator.returnPromptText, self, query)
 
             await ctx.channel.send(answer)
             await self.voice.TTS(ctx.author.voice.channel, answer)
@@ -127,9 +125,10 @@ class Daibl(commands.Bot):
         @self.command(name="listen", pass_context=True)
         async def listen(ctx: commands.Context):
             """starting live transcription (ASR)"""
-            transcription: list[str] = await self.stt.transcripe(
-                self.stt.audio_model, self.get_channel(1086951624381059112)
-            )  # can be later replaced with ctx (context) channel
+            
+            #if detection.hw_detection():
+            transcription: list[str] = await run_blocking(self.stt.transcripe, self, self.stt.audio_model, self.get_channel(1086951624381059112))
+            # can be later replaced with ctx (context) channel
             # get the transcription and give it to the LLM
             for i in range(len(transcription)):
                 full_line = "$daibl " + transcription[i]

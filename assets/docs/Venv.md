@@ -4,6 +4,8 @@
 -> | [Back](/README.md)
 -|-
 
+***Loading the requirements.txt over [pip install -r requirements.txt](#install-get-packagedependencies-in-virtuel-env) after creating the .venv is recommended!***
+
 1. Step: [Install min. Python 3.9](https://www.python.org/downloads/release/python-3913/)
 
 2. Step: [Create virtual environment with or without requirements.txt (vscode)](https://code.visualstudio.com/docs/python/environments)

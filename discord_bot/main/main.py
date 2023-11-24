@@ -1,7 +1,10 @@
 # daibl_bot.py
 import os
+os.environ['TRANSFORMERS_CACHE'] = 'D:\.cache\huggingface\hub'
+os.environ['HF_HOME'] = 'D:\.cache\huggingface'
 
 from dotenv import load_dotenv
+from huggingface_hub import logout
 
 from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
@@ -15,7 +18,6 @@ def main():
     GUILD = int(os.getenv("DISCORD_GUILD"))
     HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
     PROJECT_PATH = os.getenv("PROJECT_PATH")
-    # MODEL = os.getenv("MODEL_PATH") obsolete for now
 
     # Bot setup
     # Bot is an object that represents a connection to Discord
@@ -32,7 +34,6 @@ def main():
 
     # starting the bot
     bot.run(TOKEN)
-
 
 if __name__ == "__main__":
     main()

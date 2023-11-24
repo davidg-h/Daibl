@@ -2,6 +2,17 @@
 
 ---
 
+**Table of Contents:**
+
+- [Folder structure](#folder-structure)
+- [Docker environment](#docker-environment)
+- [Virtual environment activation](#virtual-environment-activation)
+- [Getting started](#getting-started)
+- [For Pair-Programming](#for-pair-programming)
+- [Add your files](#add-your-files)
+- [Remarks](#remarks)
+- [License](#license)
+
 ## Folder structure
 
 ```sh
@@ -31,7 +42,7 @@ The virtual environment is used to make packaging easier and to only install the
 
 ## Getting started
 
-Create a $`\textcolor{red}{\text{.env file}}`$ in the **[daibl/discord_bot/main](discord_bot/main/example.env)** directory and set the environment variables:
+Create a $`\textcolor{red}{\text{.env file}}`$ in the **[daibl/discord_bot/main](discord_bot/main/example.env)** directory and set the environment variables: (read the [remarks](#remarks) after creating the file)
 
 ```sh
 # .env example
@@ -54,7 +65,7 @@ git config user.email <Email-of-account>
 - [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
 - [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
-```
+```sh
 mkdir daibl
 cd daibl
 git clone https://git.informatik.fh-nuernberg.de/devpsoft_studios/daibl.git
@@ -62,13 +73,24 @@ git clone https://git.informatik.fh-nuernberg.de/devpsoft_studios/daibl.git
 
 or
 
-```
+```sh
 cd existing_repo
 git remote add origin https://git.informatik.fh-nuernberg.de/devpsoft_studios/daibl.git
 git branch -M main
 ```
 
-***
+## Remarks
+
+You must adjust paths in some files / python scripts. For example the [tts-training-file line 35](discord_bot/main/TTS_Bot/Train_Voice/Training_Scripts/train_vits_win.py).
+
+**In general:**
+Every time the user/developer has to make a change for path reasons it will be marked as
+
+```
+# !!Change!! to your dataset
+```
+
+---
 
 ## License
 

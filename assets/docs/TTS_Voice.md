@@ -4,6 +4,14 @@
 -> | [Back](/README.md)
 -|-
 
+**Table of Contents:**
+
+- [Setup](#setup)
+- [Dataset Generation](#dataset-generation)
+- [Train/Finetune model](#trainfinetune-model)
+- [Other Sources and References](#other-sources-and-references)
+- [Mimic Recording Studio Remarks](#mimic-recording-studio-remarks)
+
 ## Setup
 
 You will need following requirements to make training/finetuning possible and easier:
