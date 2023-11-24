@@ -272,3 +272,4 @@ fabric.properties
 tmp/
 
 test/
+discord_bot/scrap/html.sqlite
