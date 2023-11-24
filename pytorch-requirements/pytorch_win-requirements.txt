@@ -1,5 +1,0 @@
-# CUDA 12.1 for windows devices
---extra-index-url https://download.pytorch.org/whl/cu121
-torch
-torchvision
-torchaudio
