@@ -8,6 +8,8 @@ from scrap.db_init import db_get_df
 #from scrap.spacy_keywordextraction import extraction
 import json
 from scrap.question_embedding_MiniLM import get_most_similar_articles
+from scrap.msmarco_roberta_base_v3 import get_most_similar_articles_msmarco
+
 
 # best 5 documents as context
 # def get_query_embeddings(message):
@@ -38,6 +40,13 @@ def get_query_all(message):
 # get 5 best articles with MiniLM-L6-v2
 def get_query_embeddings_MiniLM(message):
     best_documents = get_most_similar_articles(message,5)
+    query="\n----Dokument----\n".join(best_documents)+ "\n"+"Bezüglich der oben genannten Dokumente, beantworte die folgende Frage: \n"+ message.replace("$daibl ", "")
+    print(query)
+    return query
+
+# get 5 best articles with embeddings_msmarco_distilroberta_base_v3
+def get_query_embeddings_Msmarco(message):
+    best_documents = get_most_similar_articles_msmarco(message,5)
     query="\n----Dokument----\n".join(best_documents)+ "\n"+"Bezüglich der oben genannten Dokumente, beantworte die folgende Frage: \n"+ message.replace("$daibl ", "")
     print(query)
     return query
