@@ -5,7 +5,7 @@ wheel
 
 # project related
 python-dotenv
-discord.py[voice]
+py-cord[voice]
 ffmpeg-python
 pyaudio # PyAudio (for microphone users) PyAudio is required if and only if you want to use microphone input (Microphone). For instalation on macOS GNU/Linux follow https://pypi.org/project/PyAudio/
 onnxruntime
