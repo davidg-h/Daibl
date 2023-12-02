@@ -1,25 +1,18 @@
 #### general
-json
-glob
 tqdm
 numpy
 pandas
 
-#### sqlite database
-sqlite3
 
 #### scraping
 # selenium
 # webdriver_manager
 bs4
-bs4.element
-collections
 requests
 
 #### processing
-ast
 scipy
-sklearn
+scikit-learn
 spacy
 
 #### for BERT embeddings
