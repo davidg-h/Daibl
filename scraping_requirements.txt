@@ -9,6 +9,7 @@ pandas
 # webdriver_manager
 bs4
 requests
+lxml
 
 #### processing
 scipy
