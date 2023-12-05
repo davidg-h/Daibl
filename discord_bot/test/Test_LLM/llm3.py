@@ -23,12 +23,12 @@ hf_token = os.environ.get('HUGGINGFACEHUB_API_TOKEN')
 
 login(token=hf_token)
 
-prompt = "Wer ist Gallwitz?"
+prompt = "Wer ist Napoleon?"
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(f"\n####################### Device: {device} #############################")
 
-model_id = "meta-llama/Llama-2-13b-chat-hf"
+model_id = "meta-llama/Llama-2-13b-chat-hf" # mistralai/Mistral-7B-v0.1 , lmsys/vicuna-13b-v1.5 , lmsys/vicuna-13b-v1.5-16k
 print(f"\nLLM-Model: {model_id}")
 
 model = None
@@ -70,8 +70,8 @@ else:
     )
 
 print(f"\n{datetime.now()}  Starting generating answer:")
-query = get_query_embeddings_MiniLM(prompt)
-answer = model(query, do_sample=True)
+#query = get_query_embeddings_MiniLM(prompt)
+answer = model(prompt, do_sample=True)
 print(f"\n{datetime.now()}  {answer[0]['generated_text']}")
 print("\n#############################################################################################")
 logout()

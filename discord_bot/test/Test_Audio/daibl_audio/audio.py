@@ -3,18 +3,30 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 import sys
-
+import librosa
+import numpy as np
+import io
 import speech_recognition as sr
 import whisper
 import torch
+import traceback
+
+import onnxruntime as rt
+
+sess_opt = rt.SessionOptions()
+sess_opt.execution_mode  = rt.ExecutionMode.ORT_PARALLEL
+sess_opt.intra_op_num_threads = 8
+sess_opt.add_session_config_entry('session.intra_op_thread_affinities', '3,4;5,6;7,8;9,10;11,12;13,14;15,16')
+sess_opt.inter_op_num_threads = 1
 
 import asyncio
 load_dotenv()
 PROJECT_PATH = os.getenv("PROJECT_PATH")
 sys.path.append(PROJECT_PATH)
-sys.path.append("/nfs/scratch/students/nguyenda81452/project/dev/daibl/discord_bot/test/Test_Audio/daibl_audio/STT")
+sys.path.append(r"/nfs/scratch/students/nguyenda81452/project/dev/daibl/discord_bot/test/Test_Audio/daibl_audio/STT")
 
-from STT.Hotword.detectionclone import detect_hotword
+from STT.Hotword.detectionclone import hw_detection
+from STT.LiveTranscripe import LiveTranscription
 from util.Environment import add_path
 
 # voice channel listening
@@ -50,7 +62,7 @@ class Daibl(commands.Bot):
         )
         self.vc = None
         self.audio_thread = None
-        #self.whisper = whisper.load_model('small').to('cuda:0') # testing if audio gets transcriped
+        self.stt = LiveTranscription(PROJECT_PATH=PROJECT_PATH)
         self.add_bot_commands()
 
     async def on_ready(self):
@@ -80,48 +92,60 @@ class Daibl(commands.Bot):
         print()
 
         await self.process_commands(message)
-    
+        
+    def resample_and_save(self, input_path, output_path, target_sr=16000):
+        # Laden der Audiodatei
+        audio, sr_orig = librosa.load(input_path, sr=None, mono=True)  # Mono und Original-Abtastrate
+
+        # Resampling auf die Ziel-Abtastrate, falls notwendig
+        if sr_orig != target_sr:
+            audio = librosa.resample(y=audio, orig_sr=sr_orig, target_sr=target_sr)
+
+        # Konvertieren in 16-Bit-Werte (normales WAV-Format)
+        audio_int16 = np.int16(audio / np.max(np.abs(audio)) * 32767)
+
+        # Speichern der resampelten Audiodatei
+        with wave.open(output_path, 'wb') as wav_file:
+            wav_file.setnchannels(1)  # Mono
+            wav_file.setsampwidth(2)  # 16 Bit
+            wav_file.setframerate(target_sr)
+            wav_file.writeframes(audio_int16.tobytes())
+
     # audio processing
     def pull_audio(self, voice_client : discord.VoiceClient, id):
-        user_data = None
         while voice_client.recording:
-            time.sleep(1)
+            time.sleep(0.5)
+            output_dir = "/nfs/scratch/students/nguyenda81452/project/dev/daibl/discord_bot/test/Test_Audio/daibl_audio/output.wav"
+            sink_data = voice_client.sink.audio_data.items()
             try:
-                for user_id, data in voice_client.sink.audio_data.items():
+                for user_id, data in sink_data:
                     if id == user_id:
-                        user_data = data.file
-                        ### hotword ###
-                    if detect_hotword(user_data):
-                        print("Hotword erkannt!")
-                user_data.seek(0) # move pointer to begin of file
-                with wave.open('./output.wav', 'wb') as wave_file:
-                    wave_file.setnchannels(voice_client.decoder.CHANNELS)
-                    wave_file.setsampwidth(voice_client.decoder.SAMPLE_SIZE // voice_client.decoder.CHANNELS)
-                    wave_file.setframerate(voice_client.decoder.SAMPLING_RATE)
-                    
-                    # Write the audio data to the wave file
-                    wave_file.writeframes(user_data.read())
+                        self.audio_data = data.file
+                        self.audio_data.seek(0)
+                        with wave.open(output_dir, "wb") as f:
+                            f.setnchannels(voice_client.decoder.CHANNELS) # 2
+                            f.setsampwidth(voice_client.decoder.SAMPLE_SIZE // voice_client.decoder.CHANNELS) # 2
+                            f.setframerate(voice_client.decoder.SAMPLING_RATE) # 48000
+                            f.writeframes(self.audio_data.read())
+                        with add_path(os.path.join(
+                            PROJECT_PATH, "assets/ffmpeg-6.0-full_build/bin")):
+                            # hw detection
+                            self.resample_and_save(output_dir, output_dir)
+                            hw_dec = hw_detection(output_dir)
+                            print("HW Detection: ", hw_dec)
+                            if hw_dec:
+                                result = self.stt.audio_model.transcribe(
+                                                output_dir, fp16=torch.cuda.is_available()
+                                            )
+                                print(result["text"].strip())
                 print("Still processing... ", voice_client.recording)
             except Exception as e:
+                traceback.print_exc()
                 print(e)
                 continue
-        print(user_data)
     
     async def finished_callback(self, sink, ctx, author_id):
-        # # Hotword detection
-        # if hw_detection(wav):
-        #     await ctx.channel.send("HW ggeeeeht!")
-        #     # transcribe
-        # with add_path(os.path.join(PROJECT_PATH, "assets/ffmpeg-6.0-full_build/bin")):
-        #     result = self.whisper.transcribe(
-        #         "./daibl_audio/output.wav", fp16=torch.cuda.is_available()
-        #     )
-        # text = result["text"].strip()
-        # print(text)
         print("Fertig")
-            
-        # antwort vom bot
-        # play antwort in voice channel 
     
     def add_bot_commands(self):
         """any commands the bot listens to when the prefix is used"""
@@ -163,25 +187,16 @@ class Daibl(commands.Bot):
         async def start_record(ctx):
             
             self.vc : discord.VoiceClient = await ctx.author.voice.channel.connect() # Connect to the voice channel of the author
-            
+
             self.vc.start_recording(discord.sinks.WaveSink(), self.finished_callback, ctx, ctx.author.id) # Start the recording
             
             await ctx.channel.send("Listening...")
             await asyncio.sleep(1) # wait to let decoder work a little
             self.audio_thread = threading.Thread(
                  target=self.pull_audio, # start pulling audio data
-                args=(self.vc, ctx.author.id)
+                 args=(self.vc, ctx.author.id)
                 )
-            self.audio_thread.start()
-        
-        @self.command(name="hw", pass_context= True)
-        async def hw_dect(ctx):
-            try:
-                if hw_detection():
-                    await ctx.channel.send("HW Klappt")
-            except Exception as e:
-                print(e)
-            
+            self.audio_thread.start()     
                 
 bot = Daibl('$')
 bot.run(TOKEN) # run the bot with the token
