@@ -1,3 +1,4 @@
+from scrap.db_init import db_get_df, db_save_df
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -7,36 +8,20 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-DATABASE_PATH = "discord_bot/scrap/html.sqlite"
-def initialize_database(database_path):
-    con = sqlite3.connect(database_path)
-    html_df = pd.read_sql_query("SELECT filename,title,text,tokens,term_frequency FROM tf_idf", con)
-    con.close()
-    return html_df
+def get_most_similar_articles_tf_idf(message):
+    df = db_get_df("chunk_embeddings")
 
-df=initialize_database(DATABASE_PATH)
+    tfidf_vectorizer = TfidfVectorizer()
+    tfidf_matrix = tfidf_vectorizer.fit_transform(df['chunk_text'])
+    question_tfidf = tfidf_vectorizer.transform([message])
+    similarities = cosine_similarity(question_tfidf, tfidf_matrix)
+    similarity_df = pd.DataFrame({
+        'similarity': similarities[0],
+        'text': df['chunk_text']
+    })
+    sorted_similarity_df = similarity_df.sort_values(by='similarity', ascending=False)
 
-
-frage_text = "welche studiengänge gibt es?"
-
-# Berechne die TF-IDF-Werte der Frage
-vectorizer = TfidfVectorizer()
-frage_tfidf = vectorizer.fit_transform([frage_text])
-
-# Berechne die Ähnlichkeit zwischen Frage und Dokumenten
-cosine_similarities = linear_kernel(frage_tfidf, df.drop(['filename', 'title', 'text', 'tokens'], axis=1))
-
-# Jetzt sind cosine_similarities[i] die Kosinusähnlichkeiten zwischen der Frage und Dokument i.
-
-# Hier verwenden wir tqdm, um den Fortschritt anzuzeigen
-for i in tqdm(range(len(cosine_similarities)), desc="Berechne Ähnlichkeiten", unit=" Dokument"):
-    # cosine_similarities[i] enthält die Ähnlichkeit zwischen Frage und Dokument i
-    ähnlichkeit = cosine_similarities[i]
-
-# Index des Dokuments mit der höchsten Ähnlichkeit
-best_document_index = cosine_similarities.argmax()
-
-# Der Name des besten Dokuments
-best_document_name = df.iloc[best_document_index]['filename']
-
-print(f'Das beste Dokument ist: {best_document_name}')
+    # Print the top N most relevant documents (e.g., top 5)
+    top_n = 3
+    relevant_documents = sorted_similarity_df.head(top_n)
+    return relevant_documents["text"]

@@ -9,6 +9,8 @@ from scrap.db_init import db_get_df
 import json
 from scrap.embedding_algorithms.question_embedding_MiniLM import get_most_similar_articles
 from scrap.embedding_algorithms.msmarco_roberta_base_v3 import get_most_similar_articles_msmarco
+from scrap.embedding_algorithms.tdIdfDistance import get_most_similar_articles_tf_idf
+import re
 
 
 # best 5 documents as context
@@ -32,9 +34,10 @@ def construct_query(documents, message):
     query=f"""
         {'----document----'.join(documents)}
         \n----document----\n
-        in regard of the documents above, anwser the following question: \n
+         Mithilfe der oben stehenden Dokumente beantworte die folgende Frage: \n
         {message.replace('$daibl ', '')}
         """
+    query = re.sub(r'\s+', ' ', query)
 
     print(query)
     return query
@@ -57,5 +60,10 @@ def get_query_embeddings_MiniLM(message):
 # get 5 best articles with embeddings_msmarco_distilroberta_base_v3
 def get_query_embeddings_Msmarco(message):
     documents = get_most_similar_articles_msmarco(message,5)
+    query = construct_query(documents, message) 
+    return query
+
+def get_query_TF_IDF(message):
+    documents = get_most_similar_articles_tf_idf(message)
     query = construct_query(documents, message) 
     return query
