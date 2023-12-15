@@ -1,7 +1,7 @@
 # Load model directly
 import os
-os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface/hub'
-os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface'
+# os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface/hub'
+# os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface'
 
 import torch
 from dotenv import load_dotenv
@@ -22,7 +22,7 @@ prompt = "Wer war Napoleon?"
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(f"\n####################### Device: {device} #############################")
 
-model_id = "lmsys/vicuna-13b-v1.5"
+model_id = "TheBloke/Llama-2-7B-Chat-GPTQ"
 print(f"\nLLM-Model: {model_id}")
 
 model = None
@@ -53,7 +53,7 @@ else:
         task="text-generation", 
         model=model_id,
         torch_dtype=torch.bfloat16, 
-        device_map='auto',
+        device_map='cpu',
         temperature=0.7,
         top_p=0.15,
         top_k=15,
