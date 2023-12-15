@@ -85,3 +85,9 @@ test/
 discord_bot/scrap/html.sqlite
 
 discord_bot/main/scrap/html.sqlite
+
+# because MAC chooses to create a bunch of files
+.DS_Store
+*/.DS_Store
+*/*/DS_Store
+discord_bot/main/TTS_Bot/.DS_Store
