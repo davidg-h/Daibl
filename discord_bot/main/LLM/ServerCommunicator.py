@@ -6,7 +6,8 @@ async def server_get_answer(query):
     connection = "http://127.0.0.1:8080"
     data = {
         "inputs": query[:9000],
-        "parameters": {"max_new_tokens": 64}
+        "parameters": {"max_new_tokens": 128,
+                       "temperature": 0.2}
     }
 
     async with aiohttp.ClientSession() as session:
