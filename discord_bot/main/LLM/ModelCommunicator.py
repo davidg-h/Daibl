@@ -1,6 +1,6 @@
 import os
-os.environ['TRANSFORMERS_CACHE'] = 'D:\.cache\huggingface\hub'
-os.environ['HF_HOME'] = 'D:\.cache\huggingface'
+# os.environ['TRANSFORMERS_CACHE'] = 'D:\.cache\huggingface\hub'
+# os.environ['HF_HOME'] = 'D:\.cache\huggingface'
 
 import torch
 from huggingface_hub import login
@@ -25,7 +25,7 @@ class ModelCommunicator:
         #setup
         login(token=hf_api_token)
         device = "cuda:0" if torch.cuda.is_available() else "cpu"
-        model_id = "jphme/em_german_7b_v01"
+        model_id = "meta-llama/Llama-2-13b-chat-hf"
         quantized_file = "" # only set if loading quantized model (model.gguf)
         self.model = None
         
@@ -54,12 +54,12 @@ class ModelCommunicator:
                 model=model_id,
                 torch_dtype=torch.bfloat16, 
                 device_map='auto',
-                temperature=0.7,
+                temperature=0.3,
                 top_p=0.15,
                 top_k=15,
                 repetition_penalty=1.1,
                 num_return_sequences=1,
-                max_new_tokens=65,
+                max_new_tokens=128,
                 #max_length=256,
             )
 

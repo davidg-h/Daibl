@@ -5,7 +5,7 @@ wheel
 
 # project related
 python-dotenv
-discord.py[voice]
+py-cord[voice]
 ffmpeg-python
 pyaudio # PyAudio (for microphone users) PyAudio is required if and only if you want to use microphone input (Microphone). For instalation on macOS GNU/Linux follow https://pypi.org/project/PyAudio/
 onnxruntime
@@ -16,12 +16,13 @@ git+https://github.com/openai/whisper.git
 
 # hugging face
 huggingface_hub
-transformers[torch]
+sentencepiece # needed for older models as sentencepiece was removed as a required dependency from transformers
 datasets
+accelerate
+transformers[torch]
 datasets[audio]
 datasets[vision]
 diffusers[torch]
-accelerate
 ctransformers[cuda] # loading quantiziced models
 
 # Pytorch with cuda

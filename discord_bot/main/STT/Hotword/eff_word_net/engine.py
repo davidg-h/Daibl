@@ -1,7 +1,6 @@
 import json
 from os.path import isfile , join
 import numpy as np
-import pyaudio
 
 from typing import Tuple , List ,Union
 
@@ -124,6 +123,12 @@ class HotwordDetector :
                  or 
             None when no voice activity is identified
         """
+        
+        max_value = inp_audio_frame.max()
+        if max_value == 0:
+            # Behandlung des Falls, dass max_value 0 ist
+            # Zum Beispiel: Weitermachen mit dem nächsten Schleifendurchlauf oder Setzen eines Standardwerts
+            return None
 
         if(not unsafe):
             upperPoint = max(
