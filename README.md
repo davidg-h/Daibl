@@ -4,6 +4,7 @@
 
 **Table of Contents:**
 
+- [Setting Up](#setting-Up)
 - [Folder structure](#folder-structure)
 - [Docker environment](#docker-environment)
 - [Virtual environment activation](#virtual-environment-activation)
@@ -12,6 +13,10 @@
 - [Add your files](#add-your-files)
 - [Remarks](#remarks)
 - [License](#license)
+
+
+## Setting Up
+![](https://git.informatik.fh-nuernberg.de/devpsoft_studios/daibl/-/raw/main/assets/docs/docs_images/clone_project.gif)
 
 ## Folder structure
 
