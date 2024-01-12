@@ -91,3 +91,4 @@ discord_bot/main/scrap/html.sqlite
 */.DS_Store
 */*/DS_Store
 discord_bot/main/TTS_Bot/.DS_Store
+discord_bot/main/scrap/visualization/html.sqlite
