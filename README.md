@@ -1,33 +1,36 @@
-<h1>
-<p align="center">
-  <img src="assets/docs/docs_images/logo.png" width="20%" height="20%">
-  </br>Daibl
-</h1>
+<div align="center">
 
-[![python](https://img.shields.io/badge/min._Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![pytorch](https://img.shields.io/badge/PyTorch-latest-EE4C2C.svg?style=flat&logo=pytorch)](https://pytorch.org)
-[![huggingface](https://img.shields.io/badge/huggingface-latest-EE4C2C.svg?style=flat&logo=pytorch)](https://huggingface.co/)
-![Static Badge](https://img.shields.io/badge/Example%20Badge-8A2BE2)
-![Static Badge](https://img.shields.io/badge/Example%202-blue)
-[![Contributors][contributors-shield]][contributors-url]
+  <img src="assets/docs/docs_images/logo.png" width="20%" height="20%">
+  
+  # Daibl
+
+
+[![python][python-shield]][python-url]
+[![pytorch][pytorch-shield]][pytorch-url]
+[![HuggingFace][HuggingFace-shield]][HuggingFace-url]
+[![pycord][pycord-shield]][pycord-url]
+[![whisper][whisper-shield]][whisper-url]
+[![coqui][coqui-shield]][coqui-url]
+
+</div>
 
 ---
 
 <details>
-<summary>Table of Contents:</summary>
+<summary>Table of Contents</summary>
 
-- About the project
-  - Folder Structure
-  - Modules
-  - Usage
-- Setup Guide
-- Additional
-  - Docker environment
-  - Virtual environment
-- Evaluation
-- Authors
-- License
-- Remarks
+- [About the project](#about-the-project)
+  - [Folder Structure](#folder-structure)
+  - [Modules](#modules)
+  - [Usage](#usage)
+- [Setup Guide](#setup-guide)
+- [Additional](#additional)
+  - [Docker environment](#docker-environment-beta)
+  - [Virtual environment](#virtual-environment-activation)
+- [Evaluation](#evaluation)
+- [Authors](#authors)
+- [License](#license)
+- [Remarks](#remarks)
 
 </details>
 
@@ -59,7 +62,7 @@ The folder structure should give a rough overview of the code base and make the 
 
 ### Modules
 
-TODO add description
+Modules are designed to be interchangeable, for example using different LLMs to generate text
 
 #### Bot
 
@@ -73,7 +76,7 @@ For our project we built a pipeline with Hugging Face to load the LLM and adjust
 
 #### STT (Speech to text)
 
-(ASR) Hotword
+TODO (ASR) Hotword
 
 This module uses whisper to transcripe audio data from discord. The data is saved as a wav file and given to whisper to process. The transcriped text is then given to the TTS module.
 
@@ -91,11 +94,11 @@ TODO Explain scrap, what technology is used, how data is processed ...
 
 TODO Gif on how to use the bot
 
-## Setup Guide
+## <u> Setup Guide </u>
 
-<p align="center">
-<img src="assets/docs/docs_images/clone_project.gif">
-</p>
+<div align="center">
+  <img src="assets/docs/docs_images/clone_project.gif">
+</div>
 
 Clone the repository:
 
@@ -113,7 +116,7 @@ git remote add origin https://git.informatik.fh-nuernberg.de/devpsoft_studios/da
 git branch -M main
 ```
 
-Create a $`\textcolor{red}{\text{.env file}}`$ in the **[daibl/discord_bot/main](discord_bot/main/example.env)** directory and set the environment variables: (read the [remarks](#remarks) after creating the file)
+Create a $`\textcolor{red}{\text{.env file}}`$ in the **daibl/discord_bot/main** directory and set the environment variables: (read the [remarks](#remarks) after creating the file)
 
 ```sh
 # .env example
@@ -128,9 +131,7 @@ Create a [virtual environment](#virtual-environment-activation) and install the 
 
 Download voice models or use existing ones.
 
-############################################
-
-## Additional
+## <u> Additional </u>
 
 ### Docker environment (beta)
 
@@ -140,21 +141,24 @@ The discord bot should be runable in any environment. For this purpose we use Do
 
 The virtual environment is used to make packaging easier and to only install the needed dependencies. To setup the virtual environment look into the corresponding [virtual environment documentation](assets/docs/Venv.md)
 
-## Evaluation
+## <u> Evaluation </u>
 
 TODO eval of LLMs and context
 
-## Authors
+## <u> Authors </u>
 
 [@David](https://github.com/davidg-h)
-
 [@Vincent](https://github.com/firevince)
-
 [@Patrick](https://github.com/DieserPat)
+[@Elisabeth](https://github.com/elisabethvolkinshtein)
 
-## License
+## <u> License </u>
 
 Click [this](/LICENSE) to read the license.
+
+---
+
+---
 
 ---
 
@@ -171,6 +175,22 @@ Every time the user/developer has to make a change for path reasons it will be m
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-<!-- https://shields.io/badges (Bagde generator)-->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
+<!-- https://shields.io/badges (Bagde generator) -->
+<!-- https://github.com/Ileriayo/markdown-badges -->
+[python-shield]: https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white
+[python-url]: https://www.python.org
+
+[pytorch-shield]: https://img.shields.io/badge/PyTorch-latest-EE4C2C.svg?style=flat&logo=pytorch
+[pytorch-url]:https://pytorch.org
+
+[HuggingFace-shield]: https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-latest-orange
+[HuggingFace-url]: https://huggingface.co/
+
+[pycord-shield]: https://img.shields.io/badge/Pycord-voice-neongreen?logo=discord&logoColor=white
+[pycord-url]: https://docs.pycord.dev/en/stable/
+
+[whisper-shield]: https://img.shields.io/badge/Whisper-74aa9c?logo=openai&logoColor=white
+[whisper-url]: https://github.com/openai/whisper
+
+[coqui-shield]: https://img.shields.io/badge/%F0%9F%90%B8Coqui.ai_TTS-green
+[coqui-url]: https://github.com/coqui-ai/TTS
