@@ -124,8 +124,10 @@ DISCORD_TOKEN=<your_token>
 DISCORD_GUILD=<guild_or_server_name>
 HUGGINGFACEHUB_API_TOKEN=<your_api_token>
 PROJECT_PATH=<path/to/project> # Full path to project to simplify imports (if you want to read further into this google Python Path)
-DATABASE_PATH=<path/to/database/of/context_documents>
+DATABASE_PATH=<path/to/database_of_context_documents>
 ```
+
+The Hugging Face api token is used to get access to the [Hugging Face Hub](https://huggingface.co/docs/hub/index) and the [Hugging Face Ecosystem](https://huggingface.co/docs). For example: You can easily download different LLMs and Datasets with access through the api token in your python script. This makes automation and handling of ML components easier.
 
 Create a [virtual environment](#virtual-environment-activation) and install the requirements
 
