@@ -58,7 +58,7 @@ class Daibl(commands.Bot):
         self.audio_data = None
         self.audio_thread = None
         self.transcription = ""
-        self.audio_input = "/nfs/scratch/students/nguyenda81452/project/dev/daibl/discord_bot/main/STT/input.wav"
+        self.audio_input = os.path.join(PROJECT_PATH, "discord_bot/main/STT/input.wav")
         self.add_bot_commands()
 
     async def on_ready(self):
@@ -153,7 +153,8 @@ class Daibl(commands.Bot):
             #     prombt = ctx.message.content
             prompt = await run_blocking(get_query_TF_IDF, self, ctx.message.content.replace("$daibl ", ""))
             answer = await run_blocking(self.modelCommunicator.returnPromptText, self, prompt)
-            answer = answer[-100:]
+            # answer = answer[-100:]
+            answer = answer[:1900]
             await ctx.channel.send(answer)
             self.vc = await self.voice.speak(self.vc, ctx, answer, self)
             await self.vc.disconnect()
@@ -191,7 +192,7 @@ class Daibl(commands.Bot):
                 # hw_dec = hw_detection(self.audio_input)
                 # print("HW Detection: ", hw_dec) # debug
                 result = self.stt.transcribe(audio=self.audio_input, fp16=torch.cuda.is_available())
-                self.transcription = "$daibl " + result["text"].strip()#.replace("Daibel", "")
+                self.transcription = "$daibl " + result["text"].strip()
                 print(self.transcription)
                 ctx.message.content = self.transcription
                 await adress_bot(ctx)
