@@ -135,9 +135,9 @@ Download voice models or use existing ones.
 
 ## <u> Additional </u>
 
-### Docker environment (beta)
+### Docker environment (beta) 
 
-The discord bot should be runable in any environment. For this purpose we use Docker. So file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project.
+The discord bot should be runable in any environment. For this purpose we use Docker. So file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project with docker.
 
 ### **Virtual environment activation**
 

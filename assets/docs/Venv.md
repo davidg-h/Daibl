@@ -30,7 +30,7 @@
 
 5. Step **Important**: [Before pushing to repository, update the requirements.txt (only if new packages are used in the project)](https://pip.pypa.io/en/stable/cli/pip_freeze/)
 
-    Remember pip freeze writes all packages installed in .venv to the requirements.txt . If you want to keep the requirements.txt more compact/sanitized list only the necessary packages. Dependencies will normally be resolved by pip (another reason to keep pip updated).
+    Remember pip freeze writes all packages installed in .venv to the requirements.txt . If you want to keep the requirements.txt more compact/sanitized then list only the necessary packages. Dependencies will normally be resolved by pip (another reason to keep pip updated).
 
     In the terminal:
 
@@ -42,7 +42,7 @@
 
 <br/>
 
-**If you get an error try this first**: (Error is related to the [ExecutionPolicy](https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows))
+On Windows: **If you get an error try this first**: (Error is related to the [ExecutionPolicy](https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows))
 
 Open Powershell.exe as Admin and enter:
 
@@ -67,7 +67,7 @@ To check if the virtual environment is active:
 
 ```sh
 python --version
-# out: Python 3.8.10
+# example output: Python 3.8.10
 ```
 
 ### Install get package/dependencies in virtuel env
