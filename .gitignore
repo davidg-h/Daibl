@@ -274,6 +274,6 @@ tmp/
 test/
 discord_bot/scrap/html.sqlite
 .DS_Store
-models/
+tts-models/
 output.wav
 input.wav
