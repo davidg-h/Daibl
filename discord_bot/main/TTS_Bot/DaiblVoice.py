@@ -26,11 +26,11 @@ class Voice:
         self.tts = TTS(
             model_path=os.path.join(
                 self.PROJECT_PATH,
-                "assets/models/tts-models/patrick-tts/vits_patrick-tts-voice-November-10-2023_12+56AM-a266f88/best_model_546403.pth",
+                "assets/models/tts-models/patrick-tts/vits_patrick-tts-voice-November-10-2023_12+56AM-a266f88/best_model_546403.pth", # !!Change!! to the desired tts model
             ),
             config_path=os.path.join(
                 self.PROJECT_PATH,
-                "assets/models/tts-models/patrick-tts/vits_patrick-tts-voice-November-10-2023_12+56AM-a266f88/config.json",
+                "assets/models/tts-models/patrick-tts/vits_patrick-tts-voice-November-10-2023_12+56AM-a266f88/config.json", # !!Change!! to the desired tts model config
             ),
             gpu=True
         ).to(device)
