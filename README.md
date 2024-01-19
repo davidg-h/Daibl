@@ -84,6 +84,8 @@ This module uses whisper to transcripe audio data from discord. The data is save
 
 TTS_Bot handles the training/finetuning of voice models as well as generating the voice to speak with the user. The text is processed by the voice model and saved to a wav file which is being played over the voice channel to the user.
 
+To read more about the TTS setup click [this](assets/docs/TTS_Voice.md).
+
 To run the voice model Coqui.ai TTS is being used. Coqui.ai TTS is a library for advanced Text-to-Speech generation. The platform offers pretrained models for over 1100 languages, along with tools for training new models and fine-tuning existing ones in any language. Additionally, it provides utilities for dataset analysis and curation.
 
 #### Scrap
@@ -129,9 +131,11 @@ DATABASE_PATH=<path/to/database_of_context_documents>
 
 The Hugging Face api token is used to get access to the [Hugging Face Hub](https://huggingface.co/docs/hub/index) and the [Hugging Face Ecosystem](https://huggingface.co/docs). For example: You can easily download different LLMs and Datasets with access through the api token in your python script. This makes automation and handling of ML components easier.
 
+(Optional: To customize your Hugging Face environment follow [this manual](https://stackoverflow.com/questions/63312859/how-to-change-huggingface-transformers-default-cache-directory) and this [cache setup](https://huggingface.co/docs/transformers/installation?highlight=transformers_cache#cache-setup).)
+
 Create a [virtual environment](#virtual-environment-activation) and install the requirements
 
-Download voice models or use existing ones.
+[Download voice models](https://huggingface.co/Daibl/Voice) or use existing ones -> Change the [necessary paths](discord_bot/main/TTS_Bot/DaiblVoice.py) to use the models.
 
 ## <u> Additional </u>
 
