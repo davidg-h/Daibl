@@ -71,7 +71,7 @@ Source: [coqui-ai TTS: Tutorial For Nervous Beginners](https://tts.readthedocs.i
 
 ### Finetune model
 
-For the german language we use a base model from [Thorsten-Voice](https://github.com/thorstenMueller/Thorsten-Voice/tree/master) which is located in: [daibl/assets/models/tts-models/tts_models--de--thorsten--vits/](../models/tts-models/tts_models--de--thorsten--vits)
+For the german language we use a base model from [Thorsten-Voice](https://github.com/thorstenMueller/Thorsten-Voice/tree/master) which is normally located in: [daibl/assets/models/tts-models/tts_models--de--thorsten--vits/](../models/tts-models/tts_models--de--thorsten--vits) after [downloading](../models/tts-models/download_voice.py). Other Thorsten Models you can find at the link above.
 
 Start finetuning on the base model:
 
