@@ -10,6 +10,7 @@ import torch
 
 from TTS.api import TTS
 from util.Antiblocking import run_blocking, run_async_in_thread
+from util.Environment import find_binary
 
 
 class Voice:
@@ -52,8 +53,9 @@ class Voice:
         
         t.output_done = True
         vc.stop()
+        ffmpeg_executable_dir = find_binary(os.path.join(self.PROJECT_PATH, "assets/ffmpeg_builds/"), 'ffmpeg')
         vc.play(
-            discord.FFmpegPCMAudio(executable=os.path.join(self.PROJECT_PATH, "assets/ffmpeg-linux/ffmpeg"), source=cwd + "/output.wav",
+            discord.FFmpegPCMAudio(executable=os.path.join(ffmpeg_executable_dir, 'ffmpeg') , source=cwd + "/output.wav",
             ),
             after=lambda e: print("done talking"),
         )
@@ -78,8 +80,9 @@ class Voice:
                 self.PROJECT_PATH,
                 "discord_bot/main/TTS_Bot/elevator.mp3",
             )
+        ffmpeg_executable_dir = find_binary(os.path.join(self.PROJECT_PATH, "assets/ffmpeg_builds/"), 'ffmpeg')
         vc.play(
-            discord.FFmpegPCMAudio(executable=os.path.join(self.PROJECT_PATH, "assets/ffmpeg-linux/ffmpeg"), source=elevator_music,
+            discord.FFmpegPCMAudio(executable=os.path.join(ffmpeg_executable_dir, 'ffmpeg'), source=elevator_music,
             ),
             after=lambda e: print("done playing elevator musdic"),
         )

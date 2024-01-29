@@ -277,3 +277,4 @@ discord_bot/scrap/html.sqlite
 tts-models/
 output.wav
 input.wav
+ffmpeg_builds

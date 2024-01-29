@@ -16,7 +16,7 @@ from TTS_Bot.DaiblVoice import Voice
 from STT.Hotword.detection import hw_detection
 from STT.LiveTranscripe import LiveTranscription
 from scrap.query_crafter import  get_query_embeddings_MiniLM, get_query_TF_IDF
-from util.Environment import add_path
+from util.Environment import add_path, find_binary
 
 
 class Daibl(commands.Bot):
@@ -187,7 +187,7 @@ class Daibl(commands.Bot):
             
             await asyncio.sleep(6)
             await stop_recording(ctx)
-            with add_path(os.path.join(self.PROJECT_PATH, "assets/ffmpeg-linux/")):
+            with add_path(find_binary(os.path.join(self.PROJECT_PATH, "assets/ffmpeg_builds/"), 'ffmpeg')):
                 # resample_and_save(self.audio_input, self.audio_input)
                 # hw_dec = hw_detection(self.audio_input)
                 # print("HW Detection: ", hw_dec) # debug

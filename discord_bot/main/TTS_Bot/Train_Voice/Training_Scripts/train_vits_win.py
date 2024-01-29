@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 from trainer import Trainer, TrainerArgs
 
@@ -10,7 +10,7 @@ from TTS.tts.models.vits import Vits, VitsAudioConfig
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 
 def main(name: str):
