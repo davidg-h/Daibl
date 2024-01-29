@@ -38,7 +38,7 @@ The dataset follows the ljspeech folder structure:
 The explanation of the ljspeech structure and how to generate it from the data recorded with mimic-recording-studio can be found [here](https://www.youtube.com/watch?v=Vxq8FAoNzqY&list=PL19C7uchWZeo-j9mUmYeVfgzbP3vHSHU-&index=4) <br>
 &rarr; the script is already there: [daibl/discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/MRS2LJSpeech.py](../../discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/MRS2LJSpeech.py)
 
-***MRS2LJSpeech.py ffmpeg flag is defaulted to True to convert any audio to the required format - In general pay attention that you $`\textcolor{red}{\text{start anything that needs ffmpeg}}`$ with [daibl/assets/ffmpeg-6.0-full_build/bin/](../ffmpeg-6.0-full_build/bin)  (look at how the util/Environment.py works)***
+***MRS2LJSpeech.py ffmpeg flag is defaulted to True to convert any audio to the required format - In general pay attention that you $`\textcolor{red}{\text{start anything that needs ffmpeg}}`$ with [the respective ffmpeg builds in the assests](../ffmpeg_builds/)  (look at how the [util/Environment.py](../../discord_bot/main/util/Environment.py) works)***
 
 **$`\textcolor{red}{\text{Attention}}`$**: your data (.wav files) should have following format:
 
