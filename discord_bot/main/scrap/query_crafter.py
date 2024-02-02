@@ -7,7 +7,7 @@ from scipy.spatial.distance import cosine
 from scrap.db_init import db_get_df
 #from scrap.spacy_keywordextraction import extraction
 import json
-from scrap.embedding_algorithms.question_embedding_MiniLM import get_most_similar_articles
+from scrap.embedding_algorithms.question_embedding_MiniLM import get_most_similar_articles_MiniLM
 from scrap.embedding_algorithms.msmarco_roberta_base_v3 import get_most_similar_articles_msmarco
 from scrap.embedding_algorithms.tdIdfDistance import get_most_similar_articles_tf_idf
 import re
@@ -30,7 +30,7 @@ import re
 #     print(query)
 #     return query
 
-def construct_query(documents, message):
+def construct_prompt(documents, message):
     query=f"""
         {'----document----'.join(documents)}
         \n----document----\n"""
@@ -49,22 +49,22 @@ def construct_query(documents, message):
 def get_query_all(message):
     df = db_get_df("word_embeddings", ["text"])
     documents = df["text"]
-    query = construct_query(documents, message)
+    query = construct_prompt(documents, message)
     return query
 
 # get 5 best articles with MiniLM-L6-v2
-def get_query_embeddings_MiniLM(message):
-    documents = get_most_similar_articles(message,5)
-    query = construct_query(documents, message)   
+def get_query_embeddings_MiniLM(message,document_amount):
+    documents = get_most_similar_articles_MiniLM(message,document_amount)
+    query = construct_prompt(documents, message)   
     return query
 
 # get 5 best articles with embeddings_msmarco_distilroberta_base_v3
 def get_query_embeddings_Msmarco(message):
     documents = get_most_similar_articles_msmarco(message,5)
-    query = construct_query(documents, message) 
+    query = construct_prompt(documents, message) 
     return query
 
-def get_query_TF_IDF(message):
-    documents = get_most_similar_articles_tf_idf(message)
-    query = construct_query(documents, message) 
+def get_query_TF_IDF(message,document_amount):
+    documents = get_most_similar_articles_tf_idf(message,document_amount)
+    query = construct_prompt(documents, message) 
     return query

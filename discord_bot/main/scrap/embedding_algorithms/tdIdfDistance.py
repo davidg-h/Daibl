@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
-def get_most_similar_articles_tf_idf(message):
+def get_most_similar_articles_tf_idf(message,document_amount):
     df = db_get_df("chunk_embeddings")
 
     tfidf_vectorizer = TfidfVectorizer()
@@ -22,6 +22,5 @@ def get_most_similar_articles_tf_idf(message):
     sorted_similarity_df = similarity_df.sort_values(by='similarity', ascending=False)
 
     # Print the top N most relevant documents (e.g., top 5)
-    top_n = 3
-    relevant_documents = sorted_similarity_df.head(top_n)
+    relevant_documents = sorted_similarity_df.head(document_amount)
     return relevant_documents["text"]
