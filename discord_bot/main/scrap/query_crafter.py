@@ -7,11 +7,9 @@ from scipy.spatial.distance import cosine
 from scrap.db_init import db_get_df
 #from scrap.spacy_keywordextraction import extraction
 import json
-from scrap.question_embedding_MiniLM import get_most_similar_articles
-from scrap.msmarco_roberta_base_v3 import get_most_similar_articles_msmarco
-from scrap.tdIdfDistance import get_most_similar_articles_tf_idf
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from scrap.embedding_algorithms.question_embedding_MiniLM import get_most_similar_articles
+from scrap.embedding_algorithms.msmarco_roberta_base_v3 import get_most_similar_articles_msmarco
+from scrap.embedding_algorithms.tdIdfDistance import get_most_similar_articles_tf_idf
 import re
 
 
@@ -56,13 +54,13 @@ def get_query_all(message):
 
 # get 5 best articles with MiniLM-L6-v2
 def get_query_embeddings_MiniLM(message):
-    documents = get_most_similar_articles(message,3)
+    documents = get_most_similar_articles(message,5)
     query = construct_query(documents, message)   
     return query
 
 # get 5 best articles with embeddings_msmarco_distilroberta_base_v3
 def get_query_embeddings_Msmarco(message):
-    documents = get_most_similar_articles_msmarco(message,3)
+    documents = get_most_similar_articles_msmarco(message,5)
     query = construct_query(documents, message) 
     return query
 
