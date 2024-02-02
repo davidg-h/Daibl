@@ -1,7 +1,0 @@
-# looking for real time capable model
-meta-llama/Llama-2-7b-chat-hf," loading model 23 sec, generating text 1 min, text quality good but english"
-meta-llama/Llama-2-7b-hf," loading model 30 sec, generating text 1 min, text quality gives weblinks useability questionable"
-meta-llama/Llama-2-13b-chat-hf," loading model 1 min, generating text 5 min, text quality is acceptable"
-jphme/em_german_7b_v01," loading model 1 min, generating text 1:10 min, text quality unuseable"
-jphme/Llama-2-13b-chat-german," loading model 1:48 min, generating text 4 min, text quality is acceptable"
-# Quantizized models

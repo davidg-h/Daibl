@@ -208,13 +208,13 @@ def main(PROJECT_PATH):
 
 
 # Begin of script execution
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv())
 PROJECT_PATH = os.getenv("PROJECT_PATH")
 sys.path.append(PROJECT_PATH)  # to make the util module recognizeable by python path
-from discord_bot.main.util.Environment import add_path
+from discord_bot.main.util.Environment import add_path, find_binary
 
 if __name__ == "__main__":
-    with add_path(os.path.join(PROJECT_PATH, "assets/ffmpeg-6.0-full_build/bin")):
+    with add_path(find_binary(os.path.join(PROJECT_PATH, "assets/ffmpeg_builds/"), 'ffmpeg')):
         main(PROJECT_PATH)

@@ -45,7 +45,7 @@ The folder structure should give a rough overview of the code base and make the 
 ```sh
 📦assets # resources and assets to run the project
  ┣ 📂docs
- ┣ 📂ffmpeg-6.0-full_build
+ ┣ 📂ffmpeg_builds
  ┗ ...
 📦discord_bot
  ┣ 📂main
@@ -55,9 +55,8 @@ The folder structure should give a rough overview of the code base and make the 
  ┃  ┣ 📂TTS_Bot # Module for text-to-speech
  ┃  ┣ 📂scrap   # TODO add description Vincent
  ┃  ┣ 📂util    # Module for utilities
- ┃  ┣ 📜main.py # programm entry point
- ┃  ┗ 📜.env    # token and keys
- ┗ (📂test) # possible test folder
+ ┃  ┗ 📜main.py # programm entry point
+ ┗ 📜.env    # token and keys
  ```
 
 ### Modules
@@ -102,7 +101,7 @@ TODO Gif on how to use the bot
   <img src="assets/docs/docs_images/clone_project.gif">
 </div>
 
-Clone the repository:
+- Clone the repository:
 
 ```sh
 mkdir daibl
@@ -118,7 +117,7 @@ git remote add origin https://git.informatik.fh-nuernberg.de/devpsoft_studios/da
 git branch -M main
 ```
 
-Create a $`\textcolor{red}{\text{.env file}}`$ in the **daibl/discord_bot/main** directory and set the environment variables: (read the [remarks](#remarks) after creating the file)
+- Create a $`\textcolor{red}{\text{.env file}}`$ in the [root of the project](/) and set the environment variables: (read the [remarks](#remarks) after creating the file)
 
 ```sh
 # .env example
@@ -133,13 +132,17 @@ The Hugging Face api token is used to get access to the [Hugging Face Hub](https
 
 (Optional: To customize your Hugging Face environment follow [this manual](https://stackoverflow.com/questions/63312859/how-to-change-huggingface-transformers-default-cache-directory) and this [cache setup](https://huggingface.co/docs/transformers/installation?highlight=transformers_cache#cache-setup).)
 
-Create a [virtual environment](#virtual-environment-activation) and install the requirements
+- Create a [virtual environment](#virtual-environment-activation) and install the requirements
 
-[Download voice models](https://huggingface.co/Daibl/Voice) or use existing ones -> Change the [necessary paths](discord_bot/main/TTS_Bot/DaiblVoice.py) to use the models.
+- [Download voice models](https://huggingface.co/Daibl/Voice) or use existing ones -> Change the [necessary paths](discord_bot/main/TTS_Bot/DaiblVoice.py) to use the models.
+
+  ***Note: you can use the [download script](assets/models/tts-models/download_voice.py) for the voice models***
+
+- [Download ffmpeg with our script](assets/ffmpeg_builds/download_ffmpeg.py) or [manually](https://ffmpeg.org/download.html). FFMPEG is needed for audio processing used in STT and TTS
 
 ## <u> Additional </u>
 
-### Docker environment (beta) 
+### Docker environment (beta)
 
 The discord bot should be runable in any environment. For this purpose we use Docker. So file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project with docker.
 
