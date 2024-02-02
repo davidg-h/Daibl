@@ -4,9 +4,9 @@ import wave
 import time
 from STT.Hotword.eff_word_net.engine import HotwordDetector
 from STT.Hotword.eff_word_net.audio_processing import Resnet50_Arc_loss
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
-load_dotenv()
+load_dotenv(find_dotenv())
 PROJECT_PATH = os.getenv("PROJECT_PATH")
 base_model = Resnet50_Arc_loss()
 def hw_detection(wav_file):

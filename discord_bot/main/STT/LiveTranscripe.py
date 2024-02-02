@@ -13,7 +13,7 @@ import tempfile
 import time
 from sys import platform
 
-from util.Environment import add_path
+from util.Environment import add_path, find_binary
 from types import SimpleNamespace
 
 
@@ -223,10 +223,8 @@ class LiveTranscription:
 
                     # Read the transcription.
                     with add_path(
-                        os.path.join(
-                            self.PROJECT_PATH, "assets/ffmpeg-6.0-full_build/bin"
-                        )
-                    ):
+                        find_binary(os.path.join(self.PROJECT_PATH, "assets/ffmpeg_builds/"), 'ffmpeg')
+                        ):
                         if torch.cuda.is_available():
                             with torch.cuda.device("cuda:0"):
                                 result = audio_model.transcribe(

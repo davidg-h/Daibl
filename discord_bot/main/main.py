@@ -1,19 +1,20 @@
 # daibl_bot.py
 import os
+import atexit
+import sys
 os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface/hub'
 os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface'
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from huggingface_hub import logout
 
 from LLM.ModelCommunicator import ModelCommunicator
 from TTS_Bot.DaiblVoice import Voice
 from Bot.Daibl import Daibl
 
-
 def main():
     # credential stored as environment variables (should be locally on every machine)
-    load_dotenv()
+    load_dotenv(find_dotenv())
     TOKEN = os.getenv("DISCORD_TOKEN")
     GUILD = int(os.getenv("DISCORD_GUILD"))
     HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
@@ -35,5 +36,11 @@ def main():
     # starting the bot
     bot.run(TOKEN)
 
+def cleanup():
+    print ('Exiting')
+    logout()
+    sys.exit(0)
+
 if __name__ == "__main__":
+    atexit.register(cleanup)
     main()
