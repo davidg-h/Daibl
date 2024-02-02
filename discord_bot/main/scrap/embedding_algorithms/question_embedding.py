@@ -69,8 +69,9 @@ def get_5_most_similar_documents(message):
     df = db_get_df("chunk_embeddings", ["chunk_word_embeddings_2", "chunk_text"])
     question_embedding = question_embeddings(message)
     df["distance"] = [calculate_document_question_distance(question_embedding,json.loads(document_embedding))for document_embedding in df["chunk_word_embeddings_2"]]
-    most_similar_documents = df.nsmallest(4, "distance")
-    print(f"question embedding: {question_embedding}")
+    most_similar_documents = df.nsmallest(5, "distance")
+    most_similar_documents = df.sample(5)
+    # print(f"question embedding: {question_embedding}")
     print(most_similar_documents["distance"])
 
     return most_similar_documents["chunk_text"]
