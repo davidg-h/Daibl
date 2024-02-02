@@ -39,14 +39,14 @@ class ModelCommunicator:
                 tokenizer=tokenizer, 
                 torch_dtype=torch.bfloat16, 
                 device_map='auto',
-                temperature=0.7,
+                temperature=0.2,
                 top_p=0.15,
                 top_k=15,
                 repetition_penalty=1.1,
                 num_return_sequences=1,
                 eos_token_id=tokenizer.eos_token_id,
                 max_new_tokens=65,
-                #max_length=256,
+                max_length=256,
             )
         else:
             self.model = pipeline(
