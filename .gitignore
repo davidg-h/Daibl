@@ -83,6 +83,11 @@ tmp/
 
 test/
 discord_bot/scrap/html.sqlite
+.DS_Store
+tts-models/
+output.wav
+input.wav
+ffmpeg_builds
 
 discord_bot/main/scrap/html.sqlite
 
