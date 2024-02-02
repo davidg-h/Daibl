@@ -4,29 +4,38 @@
 -> | [Back](/README.md)
 -|-
 
-**Table of Contents:**
+<details>
+<summary>Table of Contents</summary>
 
 - [Install Docker Environment](#install-docker-environment)
-  - [Install WSL](#install-wsl-windows-subsystem-for-linux)
+  - [Install WSL](#windows-only-install-wsl-windows-subsystem-for-linux)
 - [Deploying and pushing an image](#deploying-and-pushing-an-image)
+</details>
+
+*Disclaimer: As our bot should be able to run on any machine, this implementation is still in the test phase. Use at own risk.*
 
 ## Install [Docker Environment](https://www.docker.com/)
 
-This makes it possible to monitor your images and containers.
+This makes it possible to monitor and run your images and containers.
 To get more familiar with docker and its environment read the [documentation](https://docs.docker.com/get-started/)
 
-[Learn Docker in 12 Minutes 🐳](https://www.youtube.com/watch?v=YFl2mCHdv24)
+[Install Docker on other OS](https://docs.docker.com/get-docker/)
 
-[Learn Docker in 7 Easy Steps - Full Beginner's Tutorial](https://www.youtube.com/watch?v=gAkwW2tuIqE)
+Getting started:
 
-### Install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install-manual) (Windows Subsystem for Linux)
+- [Learn Docker in 12 Minutes 🐳](https://www.youtube.com/watch?v=YFl2mCHdv24)
 
-You will need this as Docker is based on a Linux distribution. At least on Windows. Just follow the manual and get a working Linux distribution for your machine.
+- [Learn Docker in 7 Easy Steps - Full Beginner's Tutorial](https://www.youtube.com/watch?v=gAkwW2tuIqE)
+
+### Windows only: Install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install-manual) (Windows Subsystem for Linux)
+
+As most of our devs have a Windows machine this step was necessary to run Docker. The Windows Subsystem for Linux (WSL) is a compatibility layer in Windows that enables users to run a Linux distribution directly on a Windows machine without the need for a traditional dual-boot setup. 
 
 ### Get [Docker VS Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) from Microsoft
 
 [Documentation and overview](https://code.visualstudio.com/docs/containers/overview) on how it works in VS Code
 
+---
 ---
 
 ## Deploying and pushing an image

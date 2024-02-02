@@ -6,9 +6,11 @@ RUN pip3 install pip setuptools wheel --upgrade
 RUN apt-get update && apt-get install -y ffmpeg
 
 # TODO tokens will be with .env file es authetication
-ENV DISCORD_TOKEN=MTA4ODQxODAxMDczMTExODY0Mw.G5Np4a.pJ5-9yJ2k8w_3YdHtI_GvxGsEfozD8AUF2VvPY
-ENV DISCORD_GUILD=1085963828589756437
-ENV HUGGINGFACEHUB_API_TOKEN=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
+ENV DISCORD_TOKEN=<your_token>
+ENV DISCORD_GUILD=<guild_or_server_name>
+ENV HUGGINGFACEHUB_API_TOKEN=<your_api_token>
+ENV PROJECT_PATH=<path/to/project> # Full path to project to simplify imports (if you want to read further into this google Python Path)
+ENV DATABASE_PATH=<path/to/database_of_context_documents>
 
 COPY sanitized_req.txt requirements.txt
 RUN pip install -r requirements.txt
