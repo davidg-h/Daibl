@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 from trainer import Trainer, TrainerArgs
 
@@ -10,7 +10,7 @@ from TTS.tts.models.vits import Vits, VitsAudioConfig
 from TTS.tts.utils.text.tokenizer import TTSTokenizer
 from TTS.utils.audio import AudioProcessor
 
-load_dotenv()
+load_dotenv(find_dotenv())
 
 
 def main(name: str):
@@ -32,7 +32,7 @@ def main(name: str):
         meta_file_train="metadata.csv",
         path=os.path.join(
             PROJECT_PATH,
-            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_david-v2_dataset",  # !!Change!! to your dataset
+            "discord_bot/main/TTS_Bot/Train_Voice/Dataset_Generation/dataset/LJSpeech-1.1_Vincent_dataset",  # !!Change!! to your dataset
         ),
     )
 
@@ -117,4 +117,4 @@ def main(name: str):
     print("Fertig!")
 
 
-main("patrick-tts-v3")  # !!Change!! the name of your model
+main("vincent-tts-v1")  # !!Change!! the name of your model
