@@ -1,8 +1,7 @@
 # Load model directly
 import os
-import sys
-os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface/hub'
-os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface'
+# os.environ['TRANSFORMERS_CACHE'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface/hub'
+# os.environ['HF_HOME'] = '/nfs/scratch/students/nguyenda81452/CACHE_DIR/huggingface'
 
 import torch
 from dotenv import load_dotenv
@@ -59,7 +58,7 @@ else:
         task="text-generation", 
         model=model_id,
         torch_dtype=torch.bfloat16, 
-        device_map='auto',
+        device_map='cpu',
         temperature=0.7,
         top_p=0.15,
         top_k=15,
