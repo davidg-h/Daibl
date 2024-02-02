@@ -1,69 +1,108 @@
-# Daibl (Discord AI Bot Learning)
+<div align="center">
+
+  <img src="assets/docs/docs_images/logo.png" width="20%" height="20%">
+  
+  # Daibl
+
+
+[![python][python-shield]][python-url]
+[![pytorch][pytorch-shield]][pytorch-url]
+[![HuggingFace][HuggingFace-shield]][HuggingFace-url]
+[![pycord][pycord-shield]][pycord-url]
+[![whisper][whisper-shield]][whisper-url]
+[![coqui][coqui-shield]][coqui-url]
+
+</div>
 
 ---
 
-**Table of Contents:**
+<details>
+<summary>Table of Contents</summary>
 
-- [Folder structure](#folder-structure)
-- [Docker environment](#docker-environment)
-- [Virtual environment activation](#virtual-environment-activation)
-- [Getting started](#getting-started)
-- [For Pair-Programming](#for-pair-programming)
-- [Add your files](#add-your-files)
-- [Remarks](#remarks)
+- [About the project](#about-the-project)
+  - [Folder Structure](#folder-structure)
+  - [Modules](#modules)
+  - [Usage](#usage)
+- [Setup Guide](#setup-guide)
+- [Additional](#additional)
+  - [Docker environment](#docker-environment-beta)
+  - [Virtual environment](#virtual-environment-activation)
+- [Evaluation](#evaluation)
+- [Authors](#authors)
 - [License](#license)
+- [Remarks](#remarks)
 
-## Folder structure
+</details>
+
+## <u>About The Project</u>
+
+Daibl is a university project to help students learn more about AI and their Technologies. The acronym Daibl stands for **D**iscord **AI** **B**ot **L**earning. Daibl is a bot inspired by Alexa which can answer general and TH Nuernberg related questions, to help students (especially new ones) navigate their school life easier.
+
+### Folder structure
+
+The folder structure should give a rough overview of the code base and make the project easier to understand.
 
 ```sh
-📦assets # resources and assets for the project
+📦assets # resources and assets to run the project
  ┣ 📂docs
  ┣ 📂ffmpeg-6.0-full_build
  ┗ ...
 📦discord_bot
  ┣ 📂main
- ┃  ┣ 📂Bot     # Bot application
- ┃  ┣ 📂LLM     # Communicating module with Large-Language-models
+ ┃  ┣ 📂Bot     # main Bot application
+ ┃  ┣ 📂LLM     # Communicating module with Large-Language-Models
  ┃  ┣ 📂STT     # Module for live transcription (ASR)
  ┃  ┣ 📂TTS_Bot # Module for text-to-speech
+ ┃  ┣ 📂scrap   # TODO add description Vincent
  ┃  ┣ 📂util    # Module for utilities
- ┃  ┣ 📜main.py # main entry point
+ ┃  ┣ 📜main.py # programm entry point
  ┃  ┗ 📜.env    # token and keys
  ┗ (📂test) # possible test folder
  ```
 
-## Docker environment
+### Modules
 
-The discord bot should be runable in any environment. For this purpose we use Docker. So file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project.
+Modules are designed to be interchangeable, for example using different LLMs to generate text
 
-## **Virtual environment activation**
+#### Bot
 
-The virtual environment is used to make packaging easier and to only install the needed dependencies. To setup the virtual environment look into the corresponding [virtual environment documentation](assets/docs/Venv.md)
+This module contains the code to run the Discord bot. The Discord api pycord is used to create the bot and communicate with the application
 
-## Getting started
+#### LLM (Large-Language-Models)
 
-Create a $`\textcolor{red}{\text{.env file}}`$ in the **[daibl/discord_bot/main](discord_bot/main/example.env)** directory and set the environment variables: (read the [remarks](#remarks) after creating the file)
+This module focuses on communication with the LLM. Hugging Face serves as the interface for running LLMs. It is a popular platform that provides a comprehensive set of tools and libraries for working with natural language processing (NLP) models and it is particularly well-known for its support of large language models (LLMs).
 
-```sh
-# .env example
-DISCORD_TOKEN=<your_token>
-DISCORD_GUILD=<guild-or-server_name>
-PROJECT_PATH=<path/to/project> # Full path to project to simplify imports (if you want to read further into this google Python Path)
-```
+For our project we built a pipeline with Hugging Face to load the LLM and adjust parameters. The model is loaded into the GPU to accelerate processing. For the LLM different versions of Llama 2 and Vicuna were used. Onced loaded we can prompt question/text to the model to let it generate an answer which will be further processed by the bot.
 
-## For Pair-Programming
+#### STT (Speech to text)
 
-### Change user.name and user.email to evenly split contributions
+TODO (ASR) Hotword
 
-```sh
-git config user.name <UserName>
-git config user.email <Email-of-account>
-```
+This module uses whisper to transcripe audio data from discord. The data is saved as a wav file and given to whisper to process. The transcriped text is then given to the TTS module.
 
-## Add your files
+#### TTS_Bot (Text to speech)
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+TTS_Bot handles the training/finetuning of voice models as well as generating the voice to speak with the user. The text is processed by the voice model and saved to a wav file which is being played over the voice channel to the user.
+
+To read more about the TTS setup click [this](assets/docs/TTS_Voice.md).
+
+To run the voice model Coqui.ai TTS is being used. Coqui.ai TTS is a library for advanced Text-to-Speech generation. The platform offers pretrained models for over 1100 languages, along with tools for training new models and fine-tuning existing ones in any language. Additionally, it provides utilities for dataset analysis and curation.
+
+#### Scrap
+
+TODO Explain scrap, what technology is used, how data is processed ...
+
+### Usage
+
+TODO Gif on how to use the bot
+
+## <u> Setup Guide </u>
+
+<div align="center">
+  <img src="assets/docs/docs_images/clone_project.gif">
+</div>
+
+Clone the repository:
 
 ```sh
 mkdir daibl
@@ -79,6 +118,56 @@ git remote add origin https://git.informatik.fh-nuernberg.de/devpsoft_studios/da
 git branch -M main
 ```
 
+Create a $`\textcolor{red}{\text{.env file}}`$ in the **daibl/discord_bot/main** directory and set the environment variables: (read the [remarks](#remarks) after creating the file)
+
+```sh
+# .env example
+DISCORD_TOKEN=<your_token>
+DISCORD_GUILD=<guild_or_server_name>
+HUGGINGFACEHUB_API_TOKEN=<your_api_token>
+PROJECT_PATH=<path/to/project> # Full path to project to simplify imports (if you want to read further into this google Python Path)
+DATABASE_PATH=<path/to/database_of_context_documents>
+```
+
+The Hugging Face api token is used to get access to the [Hugging Face Hub](https://huggingface.co/docs/hub/index) and the [Hugging Face Ecosystem](https://huggingface.co/docs). For example: You can easily download different LLMs and Datasets with access through the api token in your python script. This makes automation and handling of ML components easier.
+
+(Optional: To customize your Hugging Face environment follow [this manual](https://stackoverflow.com/questions/63312859/how-to-change-huggingface-transformers-default-cache-directory) and this [cache setup](https://huggingface.co/docs/transformers/installation?highlight=transformers_cache#cache-setup).)
+
+Create a [virtual environment](#virtual-environment-activation) and install the requirements
+
+[Download voice models](https://huggingface.co/Daibl/Voice) or use existing ones -> Change the [necessary paths](discord_bot/main/TTS_Bot/DaiblVoice.py) to use the models.
+
+## <u> Additional </u>
+
+### Docker environment (beta) 
+
+The discord bot should be runable in any environment. For this purpose we use Docker. So file paths may be different when running on Windows. Devs should read through our [Docker documentation](assets/docs/Docker.md) to work on the project with docker.
+
+### **Virtual environment activation**
+
+The virtual environment is used to make packaging easier and to only install the needed dependencies. To setup the virtual environment look into the corresponding [virtual environment documentation](assets/docs/Venv.md)
+
+## <u> Evaluation </u>
+
+TODO eval of LLMs and context
+
+## <u> Authors </u>
+
+[@David](https://github.com/davidg-h)
+[@Vincent](https://github.com/firevince)
+[@Patrick](https://github.com/DieserPat)
+[@Elisabeth](https://github.com/elisabethvolkinshtein)
+
+## <u> License </u>
+
+Click [this](/LICENSE) to read the license.
+
+---
+
+---
+
+---
+
 ## Remarks
 
 You must adjust paths in some files / python scripts. For example the [tts-training-file line 35](discord_bot/main/TTS_Bot/Train_Voice/Training_Scripts/train_vits_win.py).
@@ -86,12 +175,28 @@ You must adjust paths in some files / python scripts. For example the [tts-train
 **In general:**
 Every time the user/developer has to make a change for path reasons it will be marked as
 
+```sh
+# !!Change!! ...
 ```
-# !!Change!! to your dataset
-```
 
----
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+<!-- https://shields.io/badges (Bagde generator) -->
+<!-- https://github.com/Ileriayo/markdown-badges -->
+[python-shield]: https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white
+[python-url]: https://www.python.org
 
-## License
+[pytorch-shield]: https://img.shields.io/badge/PyTorch-latest-EE4C2C.svg?style=flat&logo=pytorch
+[pytorch-url]:https://pytorch.org
 
-Click [this](/LICENSE) to read the license.
+[HuggingFace-shield]: https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-latest-orange
+[HuggingFace-url]: https://huggingface.co/
+
+[pycord-shield]: https://img.shields.io/badge/Pycord-voice-neongreen?logo=discord&logoColor=white
+[pycord-url]: https://docs.pycord.dev/en/stable/
+
+[whisper-shield]: https://img.shields.io/badge/Whisper-74aa9c?logo=openai&logoColor=white
+[whisper-url]: https://github.com/openai/whisper
+
+[coqui-shield]: https://img.shields.io/badge/%F0%9F%90%B8Coqui.ai_TTS-green
+[coqui-url]: https://github.com/coqui-ai/TTS

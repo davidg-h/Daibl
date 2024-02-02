@@ -1,10 +1,15 @@
 import asyncio
+import threading
+from uu import Error
 import discord
+from discord.ext import commands
 import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import wave
 import torch
 
 from TTS.api import TTS
+from util.Antiblocking import run_blocking, run_async_in_thread
 
 
 class Voice:
@@ -21,39 +26,38 @@ class Voice:
         self.tts = TTS(
             model_path=os.path.join(
                 self.PROJECT_PATH,
-                "assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/best_model_557276.pth",
+                "assets/models/tts-models/patrick-tts/vits_patrick-tts-voice-November-10-2023_12+56AM-a266f88/best_model_546403.pth", # !!Change!! to the desired tts model
             ),
             config_path=os.path.join(
                 self.PROJECT_PATH,
-                "assets/models/tts-models/david-tts-v2/vits_david-tts-v2-voice-October-26-2023_05+35PM-f3f04d3/config.json",
+                "assets/models/tts-models/patrick-tts/vits_patrick-tts-voice-November-10-2023_12+56AM-a266f88/config.json", # !!Change!! to the desired tts model config
             ),
+            gpu=True
         ).to(device)
 
     # Run TTS
-    async def TTS(self, voiceChannel, text):
+    async def speak(self, vc : discord.VoiceClient, ctx: commands.Context, text, client):
         cwd = os.path.dirname(os.path.abspath(__file__))
+        
+        try:
+            vc : discord.VoiceClient = await ctx.author.voice.channel.connect()
+        except discord.ClientException:
+            vc : discord.VoiceClient = vc
+        
+        t = threading.Thread(target=run_async_in_thread, args=(self.play_waiting_music, vc))
+        t.start()
+        
         # Text to speech to a file
-        self.tts.tts_to_file(
-            text=text,
-            file_path=cwd + "/output.wav",
-        )
-
-        # temporary implementation
-        vc = await voiceChannel.connect()
-
+        await run_blocking(self.tts.tts_to_file, client, text=text, file_path=cwd + "/output.wav")
+        
+        t.output_done = True
+        vc.stop()
         vc.play(
-            discord.FFmpegPCMAudio(
-                executable=os.path.join(
-                    self.PROJECT_PATH,
-                    "assets/ffmpeg-6.0-full_build/bin/ffmpeg.exe",  # (.exe is Windows)
-                ),
-                # executable= os.path.join(self.PROJECT_PATH, "assets/ffmpeg"), # Linux binary executeable for ffmpeg
-                source=cwd + "/output.wav",
+            discord.FFmpegPCMAudio(executable=os.path.join(self.PROJECT_PATH, "assets/ffmpeg-linux/ffmpeg"), source=cwd + "/output.wav",
             ),
-            after=lambda e: print("done"),
+            after=lambda e: print("done talking"),
         )
-
-        # temporary implementation until bug is fixed
+        
         counter = 0
         with wave.open(cwd + "/output.wav") as mywav:
             duration_seconds = (
@@ -63,4 +67,18 @@ class Voice:
         while not counter >= duration_seconds:
             await asyncio.sleep(1)
             counter += 1
-        await vc.disconnect()
+            
+        os.remove(cwd + "/output.wav")
+        return vc
+
+    async def play_waiting_music(self, vc : discord.VoiceClient):
+        t = threading.currentThread()
+        elevator_music = "/nfs/scratch/students/nguyenda81452/project/dev/daibl/discord_bot/main/TTS_Bot/elevator.mp3"
+        vc.play(
+            discord.FFmpegPCMAudio(executable=os.path.join(self.PROJECT_PATH, "assets/ffmpeg-linux/ffmpeg"), source=elevator_music,
+            ),
+            after=lambda e: print("done playing elevator musdic"),
+        )
+        while not getattr(t, "output_done", False):
+            await asyncio.sleep(1)
+        return

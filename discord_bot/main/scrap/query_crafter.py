@@ -33,15 +33,16 @@ import re
 def construct_query(documents, message):
     query=f"""
         {'----document----'.join(documents)}
-        \n----document----\n
-         Mithilfe der oben stehenden Dokumente beantworte die folgende Frage: \n
+        \n----document----\n"""
+    query = re.sub(r'\s+', ' ', query) ## truncates multiple whitespace to one space
+    query = query[:7000]
+    query = query + f"""
+        Mithilfe der oben stehenden Dokumente beantworte die folgende Frage: \n
         {message.replace('$daibl ', '')}
         """
-    query = re.sub(r'\s+', ' ', query)
 
     print(query)
     return query
-    
 
 # all documents as context
 # throws error on api
