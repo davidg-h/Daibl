@@ -134,6 +134,8 @@ The Hugging Face api token is used to get access to the [Hugging Face Hub](https
 
 - Create a [virtual environment](#virtual-environment-activation) and install the requirements
 
+  ***(install the scraping_requirements if you intend to do web scraping)***
+
 - [Download voice models](https://huggingface.co/Daibl/Voice) or use existing ones -> Change the [necessary paths](discord_bot/main/TTS_Bot/DaiblVoice.py) to use the models.
 
   ***Note: you can use the [download script](assets/models/tts-models/download_voice.py) for the voice models***
@@ -148,7 +150,7 @@ The discord bot should be runable in any environment. For this purpose we use Do
 
 ### **Virtual environment activation**
 
-The virtual environment is used to make packaging easier and to only install the needed dependencies. To setup the virtual environment look into the corresponding [virtual environment documentation](assets/docs/Venv.md)
+The virtual environment is used to make developing easier and to only install the needed dependencies. To setup the virtual environment look into the corresponding [virtual environment documentation](assets/docs/Venv.md)
 
 ## <u> Evaluation </u>
 
@@ -163,7 +165,7 @@ TODO eval of LLMs and context
 
 ## <u> License </u>
 
-Click [this](/LICENSE) to read the license.
+Click [here](/LICENSE) to read the license.
 
 ---
 
