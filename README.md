@@ -75,7 +75,20 @@ For our project we built a pipeline with Hugging Face to load the LLM and adjust
 
 #### STT (Speech to text)
 
-TODO (ASR) Hotword
+Hotword
+The goal was to integrate a Hotword Detection with the Word "Daibl", that works parallel to the audio recording.
+It was challenging to find existing code that could be easy integrated into our work, especially since the Hotword Detection "Snowboy" was discontinued and the "Picovoice" does not allow the creation of custom hotwords with made-up words not found in the dictionary.
+
+For this purpose, we utilized another GitHub repository "EfficientWord-Net"
+[https://github.com/Ant-Brain/EfficientWord-Net](https://github.com/Ant-Brain/EfficientWord-Net).
+However, this came with its own set of challenges, including poor performance, outdated Code and a lack of updates. Moreover, it only works only with MicStream via Python.
+It was not possible to combine the Speech to Text live transcripe with the Hotword Detection. Despite these challenges, we plan to include the modified version in our repository.
+
+The solution works adequately if used without live transcription or other simultaneous processes. However, it requires the implementation of sleep timers in some methods to function correctly; without them, the detection does not work.
+
+The repository allows the creation of a custom reference file, which requires recording the desired hotword. We made 2-3 recordings of the word "Daibl" and saved them as a .json reference file.
+
+In order to create these files, check out "EfficientWord-Net" Repo for Instructions. But use the fixed Code in our Repository.
 
 This module uses whisper to transcripe audio data from discord. The data is saved as a wav file and given to whisper to process. The transcriped text is then given to the TTS module.
 
