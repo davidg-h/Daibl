@@ -6,12 +6,8 @@ import nltk
 from nltk.tokenize import word_tokenize 
 import numpy as np
 from collections import Counter
-from tqdm import tqdm  # Import tqdm for progress bar
-
+from tqdm import tqdm 
 from scrap.db_init import db_get_df
-
-DATABASE_PATH = "discord_bot/scrap/html.sqlite"
-
 from collections import Counter
 
 def calculate_term_frequencies(tokens):

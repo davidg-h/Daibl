@@ -1,10 +1,11 @@
 import sqlite3
 import pandas as pd
 import os
-from dotenv import load_dotenv, find_dotenv # TODO 
+from dotenv import load_dotenv, find_dotenv  # TODO
 
 load_dotenv()
 database_path = os.getenv("DATABASE_PATH")
+
 
 def db_get_df(tablename="chunk_embeddings", coloumns=["*"]):
     if type(coloumns) is not list:
@@ -14,6 +15,7 @@ def db_get_df(tablename="chunk_embeddings", coloumns=["*"]):
     con.close()
     return html_df
 
+
 def db_save_df(df, tablename):
     with sqlite3.connect(database_path) as con:
-        df.to_sql(tablename, con, index=False, if_exists='replace')
+        df.to_sql(tablename, con, index=False, if_exists="replace")

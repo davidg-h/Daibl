@@ -2,16 +2,11 @@ from scrap.db_init import db_get_df, db_save_df
 import json
 import pandas as pd
 from tqdm import tqdm
-from sentence_transformers import SentenceTransformer
-
 from sentence_transformers import SentenceTransformer, util
 
 def get_most_similar_articles_msmarco(query, top_n):
     model = SentenceTransformer('msmarco-distilbert-base-v4')
     embeddings_df = db_get_df("embeddings_msmarco_distilroberta_base_v3")
-    # Annahme: Die embeddings_df enthält Spalten wie 'text_embedding', 'filename', 'title', 'text' usw.
-    
-    # Hier sollte der Code zum Laden und Konvertieren der Embeddings ähnlich bleiben
     embeddings_df["text_embedding"] = [json.loads(text_embedding_json) for text_embedding_json in embeddings_df["text_embedding_json"]]
 
     query_embedding = model.encode(query, show_progress_bar=True)

@@ -1,7 +1,5 @@
 from db_init import db_get_df, db_save_df
 import json
-import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 
