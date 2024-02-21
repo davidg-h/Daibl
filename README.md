@@ -75,6 +75,8 @@ This module focuses on communication with the LLM. Hugging Face serves as the in
 
 For our project we built a pipeline with Hugging Face to load the LLM and adjust parameters. The model is loaded into the GPU to accelerate processing. For the LLM different versions of Llama 2 and Vicuna were used. Onced loaded we can prompt question/text to the model to let it generate an answer which will be further processed by the bot.
 
+Both Models have only a 4k Context and should be replaced by models with greater context.
+
 #### STT (Speech to text)
 
 
@@ -120,7 +122,14 @@ To run the voice model Coqui.ai TTS is being used. Coqui.ai TTS is a library for
 
 #### Scrap
 
-TODO Explain scrap, what technology is used, how data is processed ...
+Scrap is all about the data used for the Retrieval Augmented Generation (RAG).
+It has Notebooks for scraping the raw html data from the th-nuernberg website and the intranet website.
+It features the data manipulation and preparation for the Retrival step.
+Finally all the Methodes for creating Embeddings from the data and searching them is located here.
+
+For more information on how to use and improve the code view this [README](assets/docs/Scrap.md).
+
+
 
 ### Usage
 
