@@ -9,8 +9,10 @@
 [![pytorch][pytorch-shield]][pytorch-url]
 [![HuggingFace][HuggingFace-shield]][HuggingFace-url]
 [![pycord][pycord-shield]][pycord-url]
+[![Hotword][Hotword-shield]][Hotword-url]
 [![whisper][whisper-shield]][whisper-url]
 [![coqui][coqui-shield]][coqui-url]
+
 
 </div>
 
@@ -75,7 +77,12 @@ For our project we built a pipeline with Hugging Face to load the LLM and adjust
 
 #### STT (Speech to text)
 
-Hotword
+
+This module uses whisper to transcripe audio data from discord. The data is saved as a wav file and given to whisper to process. The transcriped text is then given to the TTS module.
+
+
+#### Hotword-Detection (Voice activation)
+
 The goal was to integrate a Hotword Detection with the Word "Daibl", that works parallel to the audio recording.
 It was challenging to find existing code that could be easy integrated into our work, especially since the Hotword Detection "Snowboy" was discontinued and the "Picovoice" does not allow the creation of custom hotwords with made-up words not found in the dictionary.
 
@@ -90,7 +97,18 @@ The repository allows the creation of a custom reference file, which requires re
 
 In order to create these files, check out "EfficientWord-Net" Repo for Instructions. But use the fixed Code in our Repository.
 
-This module uses whisper to transcripe audio data from discord. The data is saved as a wav file and given to whisper to process. The transcriped text is then given to the TTS module.
+- For using our Version of the Hotword Detection: import the method hw_detection from detection.py. It checks a given wav_file for the Hotword that is saved in the reference_file. The threshold can be changed for lower/higher "true chance"
+
+```sh
+def hw_detection(wav_file):
+    daibl_hw = HotwordDetector(
+        hotword="daibl",
+        model=base_model,
+        reference_file=os.path.join(PROJECT_PATH, "Hotword/wakewords/daibl/daibl_ref.json"),
+        threshold=0.7,
+        relaxation_time=2
+    )
+```
 
 #### TTS_Bot (Text to speech)
 
@@ -216,3 +234,6 @@ Every time the user/developer has to make a change for path reasons it will be m
 
 [coqui-shield]: https://img.shields.io/badge/%F0%9F%90%B8Coqui.ai_TTS-green
 [coqui-url]: https://github.com/coqui-ai/TTS
+
+[Hotword-shield]: https://img.shields.io/badge/Hotword-git-orange
+[Hotword-url]: https://github.com/Ant-Brain/EfficientWord-Net
