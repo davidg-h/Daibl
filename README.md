@@ -124,7 +124,24 @@ TODO Explain scrap, what technology is used, how data is processed ...
 
 ### Usage
 
-TODO Gif on how to use the bot
+To start the Discord-Bot Daibl you need to have a Discord-Bot in Discord-Developer Portal. Also you need to use your own Discord Tokens of the Bot as seen in the Setup Guide. 
+
+After the Setup you can start the main.py and the Bot will come Online. You can join a Voice Channel in Discord and write our Commands in a Text-Channel. The Bot will join in your current Voice-Channel and answer in the Text-Channel.
+
+We implemented two Commands that start with the char "$"
+
+- $daibl (Followed by the Question you want to ask him): You ask the Bot a Question and he will give you the Answer
+
+<div>
+  <img src="assets/docs/docs_images/Command1.png">
+</div>
+
+- $listen: The Bot will listen to your spoken Audio and will give you an Answer
+
+<div>
+  <img src="assets/docs/docs_images/Command2.png">
+</div>
+
 
 ## <u> Setup Guide </u>
 
