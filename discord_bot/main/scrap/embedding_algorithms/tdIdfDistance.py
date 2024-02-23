@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from tqdm import tqdm
-import sqlite3
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
@@ -11,8 +10,10 @@ from sklearn.metrics.pairwise import linear_kernel
 def get_most_similar_articles_tf_idf(message):
     df = db_get_df("chunk_embeddings")
 
+    # this is SO HIGHLY INEFFICIENT to calculate the embeddings on the fly - but works
     tfidf_vectorizer = TfidfVectorizer()
     tfidf_matrix = tfidf_vectorizer.fit_transform(df['chunk_text'])
+
     question_tfidf = tfidf_vectorizer.transform([message])
     similarities = cosine_similarity(question_tfidf, tfidf_matrix)
     similarity_df = pd.DataFrame({

@@ -75,6 +75,8 @@ This module focuses on communication with the LLM. Hugging Face serves as the in
 
 For our project we built a pipeline with Hugging Face to load the LLM and adjust parameters. The model is loaded into the GPU to accelerate processing. For the LLM different versions of Llama 2 and Vicuna were used. Onced loaded we can prompt question/text to the model to let it generate an answer which will be further processed by the bot.
 
+Both Models have only a 4k Context and should be replaced by models with greater context.
+
 #### STT (Speech to text)
 
 
@@ -120,7 +122,14 @@ To run the voice model Coqui.ai TTS is being used. Coqui.ai TTS is a library for
 
 #### Scrap
 
-TODO Explain scrap, what technology is used, how data is processed ...
+Scrap is all about the data used for the Retrieval Augmented Generation (RAG).
+It has Notebooks for scraping the raw html data from the th-nuernberg website and the intranet website.
+It features the data manipulation and preparation for the Retrival step.
+Finally all the Methodes for creating Embeddings from the data and searching them is located here.
+
+For more information on how to use and improve the code view this [README](assets/docs/Scrap.md).
+
+
 
 ### Usage
 
@@ -200,7 +209,25 @@ The virtual environment is used to make packaging easier and to only install the
 
 ## <u> Evaluation </u>
 
-TODO eval of LLMs and context
+The Evaluation of the RAG is handled in the Evaluation folder.
+There are 3 different ascpects which are evaluated:
+
+- the model (llama-13b, vicuna-13b, vicuna-70b)
+- the embedding methode (tf-idf, MINI-LM-L6-v2)
+- the context size (1, 5, 10 documents)
+
+These aspects are evaluated in all combinations across 5 different answers.
+The results can be viewed in the excel table.
+The results suggest, that none of the methodes really works well...
+
+This evaluation can be improved by:
+- improving questions: assuring that there is indeed information to answere each questions
+- categorising the questions in easy to hard and across different subjects
+- using different llms (example Vicuna and Llama with 16k Context)
+- don't cut off context documents
+- don't cut off answers
+- prompt engineer for better answers
+- restructure code using the evaluation from langchain
 
 ## <u> Authors </u>
 
