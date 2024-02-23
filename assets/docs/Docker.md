@@ -1,8 +1,7 @@
 # Steps to get Docker configured to run Daibl in a container
 
 ---
--> | [Back](/README.md)
--|-
+[<- Back](/README.md)
 
 <details>
 <summary>Table of Contents</summary>

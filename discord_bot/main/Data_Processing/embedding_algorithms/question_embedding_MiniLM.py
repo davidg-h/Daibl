@@ -6,7 +6,7 @@ from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 
 
-def get_most_similar_articles(query,top_n):
+def get_most_similar_articles_MiniLM(query,top_n):
     model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     embeddings_df=db_get_df("embeddings_paraphrase_MiniLM_L6_v2")
     # Convert back to lists.

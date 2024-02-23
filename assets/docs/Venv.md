@@ -1,8 +1,7 @@
 # Steps to get a virtual environment running in VS Code with python
 
 ---
--> | [Back](/README.md)
--|-
+[<- Back](/README.md)
 
 ***Loading the requirements.txt over [pip install -r requirements.txt](#install-get-packagedependencies-in-virtuel-env) after creating the .venv is recommended!***
 
@@ -67,7 +66,7 @@ To check if the virtual environment is active:
 
 ```sh
 python --version
-# example output: Python 3.8.10
+# example output: Python 3.9.10
 ```
 
 ### Install get package/dependencies in virtuel env
@@ -84,7 +83,7 @@ python -m venv my-venv # Creates virtual env with the name my-venv. Version of v
 
 python3.9 -m venv my-venv # Creates venv with python version 3.9 named my-venv
 # alternative
-py -3.9 -m venv c:\path\to\wherever\you\want\it # example: py -3.9 -m venv my-venv
+py -3.9 -m venv /path/to/wherever/you/want/it # example: py -3.9 -m venv my_folder/my-venv 
 
 source my-venv/bin/activate # activates the venv
 deactivate # to deactivate venv
