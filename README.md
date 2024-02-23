@@ -229,6 +229,8 @@ This evaluation can be improved by:
 - prompt engineer for better answers
 - restructure code using the evaluation from langchain
 
+For more information about the evaluation, view this [README](assets/docs/Evaluation.md).
+
 ## <u> Authors </u>
 
 [@David](https://github.com/davidg-h)
