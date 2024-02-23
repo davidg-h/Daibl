@@ -1,8 +1,7 @@
 # Manual for training/finetune own voice for TTS model
 
 ---
--> | [Back](/README.md)
--|-
+[<- Back](/README.md)
 
 <details>
 <summary>Table of Contents</summary>
@@ -86,7 +85,7 @@ Continue a previous run:
 ```sh
 # cd into the location where the trainig script is or start the script with a qualified path
 # start the script with the --continue_path flag (Attention: Here only specify the folder)
-CUDA_VISIBLE_DEVICES=0 python train_vits_win.py --continue_path /home/$USER/path-to-project/daibl/assets/models/tts-models/path/to/previous/run/folder/
+CUDA_VISIBLE_DEVICES=0 python train_vits_win.py --continue_path /home/$USER/path-to-project/daibl/assets/models/tts-models/path/to/previous/run-folder/
 ```
 
 Source: [coqui-ai TTS: Fine-tuning a 🐸 TTS model](https://tts.readthedocs.io/en/dev/finetuning.html#fine-tuning-a-tts-model)
