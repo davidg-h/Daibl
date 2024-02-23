@@ -217,17 +217,24 @@ There are 3 different ascpects which are evaluated:
 - the context size (1, 5, 10 documents)
 
 These aspects are evaluated in all combinations across 5 different answers.
-The results can be viewed in the excel table.
-The results suggest, that none of the methodes really works well...
+The results can be viewed in the [excel table](assets/docs/Evaluation.xlsx).
+The LLama2 Model with TF-IDF and 5 Context Documents is working best.
+The Context is cut of earlier than 10 context documents maybe resulting in confusing the models.
+One could expect Vicuna70b to be better, because it is a bigger model, but llama2 is newer and giving better results.
+
+The results here may be biased by the selection of Questions or other factors like hyperparameters, or errors in generation.
+For future evaluations we found some tips to improve:
 
 This evaluation can be improved by:
 - improving questions: assuring that there is indeed information to answere each questions
 - categorising the questions in easy to hard and across different subjects
-- using different llms (example Vicuna and Llama with 16k Context)
+- using different llms with larger context (example Vicuna and Llama with 16k Context)
 - don't cut off context documents
 - don't cut off answers
 - prompt engineer for better answers
 - restructure code using the evaluation from langchain
+- MINI_LM use all the data (including intranet)
+- Having every model use same Temperature and hyperparameters
 
 ## <u> Authors </u>
 
