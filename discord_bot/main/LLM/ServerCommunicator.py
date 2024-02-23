@@ -2,6 +2,8 @@ import aiohttp
 import json
 import asyncio
 
+
+# needs to setup a ssh tunnel to the server - look at evaluation.ipynb
 async def server_get_answer(query):
     connection = "http://127.0.0.1:8080"
     data = {

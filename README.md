@@ -209,7 +209,25 @@ The virtual environment is used to make packaging easier and to only install the
 
 ## <u> Evaluation </u>
 
-TODO eval of LLMs and context
+The Evaluation of the RAG is handled in the Evaluation folder.
+There are 3 different ascpects which are evaluated:
+
+- the model (llama-13b, vicuna-13b, vicuna-70b)
+- the embedding methode (tf-idf, MINI-LM-L6-v2)
+- the context size (1, 5, 10 documents)
+
+These aspects are evaluated in all combinations across 5 different answers.
+The results can be viewed in the excel table.
+The results suggest, that none of the methodes really works well...
+
+This evaluation can be improved by:
+- improving questions: assuring that there is indeed information to answere each questions
+- categorising the questions in easy to hard and across different subjects
+- using different llms (example Vicuna and Llama with 16k Context)
+- don't cut off context documents
+- don't cut off answers
+- prompt engineer for better answers
+- restructure code using the evaluation from langchain
 
 ## <u> Authors </u>
 

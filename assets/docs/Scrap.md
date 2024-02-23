@@ -1,14 +1,13 @@
 # Srap README
 
-
 first of all look at this chart:
 <div align="center">
-  <img src="assets/docs/docs_images/Screenshot-RAG-trends.png">
+  <img src="docs_images/Screenshot-RAG-trends.png">
 </div>
 
 As we started the Project back in March 2023 the term Retrieval Augmented Generation (RAG) wasn't even invented!!!
 And yet it is the term that exactly describes our Project.
-The Term RAG is the number one solution for building custom knowlege agnostic Chatbots for obvious Reasons:
+The RAG is the number one solution for building custom knowlege agnostic Chatbots for obvious Reasons:
 
 1. It is easier and cheaper to implement than fine-tuning a model
 2. The verification of facts is much easier - the sources are given
@@ -53,11 +52,9 @@ The possibility of chaining multiple Queries is good, too.
 
 
 TODO:
-- For future it would be advised to store vectors in a vector db (Milvus, Chroma DB).
+- For future it would be advised to store vectors in a vector db (Chroma DB).
 - Srcaping and reading pdf files would be very useful.
 - Continous scraping would be useful, too. (example th-mensa API)
-- splitting data into good chunks and embed them
+- splitting data into good chunks and embed them (langchain text splitter)
 
-
-
-
+for anyone struggling to get into, [this website](https://learn.deeplearning.ai/) has great video tutorials with assosiated notebooks one can try for free.
