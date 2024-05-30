@@ -55,7 +55,7 @@ The folder structure should give a rough overview of the code base and make the 
  ┃  ┣ 📂LLM     # Communicating module with Large-Language-Models
  ┃  ┣ 📂STT     # Module for live transcription (ASR)
  ┃  ┣ 📂TTS_Bot # Module for text-to-speech
- ┃  ┣ 📂scrap   # TODO add description Vincent
+ ┃  ┣ 📂Data_Processing   # TODO add description Vincent
  ┃  ┣ 📂util    # Module for utilities
  ┃  ┗ 📜main.py # programm entry point
  ┗ 📜.env    # token and keys
@@ -120,14 +120,14 @@ To read more about the TTS setup click [this](assets/docs/TTS_Voice.md).
 
 To run the voice model Coqui.ai TTS is being used. Coqui.ai TTS is a library for advanced Text-to-Speech generation. The platform offers pretrained models for over 1100 languages, along with tools for training new models and fine-tuning existing ones in any language. Additionally, it provides utilities for dataset analysis and curation.
 
-#### Scrap
+#### Data Processing
 
-Scrap is all about the data used for the Retrieval Augmented Generation (RAG).
+Data Processing is all about the data used for the Retrieval Augmented Generation (RAG).
 It has Notebooks for scraping the raw html data from the th-nuernberg website and the intranet website.
 It features the data manipulation and preparation for the Retrival step.
 Finally all the Methodes for creating Embeddings from the data and searching them is located here.
 
-For more information on how to use and improve the code view this [README](assets/docs/Scrap.md).
+For more information on how to use and improve the code view this [README](assets/docs/Data_Processing.md).
 
 
 
@@ -237,6 +237,8 @@ This evaluation can be improved by:
 - restructure code using the evaluation from langchain
 - MINI_LM use all the data (including intranet)
 - Having every model use same Temperature and hyperparameters
+
+For more information about the evaluation, view this [README](assets/docs/Evaluation.md).
 
 ## <u> Authors </u>
 
